@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">FoodDelivery</string>
     <string name="tsmc_food">TSMC Food</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="sing_in">Sing in</string>
+    <string name="fastest_delivery">Fastest Delivery</string>
+    <string name="_24_7">24/7</string>
+    <string name="welcome_to_tcmc_food">Welcome To TCMC Food</string>
 </resources>
