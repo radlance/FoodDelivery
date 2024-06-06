@@ -32,6 +32,7 @@
         app:layout_constraintEnd_toEndOf="@id/iv_main" />
 
     <androidx.appcompat.widget.AppCompatButton
+        style="?android:borderlessButtonStyle"
         android:id="@+id/button_sing_in"
         android:layout_width="157dp"
         android:layout_height="68dp"
@@ -40,7 +41,7 @@
         android:background="@drawable/button_frame"
         android:backgroundTint="@color/white"
         android:fontFamily="@font/italianno_regular"
-        android:text="@string/sing_in"
+        android:text="@string/sign_in"
         android:textAllCaps="false"
         android:textColor="@color/black"
         android:textFontWeight="400"
@@ -53,6 +54,7 @@
 
 
     <androidx.appcompat.widget.AppCompatButton
+        style="?android:borderlessButtonStyle"
         android:id="@+id/button_sign_up"
         android:layout_width="157dp"
         android:layout_height="68dp"
@@ -70,5 +72,15 @@
         app:layout_constraintStart_toEndOf="@id/button_sing_in"
         app:layout_constraintTop_toTopOf="@id/button_sing_in" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/skip_authorization"
+        android:layout_marginBottom="24dp"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

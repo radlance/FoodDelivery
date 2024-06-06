@@ -12,14 +12,14 @@
         android:src="@drawable/courier"
         android:scaleX="1.2"
         android:scaleY="1.2"/>
-    
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/fastest_delivery"
         android:textSize="40sp"
         android:textColor="@color/black"/>
-    
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

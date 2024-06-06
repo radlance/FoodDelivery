@@ -2,8 +2,17 @@
     <string name="app_name">FoodDelivery</string>
     <string name="tsmc_food">TSMC Food</string>
     <string name="sign_up">Sign Up</string>
-    <string name="sing_in">Sing in</string>
+    <string name="sign_in">Sign in</string>
     <string name="fastest_delivery">Fastest Delivery</string>
     <string name="_24_7">24/7</string>
     <string name="welcome_to_tcmc_food">Welcome To TCMC Food</string>
+    <string name="skip_authorization">Skip authorization</string>
+    <string name="e_mail">E-mail</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="full_name">Full name</string>
+    <string name="phone_number">Phone number</string>
+    <string name="register_now">Register Now</string>
+    <string name="cancel">Cancel</string>
 </resources>
