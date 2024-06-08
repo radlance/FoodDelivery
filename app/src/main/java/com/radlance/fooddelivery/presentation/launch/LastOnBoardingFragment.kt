@@ -1,9 +1,12 @@
 package com.radlance.fooddelivery.presentation.launch
 
+import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import com.radlance.fooddelivery.core.AbstractFragment
 import com.radlance.fooddelivery.databinding.FragmentOnBoardingLastBinding
+import com.radlance.fooddelivery.presentation.authorization.AuthorizationActivity
 
 class LastOnBoardingFragment : AbstractFragment<FragmentOnBoardingLastBinding>() {
     override fun bind(
@@ -11,5 +14,18 @@ class LastOnBoardingFragment : AbstractFragment<FragmentOnBoardingLastBinding>()
         container: ViewGroup?
     ): FragmentOnBoardingLastBinding {
         return FragmentOnBoardingLastBinding.inflate(inflater, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.buttonSingIn.setOnClickListener {
+            val intent = AuthorizationActivity.newInstanceSignIn(requireContext())
+            startActivity(intent)
+        }
+
+        binding.buttonSignUp.setOnClickListener {
+            val intent = AuthorizationActivity.newInstanceSignUp(requireContext())
+            startActivity(intent)
+        }
     }
 }

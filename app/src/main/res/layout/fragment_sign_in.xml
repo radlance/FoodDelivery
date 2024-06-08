@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
     android:background="@color/background_color"
     android:elevation="0dp">
 
@@ -33,14 +38,14 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
-    <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/et_email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="23dp"
         android:layout_marginEnd="23dp"
         android:layout_marginBottom="19dp"
-        android:hint="@string/e_mail"
+
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toTopOf="@id/et_password"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,6 +53,7 @@
         app:layout_constraintTop_toBottomOf="@id/cv_main"
         app:layout_constraintVertical_chainStyle="packed"
         android:backgroundTint="@color/black"
+            android:hint="@string/e_mail"
         />
 
     <com.google.android.material.textfield.TextInputEditText
@@ -55,23 +61,27 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="19dp"
-        android:hint="@string/password"
         android:inputType="textPassword"
         app:layout_constraintBottom_toTopOf="@id/button_login"
         app:layout_constraintEnd_toEndOf="@id/et_email"
         app:layout_constraintStart_toStartOf="@id/et_email"
         app:layout_constraintTop_toBottomOf="@id/et_email"
-        android:backgroundTint="@color/black"/>
+        android:backgroundTint="@color/black"
+        android:hint="@string/password"
+        android:layout_marginBottom="25dp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
-        android:text="@string/forgot_password"
-        android:textColor="@color/main_color"
-        android:textSize="17sp"
-        app:layout_constraintBottom_toTopOf="@id/button_login"
-        app:layout_constraintStart_toStartOf="@id/button_login" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:text="@string/forgot_password"
+            android:textColor="@color/main_color"
+            android:textSize="17sp"
+            android:layout_marginTop="25dp"
+            app:layout_constraintBottom_toTopOf="@id/button_login"
+            app:layout_constraintStart_toStartOf="@id/button_login"
+            app:layout_constraintTop_toBottomOf="@+id/et_password"
+            app:layout_constraintVertical_bias="1.0" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button_login"
@@ -90,3 +100,4 @@
         android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

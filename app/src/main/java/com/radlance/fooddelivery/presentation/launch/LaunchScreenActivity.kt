@@ -1,4 +1,4 @@
-package com.radlance.fooddelivery.presentation
+package com.radlance.fooddelivery.presentation.launch
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -15,7 +15,7 @@ class LaunchScreenActivity : AppCompatActivity() {
         setContentView(R.layout.activity_launch_screen)
         supportActionBar?.hide()
         Handler(Looper.getMainLooper()).postDelayed({
-            val intent = Intent(this@LaunchScreenActivity, MainActivity::class.java)
+            val intent = Intent(this@LaunchScreenActivity, OnBoardingActivity::class.java)
             startActivity(intent)
             finish()
         }, 1000)

@@ -5,4 +5,5 @@
     <color name="main_color">#FA4A0C</color>
     <color name="background_color">#EAEAEA</color>
     <color name="card_color">#F3F3F3</color>
+    <color name="hint_color">#8c8c8c</color>
 </resources>
