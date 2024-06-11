@@ -3,6 +3,7 @@ package com.radlance.fooddelivery.data.repository
 import android.util.Log
 import com.radlance.fooddelivery.data.api.core.Service
 import com.radlance.fooddelivery.data.api.request.NewUser
+import com.radlance.fooddelivery.data.api.request.UserData
 import com.radlance.fooddelivery.domain.core.LoadResult
 import com.radlance.fooddelivery.domain.entity.User
 import com.radlance.fooddelivery.domain.repository.UserRepository
@@ -26,6 +27,15 @@ class UserRepositoryImpl @Inject constructor(private val service: Service) : Use
                 )
             )
             LoadResult.Success()
+        } catch (e: Exception) {
+            LoadResult.Error(e is HttpException)
+        }
+    }
+
+    override suspend fun loginUser(user: User): LoadResult {
+        return try {
+            val token = service.loginUser(UserData(user.login, user.password))
+            LoadResult.Success(token)
         } catch (e: Exception) {
             LoadResult.Error(e is HttpException)
         }

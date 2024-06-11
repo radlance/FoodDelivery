@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.radlance.fooddelivery.domain.core.LoadResult
 import com.radlance.fooddelivery.domain.entity.User
+import com.radlance.fooddelivery.domain.usecase.LoginUserUseCase
 import com.radlance.fooddelivery.domain.usecase.RegisterUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -14,7 +15,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SignUpViewModel @Inject constructor(private val registerUserUseCase: RegisterUserUseCase) :
+class SignUpViewModel @Inject constructor(
+    private val registerUserUseCase: RegisterUserUseCase,
+    private val loginUserUseCase: LoginUserUseCase
+) :
     ViewModel() {
     private val _registerResult = MutableLiveData<LoadResult>()
     val registerResult: LiveData<LoadResult>
@@ -39,17 +43,27 @@ class SignUpViewModel @Inject constructor(private val registerUserUseCase: Regis
     val errorInputNumber: LiveData<Unit>
         get() = _errorInputNumber
 
+    private var _registeredUser: User? = null
+    private val registeredUser: User
+        get() = _registeredUser ?: throw RuntimeException("user == null")
+
     fun registerUser(fullName: String, login: String, password: String, phoneNumber: String) {
         viewModelScope.launch {
-            val formattedUser = User(
+            _registeredUser = User(
                 fullName = parseString(fullName),
                 login = parseString(login),
                 password = parseString(password),
                 phoneNumber = parseString(phoneNumber)
             )
-            if (validateInput(formattedUser)) {
-                _registerResult.value = registerUserUseCase(formattedUser)!!
+            if (validateInput(registeredUser)) {
+                _registerResult.value = registerUserUseCase(registeredUser)!!
             }
+        }
+    }
+
+    fun loginUser() {
+        viewModelScope.launch {
+            loginUserUseCase(registeredUser)
         }
     }
 

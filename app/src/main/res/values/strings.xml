@@ -19,4 +19,5 @@
     <string name="incorrect_email">email field should not be empty and have the correct format</string>
     <string name="incorrect_password">password field must have a minimum length of 8 and a maximum length of 20</string>
     <string name="incorrect_number">phone number field should not be empty</string>
+    <string name="failed_registration">registration failed</string>
 </resources>

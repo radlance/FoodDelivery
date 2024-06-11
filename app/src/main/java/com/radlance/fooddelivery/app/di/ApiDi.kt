@@ -31,7 +31,7 @@ object ApiDi {
         }
 
         val client = OkHttpClient.Builder().addInterceptor(interceptor)
-
+            
 
         /** settings for working with the api without an ssl certificate */
         try {

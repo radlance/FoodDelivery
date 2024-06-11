@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.radlance.fooddelivery.R
 import com.radlance.fooddelivery.databinding.FragmentSignUpBinding
+import com.radlance.fooddelivery.domain.core.LoadResult
 import com.radlance.fooddelivery.presentation.core.AbstractFragment
 import com.radlance.fooddelivery.presentation.core.IncorrectFillDialog
 import dagger.hilt.android.AndroidEntryPoint
@@ -55,6 +56,13 @@ class SignUpFragment : AbstractFragment<FragmentSignUpBinding>() {
             showErrorDialog(getString(R.string.incorrect_number))
         }
 
+        viewModel.registerResult.observe(viewLifecycleOwner) {
+            when (it) {
+                is LoadResult.Success -> viewModel.loginUser()
+                // TODO передеть токен в header
+                is LoadResult.Error -> showErrorDialog(getString(R.string.failed_registration))
+            }
+        }
     }
 
     private fun showErrorDialog(errorMessage: String) {

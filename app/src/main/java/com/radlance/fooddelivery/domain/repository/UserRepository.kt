@@ -5,4 +5,5 @@ import com.radlance.fooddelivery.domain.entity.User
 
 interface UserRepository {
     suspend fun registerUser(user: User): LoadResult
+    suspend fun loginUser(user: User): LoadResult
 }

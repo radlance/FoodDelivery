@@ -15,4 +15,5 @@ interface Service {
 
     @POST("user/login")
     suspend fun loginUser(@Body userData: UserData): String
+
 }
