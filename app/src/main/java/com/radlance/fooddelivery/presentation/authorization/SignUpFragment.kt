@@ -4,17 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.radlance.fooddelivery.R
 import com.radlance.fooddelivery.databinding.FragmentSignUpBinding
 import com.radlance.fooddelivery.domain.core.LoadResult
 import com.radlance.fooddelivery.presentation.core.AbstractFragment
 import com.radlance.fooddelivery.presentation.core.IncorrectFillDialog
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class SignUpFragment : AbstractFragment<FragmentSignUpBinding>() {
-    private val viewModel: SignUpViewModel by viewModels()
+    private val viewModel: SignUpViewModel by lazy {
+        ViewModelProvider(this, SignUpViewModelFactory())[SignUpViewModel::class.java]
+    }
     override fun bind(inflater: LayoutInflater, container: ViewGroup?): FragmentSignUpBinding {
         return FragmentSignUpBinding.inflate(inflater, container, false)
     }
@@ -41,19 +41,31 @@ class SignUpFragment : AbstractFragment<FragmentSignUpBinding>() {
         }
 
         viewModel.errorInputFullName.observe(viewLifecycleOwner) {
-            showErrorDialog(getString(R.string.incorrect_fullname))
+            if (it) {
+                viewModel.resetErrorInputFullName()
+                showErrorDialog(getString(R.string.incorrect_fullname))
+            }
         }
 
         viewModel.errorInputEmail.observe(viewLifecycleOwner) {
-            showErrorDialog(getString(R.string.incorrect_email))
+            if (it) {
+                viewModel.resetErrorInputEmail()
+                showErrorDialog(getString(R.string.incorrect_email))
+            }
         }
 
         viewModel.errorInputPassword.observe(viewLifecycleOwner) {
-            showErrorDialog(getString(R.string.incorrect_password))
+            if (it) {
+                viewModel.resetErrorInputPassword()
+                showErrorDialog(getString(R.string.incorrect_password))
+            }
         }
 
         viewModel.errorInputNumber.observe(viewLifecycleOwner) {
-            showErrorDialog(getString(R.string.incorrect_number))
+            if (it) {
+                viewModel.resetErrorInputNumber()
+                showErrorDialog(getString(R.string.incorrect_number))
+            }
         }
 
         viewModel.registerResult.observe(viewLifecycleOwner) {
@@ -77,3 +89,4 @@ class SignUpFragment : AbstractFragment<FragmentSignUpBinding>() {
         }
     }
 }
+

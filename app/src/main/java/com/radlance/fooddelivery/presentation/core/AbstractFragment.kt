@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
-import javax.inject.Inject
 
 abstract class AbstractFragment<B : ViewBinding> : Fragment() {
     private var _binding: B? = null

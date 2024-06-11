@@ -1,10 +1,5 @@
-package com.radlance.fooddelivery.app.di
+package com.radlance.fooddelivery.data.api.core
 
-import com.radlance.fooddelivery.data.api.core.Service
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -13,25 +8,20 @@ import java.security.KeyManagementException
 import java.security.NoSuchAlgorithmException
 import java.security.SecureRandom
 import java.security.cert.X509Certificate
-import javax.inject.Singleton
 import javax.net.ssl.SSLContext
 import javax.net.ssl.TrustManager
 import javax.net.ssl.X509TrustManager
 
 
-@Module
-@InstallIn(SingletonComponent::class)
-object ApiDi {
+object BaseService {
 
-    @Provides
-    @Singleton
-    fun service(): Service {
+    operator fun invoke(): Service {
         val interceptor = HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         }
 
         val client = OkHttpClient.Builder().addInterceptor(interceptor)
-            
+
 
         /** settings for working with the api without an ssl certificate */
         try {

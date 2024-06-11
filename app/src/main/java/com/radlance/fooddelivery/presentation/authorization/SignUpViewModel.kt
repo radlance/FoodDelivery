@@ -1,5 +1,6 @@
 package com.radlance.fooddelivery.presentation.authorization
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,19 +8,19 @@ import com.radlance.fooddelivery.domain.core.LoadResult
 import com.radlance.fooddelivery.domain.entity.User
 import com.radlance.fooddelivery.domain.usecase.LoginUserUseCase
 import com.radlance.fooddelivery.domain.usecase.RegisterUserUseCase
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class SignUpViewModel @Inject constructor(
+class SignUpViewModel(
     private val registerUserUseCase: RegisterUserUseCase,
     private val loginUserUseCase: LoginUserUseCase
 ) :
     ViewModel() {
+        init {
+            Log.d("AAA", "ViewModel created")
+        }
     private val _registerResult = MutableLiveData<LoadResult>()
     val registerResult: LiveData<LoadResult>
         get() = _registerResult
@@ -27,20 +28,20 @@ class SignUpViewModel @Inject constructor(
 
     private val viewModelScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
-    private val _errorInputEmail = MutableLiveData<Unit>()
-    val errorInputEmail: LiveData<Unit>
+    private val _errorInputEmail = MutableLiveData<Boolean>()
+    val errorInputEmail: LiveData<Boolean>
         get() = _errorInputEmail
 
-    private val _errorInputPassword = MutableLiveData<Unit>()
-    val errorInputPassword: LiveData<Unit>
+    private val _errorInputPassword = MutableLiveData<Boolean>()
+    val errorInputPassword: LiveData<Boolean>
         get() = _errorInputPassword
 
-    private val _errorInputFullName = MutableLiveData<Unit>()
-    val errorInputFullName: LiveData<Unit>
+    private val _errorInputFullName = MutableLiveData<Boolean>()
+    val errorInputFullName: LiveData<Boolean>
         get() = _errorInputFullName
 
-    private val _errorInputNumber = MutableLiveData<Unit>()
-    val errorInputNumber: LiveData<Unit>
+    private val _errorInputNumber = MutableLiveData<Boolean>()
+    val errorInputNumber: LiveData<Boolean>
         get() = _errorInputNumber
 
     private var _registeredUser: User? = null
@@ -71,26 +72,42 @@ class SignUpViewModel @Inject constructor(
         val result = true
         with(user) {
             if (login.isBlank() || !login.matches(emailRegex)) {
-                _errorInputEmail.value = Unit
+                _errorInputEmail.value = true
                 return false
             }
 
             if (password.length < 8 || password.length > 20) {
-                _errorInputPassword.value = Unit
+                _errorInputPassword.value = true
                 return false
             }
 
             if (fullName.isBlank() || fullName.split(" ").size < 2) {
-                _errorInputFullName.value = Unit
+                _errorInputFullName.value = true
                 return false
             }
 
             if (phoneNumber.isBlank()) {
-                _errorInputNumber.value = Unit
+                _errorInputNumber.value = true
                 return false
             }
         }
         return result
+    }
+
+    fun resetErrorInputEmail() {
+        _errorInputEmail.value = false
+    }
+
+    fun resetErrorInputFullName() {
+        _errorInputFullName.value = false
+    }
+
+    fun resetErrorInputPassword() {
+        _errorInputPassword.value = false
+    }
+
+    fun resetErrorInputNumber() {
+        _errorInputNumber.value = false
     }
 
     private fun parseString(string: String?) = string?.trim() ?: ""
