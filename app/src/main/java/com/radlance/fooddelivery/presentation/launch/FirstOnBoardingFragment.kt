@@ -2,7 +2,7 @@ package com.radlance.fooddelivery.presentation.launch
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.radlance.fooddelivery.core.AbstractFragment
+import com.radlance.fooddelivery.presentation.core.AbstractFragment
 import com.radlance.fooddelivery.databinding.FragmentOnBoardingFirstBinding
 
 class FirstOnBoardingFragment : AbstractFragment<FragmentOnBoardingFirstBinding>() {

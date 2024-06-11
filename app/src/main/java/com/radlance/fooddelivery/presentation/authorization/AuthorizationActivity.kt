@@ -6,7 +6,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.radlance.fooddelivery.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AuthorizationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,5 +50,7 @@ class AuthorizationActivity : AppCompatActivity() {
             intent.putExtra(LAUNCH_EXTRA, SIGN_UP_MODE)
             return intent
         }
+
+        //TODO посмотреть видео EasyCodeRu retrofit
     }
 }

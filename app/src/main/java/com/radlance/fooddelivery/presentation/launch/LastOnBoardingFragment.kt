@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.radlance.fooddelivery.core.AbstractFragment
+import com.radlance.fooddelivery.presentation.core.AbstractFragment
 import com.radlance.fooddelivery.databinding.FragmentOnBoardingLastBinding
 import com.radlance.fooddelivery.presentation.authorization.AuthorizationActivity
 
