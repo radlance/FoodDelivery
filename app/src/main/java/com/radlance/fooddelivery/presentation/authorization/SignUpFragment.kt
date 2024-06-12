@@ -10,6 +10,7 @@ import com.radlance.fooddelivery.databinding.FragmentSignUpBinding
 import com.radlance.fooddelivery.domain.core.LoadResult
 import com.radlance.fooddelivery.presentation.core.AbstractFragment
 import com.radlance.fooddelivery.presentation.core.IncorrectFillDialog
+import com.radlance.fooddelivery.presentation.main.MainActivity
 
 class SignUpFragment : AbstractFragment<FragmentSignUpBinding>() {
     private val viewModel: SignUpViewModel by lazy {
@@ -43,42 +44,46 @@ class SignUpFragment : AbstractFragment<FragmentSignUpBinding>() {
         viewModel.errorInputFullName.observe(viewLifecycleOwner) {
             if (it) {
                 viewModel.resetErrorInputFullName()
-                showErrorDialog(getString(R.string.incorrect_fullname))
+                showErrorDialog(R.string.incorrect_fullname)
             }
         }
 
         viewModel.errorInputEmail.observe(viewLifecycleOwner) {
             if (it) {
                 viewModel.resetErrorInputEmail()
-                showErrorDialog(getString(R.string.incorrect_email))
+                showErrorDialog(R.string.incorrect_email)
             }
         }
 
         viewModel.errorInputPassword.observe(viewLifecycleOwner) {
             if (it) {
                 viewModel.resetErrorInputPassword()
-                showErrorDialog(getString(R.string.incorrect_password))
+                showErrorDialog(R.string.incorrect_password)
             }
         }
 
         viewModel.errorInputNumber.observe(viewLifecycleOwner) {
             if (it) {
                 viewModel.resetErrorInputNumber()
-                showErrorDialog(getString(R.string.incorrect_number))
+                showErrorDialog(R.string.incorrect_number)
             }
         }
 
-        viewModel.registerResult.observe(viewLifecycleOwner) {
-            when (it) {
-                is LoadResult.Success -> viewModel.loginUser()
-                // TODO передеть токен в header
-                is LoadResult.Error -> showErrorDialog(getString(R.string.failed_registration))
+        viewModel.registerResult.observe(viewLifecycleOwner) { registrationResult ->
+            when (registrationResult) {
+                is LoadResult.Success -> {
+                    val intent = MainActivity
+                        .newInstance(requireActivity().applicationContext, registrationResult.token)
+                    startActivity(intent)
+                }
+
+                is LoadResult.Error -> showErrorDialog(R.string.failed_registration)
             }
         }
     }
 
-    private fun showErrorDialog(errorMessage: String) {
-        IncorrectFillDialog.newInstance(errorMessage)
+    private fun showErrorDialog(errorMessage: Int) {
+        IncorrectFillDialog.newInstance(getString(errorMessage))
             .show(requireActivity().supportFragmentManager, ERROR_DIALOG)
     }
 

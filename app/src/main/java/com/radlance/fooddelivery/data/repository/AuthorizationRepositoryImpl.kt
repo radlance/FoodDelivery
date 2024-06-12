@@ -5,11 +5,11 @@ import com.radlance.fooddelivery.data.api.request.NewUser
 import com.radlance.fooddelivery.data.api.request.UserData
 import com.radlance.fooddelivery.domain.core.LoadResult
 import com.radlance.fooddelivery.domain.entity.User
-import com.radlance.fooddelivery.domain.repository.UserRepository
+import com.radlance.fooddelivery.domain.repository.AuthorizationRepository
 import retrofit2.HttpException
 import java.time.LocalDate
 
-class UserRepositoryImpl(private val service: Service) : UserRepository {
+class AuthorizationRepositoryImpl(private val service: Service) : AuthorizationRepository {
     override suspend fun registerUser(user: User): LoadResult {
         val userInitials = user.fullName.split(" ")
         return try {
@@ -23,7 +23,8 @@ class UserRepositoryImpl(private val service: Service) : UserRepository {
                     dateOfBirth = LocalDate.now().toString()
                 )
             )
-            LoadResult.Success()
+            val token = service.loginUser(UserData(user.login, user.password))
+            LoadResult.Success(token.token)
         } catch (e: Exception) {
             LoadResult.Error(e is HttpException)
         }
@@ -32,10 +33,9 @@ class UserRepositoryImpl(private val service: Service) : UserRepository {
     override suspend fun loginUser(user: User): LoadResult {
         return try {
             val token = service.loginUser(UserData(user.login, user.password))
-            LoadResult.Success(token)
+            LoadResult.Success(token.token)
         } catch (e: Exception) {
             LoadResult.Error(e is HttpException)
         }
     }
-
 }

@@ -1,7 +1,7 @@
 package com.radlance.fooddelivery.presentation.core
 
-import com.radlance.fooddelivery.domain.repository.UserRepository
+import com.radlance.fooddelivery.domain.repository.AuthorizationRepository
 
 interface ProvideRepository {
-    fun userRepository(): UserRepository
+    fun authorizationRepository(): AuthorizationRepository
 }

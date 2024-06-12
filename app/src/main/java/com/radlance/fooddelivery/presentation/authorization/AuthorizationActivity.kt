@@ -38,17 +38,15 @@ class AuthorizationActivity : AppCompatActivity() {
         private const val SIGN_IN_MODE = "sign_in"
         private const val SIGN_UP_MODE = "sign_up"
         fun newInstanceSignIn(context: Context): Intent {
-            val intent = Intent(context, AuthorizationActivity::class.java)
-            intent.putExtra(LAUNCH_EXTRA, SIGN_IN_MODE)
-            return intent
+            return Intent(context, AuthorizationActivity::class.java).apply {
+                putExtra(LAUNCH_EXTRA, SIGN_IN_MODE)
+            }
         }
 
         fun newInstanceSignUp(context: Context): Intent {
-            val intent = Intent(context, AuthorizationActivity::class.java)
-            intent.putExtra(LAUNCH_EXTRA, SIGN_UP_MODE)
-            return intent
+            return Intent(context, AuthorizationActivity::class.java).apply {
+                putExtra(LAUNCH_EXTRA, SIGN_UP_MODE)
+            }
         }
-
-        //TODO посмотреть видео EasyCodeRu retrofit
     }
 }

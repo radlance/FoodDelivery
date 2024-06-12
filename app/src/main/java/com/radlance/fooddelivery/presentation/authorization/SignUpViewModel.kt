@@ -1,26 +1,22 @@
 package com.radlance.fooddelivery.presentation.authorization
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.radlance.fooddelivery.domain.core.LoadResult
 import com.radlance.fooddelivery.domain.entity.User
-import com.radlance.fooddelivery.domain.usecase.LoginUserUseCase
 import com.radlance.fooddelivery.domain.usecase.RegisterUserUseCase
+import com.radlance.fooddelivery.presentation.core.parseString
+import com.radlance.fooddelivery.presentation.core.validateLogin
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
 class SignUpViewModel(
-    private val registerUserUseCase: RegisterUserUseCase,
-    private val loginUserUseCase: LoginUserUseCase
+    private val registerUserUseCase: RegisterUserUseCase
 ) :
     ViewModel() {
-        init {
-            Log.d("AAA", "ViewModel created")
-        }
     private val _registerResult = MutableLiveData<LoadResult>()
     val registerResult: LiveData<LoadResult>
         get() = _registerResult
@@ -51,9 +47,9 @@ class SignUpViewModel(
     fun registerUser(fullName: String, login: String, password: String, phoneNumber: String) {
         viewModelScope.launch {
             _registeredUser = User(
-                fullName = parseString(fullName),
                 login = parseString(login),
                 password = parseString(password),
+                fullName = parseString(fullName),
                 phoneNumber = parseString(phoneNumber)
             )
             if (validateInput(registeredUser)) {
@@ -62,16 +58,10 @@ class SignUpViewModel(
         }
     }
 
-    fun loginUser() {
-        viewModelScope.launch {
-            loginUserUseCase(registeredUser)
-        }
-    }
-
     private fun validateInput(user: User): Boolean {
         val result = true
         with(user) {
-            if (login.isBlank() || !login.matches(emailRegex)) {
+            if (login.isBlank() || !validateLogin(login)) {
                 _errorInputEmail.value = true
                 return false
             }
@@ -110,10 +100,4 @@ class SignUpViewModel(
         _errorInputNumber.value = false
     }
 
-    private fun parseString(string: String?) = string?.trim() ?: ""
-
-    companion object {
-        private val emailRegex =
-            Regex("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$")
-    }
 }
