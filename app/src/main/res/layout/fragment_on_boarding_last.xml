@@ -73,6 +73,7 @@
         app:layout_constraintTop_toTopOf="@id/button_sing_in" />
 
     <TextView
+        android:id="@+id/tv_skip_authorization"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/skip_authorization"

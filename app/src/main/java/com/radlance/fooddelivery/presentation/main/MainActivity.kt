@@ -12,11 +12,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        if (savedInstanceState == null) {
+            supportFragmentManager
+                .beginTransaction()
+                .add(binding.containerMain.id, FragmentCatalog.newInstance())
+                .commit()
+        }
     }
 
     companion object {
         private const val SIGN_IN_KEY = "sign_in"
-        fun newInstance(context: Context, token: String): Intent {
+        fun newInstance(context: Context, token: String = ""): Intent {
             return Intent(context, MainActivity::class.java).apply {
                 putExtra(SIGN_IN_KEY, token)
             }

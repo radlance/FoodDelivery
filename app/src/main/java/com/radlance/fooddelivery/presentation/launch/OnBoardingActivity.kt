@@ -10,6 +10,6 @@ class OnBoardingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityOnBoardingBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.viewPager2.adapter = ScreenSlidePageAdapter(this)
+        binding.viewPager2.adapter = LaunchSlidePageAdapter(this)
     }
 }

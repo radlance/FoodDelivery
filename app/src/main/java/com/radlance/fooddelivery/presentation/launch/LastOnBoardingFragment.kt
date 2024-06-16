@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import com.radlance.fooddelivery.presentation.core.AbstractFragment
 import com.radlance.fooddelivery.databinding.FragmentOnBoardingLastBinding
 import com.radlance.fooddelivery.presentation.authorization.AuthorizationActivity
+import com.radlance.fooddelivery.presentation.main.MainActivity
 
 class LastOnBoardingFragment : AbstractFragment<FragmentOnBoardingLastBinding>() {
     override fun bind(
@@ -25,6 +26,11 @@ class LastOnBoardingFragment : AbstractFragment<FragmentOnBoardingLastBinding>()
 
         binding.buttonSignUp.setOnClickListener {
             val intent = AuthorizationActivity.newInstanceSignUp(requireContext())
+            startActivity(intent)
+        }
+
+        binding.tvSkipAuthorization.setOnClickListener {
+            val intent = MainActivity.newInstance(requireActivity().applicationContext)
             startActivity(intent)
         }
     }
