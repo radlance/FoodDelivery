@@ -7,6 +7,7 @@
     android:layout_margin="8dp">
     
     <LinearLayout
+        android:layout_margin="15dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -19,19 +20,21 @@
             android:src="@drawable/courier" />
 
         <TextView
-            android:layout_width="110dp"
-            android:gravity="center"
-            android:layout_height="wrap_content"
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_height="55dp"
             android:text="@string/name"
             android:textSize="22sp"
             android:textColor="@color/black"/>
 
         <TextView
+            android:id="@+id/tv_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/price"
             android:textSize="17sp"
             android:textColor="@color/main_color"
-            android:layout_marginTop="25dp"/>
+            android:layout_marginTop="8dp"/>
     </LinearLayout>
 </androidx.cardview.widget.CardView>
