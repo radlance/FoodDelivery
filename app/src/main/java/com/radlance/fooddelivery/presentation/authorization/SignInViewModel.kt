@@ -3,9 +3,9 @@ package com.radlance.fooddelivery.presentation.authorization
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.radlance.fooddelivery.domain.core.LoadResult
+import com.radlance.fooddelivery.domain.core.AuthResult
 import com.radlance.fooddelivery.domain.entity.User
-import com.radlance.fooddelivery.domain.usecase.LoginUserUseCase
+import com.radlance.fooddelivery.domain.usecase.authorization.LoginUserUseCase
 import com.radlance.fooddelivery.presentation.core.parseString
 import com.radlance.fooddelivery.presentation.core.validateLogin
 import kotlinx.coroutines.CoroutineScope
@@ -16,8 +16,8 @@ import kotlinx.coroutines.launch
 class SignInViewModel(private val loginUserUseCase: LoginUserUseCase) : ViewModel() {
     private val viewModelScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
-    private val _loginResult = MutableLiveData<LoadResult>()
-    val loginResult: LiveData<LoadResult>
+    private val _loginResult = MutableLiveData<AuthResult>()
+    val loginResult: LiveData<AuthResult>
         get() = _loginResult
 
     private val _errorInputLogin = MutableLiveData<Boolean>()

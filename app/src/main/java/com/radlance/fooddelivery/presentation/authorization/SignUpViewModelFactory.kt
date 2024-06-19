@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewmodel.CreationExtras
-import com.radlance.fooddelivery.domain.usecase.RegisterUserUseCase
+import com.radlance.fooddelivery.domain.usecase.authorization.RegisterUserUseCase
 import com.radlance.fooddelivery.presentation.core.ProvideRepository
 
 class SignUpViewModelFactory : ViewModelProvider.Factory {

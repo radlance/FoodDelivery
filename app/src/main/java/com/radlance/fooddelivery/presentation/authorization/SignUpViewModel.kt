@@ -3,9 +3,9 @@ package com.radlance.fooddelivery.presentation.authorization
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.radlance.fooddelivery.domain.core.LoadResult
+import com.radlance.fooddelivery.domain.core.AuthResult
 import com.radlance.fooddelivery.domain.entity.User
-import com.radlance.fooddelivery.domain.usecase.RegisterUserUseCase
+import com.radlance.fooddelivery.domain.usecase.authorization.RegisterUserUseCase
 import com.radlance.fooddelivery.presentation.core.parseString
 import com.radlance.fooddelivery.presentation.core.validateLogin
 import kotlinx.coroutines.CoroutineScope
@@ -17,8 +17,8 @@ class SignUpViewModel(
     private val registerUserUseCase: RegisterUserUseCase
 ) :
     ViewModel() {
-    private val _registerResult = MutableLiveData<LoadResult>()
-    val registerResult: LiveData<LoadResult>
+    private val _registerResult = MutableLiveData<AuthResult>()
+    val registerResult: LiveData<AuthResult>
         get() = _registerResult
 
 

@@ -1,5 +1,6 @@
 package com.radlance.fooddelivery.data.api.core
 
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -15,12 +16,21 @@ import javax.net.ssl.X509TrustManager
 
 object BaseService {
 
-    operator fun invoke(): Service {
+    operator fun invoke(token: String? = null): Service {
+
         val interceptor = HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         }
+        var client = OkHttpClient.Builder().addInterceptor(interceptor)
 
-        val client = OkHttpClient.Builder().addInterceptor(interceptor)
+        token?.let {
+            client = client.addInterceptor { chain: Interceptor.Chain ->
+                val request = chain.request().newBuilder()
+                    .header("Authorization", "Bearer token")
+                    .build()
+                return@addInterceptor chain.proceed(request)
+            }
+        }
 
 
         /** settings for working with the api without an ssl certificate */
