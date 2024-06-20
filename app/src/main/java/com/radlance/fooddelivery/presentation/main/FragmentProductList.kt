@@ -35,6 +35,7 @@ class FragmentProductList : AbstractFragment<FragmentProductListBinding>() {
             when (loadResult) {
                 is LoadResult.Success -> {
                     productListAdapter.productList = loadResult.productList
+                    viewModel.saveProducts(loadResult.productList)
                 }
 
                 is LoadResult.Error -> {}
