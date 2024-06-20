@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.radlance.fooddelivery.R
 import com.radlance.fooddelivery.databinding.FragmentSignUpBinding
-import com.radlance.fooddelivery.domain.core.LoadResult
+import com.radlance.fooddelivery.domain.core.AuthResult
 import com.radlance.fooddelivery.presentation.core.AbstractFragment
 import com.radlance.fooddelivery.presentation.core.IncorrectFillDialog
 import com.radlance.fooddelivery.presentation.main.MainActivity
@@ -71,13 +71,13 @@ class SignUpFragment : AbstractFragment<FragmentSignUpBinding>() {
 
         viewModel.registerResult.observe(viewLifecycleOwner) { registrationResult ->
             when (registrationResult) {
-                is LoadResult.Success -> {
+                is AuthResult.Success -> {
                     val intent = MainActivity
                         .newInstance(requireActivity().applicationContext, registrationResult.token)
                     startActivity(intent)
                 }
 
-                is LoadResult.Error -> showErrorDialog(R.string.failed_registration)
+                is AuthResult.Error -> showErrorDialog(R.string.failed_registration)
             }
         }
     }

@@ -3,6 +3,7 @@ package com.radlance.fooddelivery.presentation.main
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.radlance.fooddelivery.R
 import com.radlance.fooddelivery.databinding.ItemProductBinding
@@ -11,6 +12,13 @@ import com.squareup.picasso.Picasso
 
 class ProductListAdapter : RecyclerView.Adapter<ProductListAdapter.ProductListViewHolder>() {
     var productList = listOf<Product>()
+        set(value) {
+            val callback = ProductListDiffCallback(field, value)
+            val diffResult = DiffUtil.calculateDiff(callback)
+
+            diffResult.dispatchUpdatesTo(this)
+            field = value
+        }
 
     class ProductListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding = ItemProductBinding.bind(itemView)

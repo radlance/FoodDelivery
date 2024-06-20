@@ -10,7 +10,7 @@ data class ProductCache(
     @ColumnInfo(name = "title")
     val title: String,
     @ColumnInfo(name = "price")
-    val price: Int,
+    val price: Double,
     @ColumnInfo(name = "imageUrl")
     val imageUrl: String,
     @PrimaryKey(autoGenerate = true)
