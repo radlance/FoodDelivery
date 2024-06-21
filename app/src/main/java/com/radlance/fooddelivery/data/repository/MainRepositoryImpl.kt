@@ -24,4 +24,8 @@ class MainRepositoryImpl(private val service: Service, private val productsDao: 
             ProductCache(it.title, it.price, it.imageUrl, it.id)
         })
     }
+
+    override suspend fun getLocalProducts(): List<Product> {
+        return productsDao.productList().map { Product(it.id, it.title, it.price, it.imageUrl) }
+    }
 }

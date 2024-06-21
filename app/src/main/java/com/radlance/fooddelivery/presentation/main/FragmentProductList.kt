@@ -30,16 +30,40 @@ class FragmentProductList : AbstractFragment<FragmentProductListBinding>() {
             layoutManager = GridLayoutManager(requireActivity(), 2)
             adapter = productListAdapter
         }
+
+        binding.progressLoading.visibility = View.VISIBLE
+
         viewModel.getProductList()
         viewModel.loadState.observe(viewLifecycleOwner) { loadResult ->
             when (loadResult) {
                 is LoadResult.Success -> {
                     productListAdapter.productList = loadResult.productList
                     viewModel.saveProducts(loadResult.productList)
+
+                    with(binding) {
+                        tvNoConnection.visibility = View.GONE
+                        progressLoading.visibility = View.GONE
+                        buttonRetry.visibility = View.INVISIBLE
+                    }
                 }
 
-                is LoadResult.Error -> {}
+                is LoadResult.Error -> {
+                    with(binding) {
+                        tvNoConnection.visibility = View.VISIBLE
+                        progressLoading.visibility = View.GONE
+                        buttonRetry.visibility = View.VISIBLE
+                    }
+                }
             }
+        }
+
+        binding.buttonRetry.setOnClickListener {
+            viewModel.getProductList()
+        }
+
+        viewModel.localProducts.observe(viewLifecycleOwner) { productList ->
+            productListAdapter.productList = productList
+            binding.progressLoading.visibility = View.GONE
         }
     }
 

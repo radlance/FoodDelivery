@@ -22,4 +22,6 @@
     <string name="failed_registration">registration failed</string>
     <string name="name">name</string>
     <string name="price">price</string>
+    <string name="no_connection">no connection</string>
+    <string name="try_again">try again</string>
 </resources>
