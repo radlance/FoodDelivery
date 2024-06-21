@@ -26,6 +26,8 @@
             android:layout_height="55dp"
             android:text="@string/name"
             android:textSize="22sp"
+            android:maxLines="2"
+            android:ellipsize="end"
             android:textColor="@color/black"/>
 
         <TextView

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.radlance.fooddelivery.R
 import com.radlance.fooddelivery.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -18,6 +19,34 @@ class MainActivity : AppCompatActivity() {
                 .beginTransaction()
                 .add(binding.containerMain.id, FragmentCatalog.newInstance())
                 .commit()
+        }
+
+        val buttons = arrayOf(
+            binding.buttonHomePage,
+            binding.buttonShoppingCart,
+            binding.buttonUser,
+            binding.buttonHistory
+        )
+        val filledImages = arrayOf(
+            R.drawable.ic_home_filled,
+            R.drawable.ic_shopping_cart_filled,
+            R.drawable.ic_user_filled,
+            R.drawable.ic_sharp_history_filled
+        )
+        val defaultImages = arrayOf(
+            R.drawable.ic_home,
+            R.drawable.ic_shopping_cart,
+            R.drawable.ic_user,
+            R.drawable.ic_sharp_history
+        )
+
+        for (i in buttons.indices) {
+            buttons[i].setOnClickListener {
+                for (j in buttons.indices) {
+                    buttons[j].setImageResource(defaultImages[j])
+                }
+                buttons[i].setImageResource(filledImages[i])
+            }
         }
     }
 
