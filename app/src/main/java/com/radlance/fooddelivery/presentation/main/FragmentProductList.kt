@@ -18,7 +18,7 @@ class FragmentProductList : AbstractFragment<FragmentProductListBinding>() {
             ProductListViewModelFactory(token)
         )[ProductListViewModel::class.java]
     }
-    private lateinit var productListAdapter: ProductListAdapter
+    private lateinit var productListAdapter: ProductListRecyclerAdapter
     override fun bind(inflater: LayoutInflater, container: ViewGroup?): FragmentProductListBinding {
         return FragmentProductListBinding.inflate(inflater, container, false)
     }
@@ -26,7 +26,7 @@ class FragmentProductList : AbstractFragment<FragmentProductListBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.rvProductList.apply {
-            productListAdapter = ProductListAdapter()
+            productListAdapter = ProductListRecyclerAdapter()
             layoutManager = GridLayoutManager(requireActivity(), 2)
             adapter = productListAdapter
         }
@@ -69,8 +69,42 @@ class FragmentProductList : AbstractFragment<FragmentProductListBinding>() {
 
     companion object {
         private const val DEFAULT_TOKEN = ""
-        fun newInstance(): FragmentProductList {
-            return FragmentProductList()
+        private const val CATEGORY_KEY = "category"
+        private const val CATEGORY_FOODS = "foods"
+        private const val CATEGORY_DRINKS = "drinks"
+        private const val CATEGORY_SNACKS = "snacks"
+        private const val CATEGORY_SAUCE = "sauce"
+
+        fun foodsInstance(): FragmentProductList {
+            return FragmentProductList().apply {
+                arguments = Bundle().apply {
+                    putString(CATEGORY_KEY, CATEGORY_FOODS)
+                }
+            }
+        }
+
+        fun drinksInstance(): FragmentProductList {
+            return FragmentProductList().apply {
+                arguments = Bundle().apply {
+                    putString(CATEGORY_KEY, CATEGORY_DRINKS)
+                }
+            }
+        }
+
+        fun snacksInstance(): FragmentProductList {
+            return FragmentProductList().apply {
+                arguments = Bundle().apply {
+                    putString(CATEGORY_KEY, CATEGORY_SNACKS)
+                }
+            }
+        }
+
+        fun sauceInstance(): FragmentProductList {
+            return FragmentProductList().apply {
+                arguments = Bundle().apply {
+                    putString(CATEGORY_KEY, CATEGORY_SAUCE)
+                }
+            }
         }
     }
 }

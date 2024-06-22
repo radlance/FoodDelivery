@@ -10,7 +10,7 @@ import com.radlance.fooddelivery.databinding.ItemProductBinding
 import com.radlance.fooddelivery.domain.entity.Product
 import com.squareup.picasso.Picasso
 
-class ProductListAdapter : RecyclerView.Adapter<ProductListAdapter.ProductListViewHolder>() {
+class ProductListRecyclerAdapter : RecyclerView.Adapter<ProductListRecyclerAdapter.ProductListViewHolder>() {
     var productList = listOf<Product>()
         set(value) {
             val callback = ProductListDiffCallback(field, value)

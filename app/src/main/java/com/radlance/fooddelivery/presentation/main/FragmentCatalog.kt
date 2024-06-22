@@ -9,6 +9,7 @@ import com.radlance.fooddelivery.databinding.FragmentCatalogBinding
 import com.radlance.fooddelivery.presentation.core.AbstractFragment
 
 class FragmentCatalog : AbstractFragment<FragmentCatalogBinding>() {
+    private val tabTitles = listOf("Foods", "Drinks", "Snacks", "Sauce")
     override fun bind(inflater: LayoutInflater, container: ViewGroup?): FragmentCatalogBinding {
         return FragmentCatalogBinding.inflate(inflater, container, false)
     }
@@ -16,8 +17,8 @@ class FragmentCatalog : AbstractFragment<FragmentCatalogBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.pagerProducts.adapter = ProductsSlidePageAdapter(this)
-        TabLayoutMediator(binding.tabLayout, binding.pagerProducts) { tab, _ ->
-            tab.text = "Foods"
+        TabLayoutMediator(binding.tabLayout, binding.pagerProducts) { tab, position ->
+            tab.text = tabTitles[position]
         }.attach()
     }
 
