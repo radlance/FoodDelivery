@@ -7,9 +7,18 @@ import androidx.room.Query
 
 @Dao
 interface ProductsDao {
-    @Query("SELECT * FROM product")
-    suspend fun productList(): List<ProductCache>
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveProducts(productList: List<ProductCache>)
+
+    @Insert
+    suspend fun saveCategories(categoryCache: List<CategoryCache>)
+
+    @Query("SELECT * FROM category WHERE id = :id")
+    suspend fun categoryById(id: Long): CategoryCache
+
+    @Query(
+        "SELECT product.*, category.id AS categoryId, category.title AS categoryTitle FROM product" +
+                " INNER JOIN category ON product.category = category.id"
+    )
+    suspend fun getFullProductsInfo(): List<FullProductInfo>
 }
