@@ -9,7 +9,9 @@ import com.radlance.fooddelivery.databinding.FragmentCatalogBinding
 import com.radlance.fooddelivery.presentation.core.AbstractFragment
 
 class FragmentCatalog : AbstractFragment<FragmentCatalogBinding>() {
-    private val tabTitles = listOf("Foods", "Drinks", "Snacks", "Sauce")
+    private val tabTitles = listOf(
+        "Foods", "Burgers", "Drinks", "Pizza", "Chicken", "Potato", "Desserts"
+    )
     override fun bind(inflater: LayoutInflater, container: ViewGroup?): FragmentCatalogBinding {
         return FragmentCatalogBinding.inflate(inflater, container, false)
     }

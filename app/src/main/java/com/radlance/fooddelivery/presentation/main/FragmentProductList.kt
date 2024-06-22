@@ -11,16 +11,21 @@ import com.radlance.fooddelivery.domain.core.LoadResult
 import com.radlance.fooddelivery.presentation.core.AbstractFragment
 
 class FragmentProductList : AbstractFragment<FragmentProductListBinding>() {
-    private val token = DEFAULT_TOKEN
+    private var category = DEFAULT_CATEGORY
     private val viewModel: ProductListViewModel by lazy {
         ViewModelProvider(
             this,
-            ProductListViewModelFactory(token)
+            ProductListViewModelFactory()
         )[ProductListViewModel::class.java]
     }
     private lateinit var productListAdapter: ProductListRecyclerAdapter
     override fun bind(inflater: LayoutInflater, container: ViewGroup?): FragmentProductListBinding {
         return FragmentProductListBinding.inflate(inflater, container, false)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        category = requireArguments().getString(CATEGORY_KEY)!!
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -33,7 +38,9 @@ class FragmentProductList : AbstractFragment<FragmentProductListBinding>() {
 
         binding.progressLoading.visibility = View.VISIBLE
 
-        viewModel.getProductList()
+        if (category == CATEGORY_FOODS) {
+            viewModel.getProductList()
+        }
         viewModel.loadState.observe(viewLifecycleOwner) { loadResult ->
             when (loadResult) {
                 is LoadResult.Success -> {
@@ -68,17 +75,29 @@ class FragmentProductList : AbstractFragment<FragmentProductListBinding>() {
     }
 
     companion object {
-        private const val DEFAULT_TOKEN = ""
+        private const val DEFAULT_CATEGORY = "unknown category"
+
         private const val CATEGORY_KEY = "category"
         private const val CATEGORY_FOODS = "foods"
+        private const val CATEGORY_BURGERS = "burgers"
         private const val CATEGORY_DRINKS = "drinks"
-        private const val CATEGORY_SNACKS = "snacks"
-        private const val CATEGORY_SAUCE = "sauce"
+        private const val CATEGORY_PIZZA = "pizza"
+        private const val CATEGORY_CHICKEN = "chicken"
+        private const val CATEGORY_POTATO = "potato"
+        private const val CATEGORY_DESSERTS = "desserts"
 
         fun foodsInstance(): FragmentProductList {
             return FragmentProductList().apply {
                 arguments = Bundle().apply {
                     putString(CATEGORY_KEY, CATEGORY_FOODS)
+                }
+            }
+        }
+
+        fun burgersInstance(): FragmentProductList {
+            return FragmentProductList().apply {
+                arguments = Bundle().apply {
+                    putString(CATEGORY_KEY, CATEGORY_BURGERS)
                 }
             }
         }
@@ -91,18 +110,34 @@ class FragmentProductList : AbstractFragment<FragmentProductListBinding>() {
             }
         }
 
-        fun snacksInstance(): FragmentProductList {
+        fun pizzaInstance(): FragmentProductList {
             return FragmentProductList().apply {
                 arguments = Bundle().apply {
-                    putString(CATEGORY_KEY, CATEGORY_SNACKS)
+                    putString(CATEGORY_KEY, CATEGORY_PIZZA)
                 }
             }
         }
 
-        fun sauceInstance(): FragmentProductList {
+        fun chickenInstance(): FragmentProductList {
             return FragmentProductList().apply {
                 arguments = Bundle().apply {
-                    putString(CATEGORY_KEY, CATEGORY_SAUCE)
+                    putString(CATEGORY_KEY, CATEGORY_CHICKEN)
+                }
+            }
+        }
+
+        fun potatoInstance(): FragmentProductList {
+            return FragmentProductList().apply {
+                arguments = Bundle().apply {
+                    putString(CATEGORY_KEY, CATEGORY_POTATO)
+                }
+            }
+        }
+
+        fun dessertsInstance(): FragmentProductList {
+            return FragmentProductList().apply {
+                arguments = Bundle().apply {
+                    putString(CATEGORY_KEY, CATEGORY_DESSERTS)
                 }
             }
         }
