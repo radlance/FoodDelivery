@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import com.radlance.fooddelivery.R
 import com.radlance.fooddelivery.databinding.FragmentProductListBinding
 import com.radlance.fooddelivery.domain.core.LoadResult
 import com.radlance.fooddelivery.presentation.core.AbstractFragment
@@ -38,9 +39,16 @@ class FragmentProductList : AbstractFragment<FragmentProductListBinding>() {
 
         binding.progressLoading.visibility = View.VISIBLE
 
-        if (category == CATEGORY_FOODS) {
-            viewModel.getProductList()
+        when (category) {
+            CATEGORY_FOODS -> viewModel.getProductList()
+            CATEGORY_BURGERS -> viewModel.getProductsByCategoryUseCase(getString(R.string.burgers))
+            CATEGORY_DRINKS -> viewModel.getProductsByCategoryUseCase(getString(R.string.drinks))
+            CATEGORY_PIZZA -> viewModel.getProductsByCategoryUseCase(getString(R.string.pizza))
+            CATEGORY_CHICKEN -> viewModel.getProductsByCategoryUseCase(getString(R.string.chicken))
+            CATEGORY_POTATO -> viewModel.getProductsByCategoryUseCase(getString(R.string.potato))
+            CATEGORY_DESSERTS -> viewModel.getProductsByCategoryUseCase(getString(R.string.desserts))
         }
+
         viewModel.loadState.observe(viewLifecycleOwner) { loadResult ->
             when (loadResult) {
                 is LoadResult.Success -> {

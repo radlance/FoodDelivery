@@ -11,7 +11,7 @@ import com.radlance.fooddelivery.domain.repository.MainRepository
 
 class MainRepositoryImpl(private val service: Service, private val productsDao: ProductsDao) :
     MainRepository {
-        private var categories = listOf<CategoryResponse>()
+    private var categories = listOf<CategoryResponse>()
     override suspend fun getProducts(): LoadResult {
         return try {
             categories = service.categories()
@@ -45,5 +45,18 @@ class MainRepositoryImpl(private val service: Service, private val productsDao: 
                     it.categoryTitle
                 )
             }
+    }
+
+    override suspend fun getProductsByCategory(categoryName: String): List<Product> {
+        return productsDao.getProductsByCategory(categoryName).map {
+            Product(
+                it.product.id,
+                it.product.title,
+                it.product.price,
+                it.product.imageUrl,
+                it.categoryId,
+                it.categoryTitle
+            )
+        }
     }
 }

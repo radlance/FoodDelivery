@@ -18,7 +18,7 @@ abstract class DeliveryDatabase : RoomDatabase() {
                     context.applicationContext,
                     DeliveryDatabase::class.java,
                     "delivery_db"
-                ).fallbackToDestructiveMigration().build()
+                ).build()
                 INSTANCE = instance
                 instance
             }

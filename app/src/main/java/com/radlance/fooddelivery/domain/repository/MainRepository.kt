@@ -7,4 +7,5 @@ interface MainRepository {
     suspend fun getProducts(): LoadResult
     suspend fun saveProducts(productList: List<Product>)
     suspend fun getLocalProducts(): List<Product>
+    suspend fun getProductsByCategory(categoryName: String): List<Product>
 }

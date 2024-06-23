@@ -24,4 +24,10 @@
     <string name="price">price</string>
     <string name="no_connection">no connection</string>
     <string name="try_again">try again</string>
+    <string name="burgers">Бургеры</string>
+    <string name="drinks">Напитки</string>
+    <string name="pizza">Пицца</string>
+    <string name="chicken">Курица</string>
+    <string name="potato">Картофель</string>
+    <string name="desserts">Десерты</string>
 </resources>
