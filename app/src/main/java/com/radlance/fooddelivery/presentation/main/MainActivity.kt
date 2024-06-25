@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.radlance.fooddelivery.R
 import com.radlance.fooddelivery.databinding.ActivityMainBinding
+import com.radlance.fooddelivery.presentation.catalog.core.FragmentCatalog
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding

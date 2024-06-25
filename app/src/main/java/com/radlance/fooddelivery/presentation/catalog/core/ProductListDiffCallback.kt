@@ -1,4 +1,4 @@
-package com.radlance.fooddelivery.presentation.main
+package com.radlance.fooddelivery.presentation.catalog.core
 
 import androidx.recyclerview.widget.DiffUtil
 import com.radlance.fooddelivery.domain.entity.Product

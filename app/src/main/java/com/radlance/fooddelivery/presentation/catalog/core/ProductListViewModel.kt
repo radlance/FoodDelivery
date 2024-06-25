@@ -1,4 +1,4 @@
-package com.radlance.fooddelivery.presentation.main
+package com.radlance.fooddelivery.presentation.catalog.core
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -47,7 +47,7 @@ class ProductListViewModel(
         }
     }
 
-    fun getProductsByCategoryUseCase(categoryName: String) {
+    fun getProductsByCategory(categoryName: String) {
         viewModelScope.launch {
             _localProducts.value = getProductByCategoryUseCase(categoryName)
         }

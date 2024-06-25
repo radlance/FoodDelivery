@@ -1,4 +1,4 @@
-package com.radlance.fooddelivery.presentation.main
+package com.radlance.fooddelivery.presentation.catalog.core
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
