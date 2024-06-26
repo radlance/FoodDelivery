@@ -10,11 +10,11 @@ import com.radlance.fooddelivery.presentation.catalog.tabs.FoodCategoryFragment
 import com.radlance.fooddelivery.presentation.catalog.tabs.PizzaCategoryFragment
 import com.radlance.fooddelivery.presentation.catalog.tabs.PotatoCategoryFragment
 
-class ProductsSlidePageAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
+class ProductsSlidePageAdapter(private val fragment: Fragment) : FragmentStateAdapter(fragment) {
     override fun getItemCount(): Int = 7
 
     override fun createFragment(position: Int): Fragment {
-        return when (position) {
+        val fragmentProductList = when (position) {
             0 -> FoodCategoryFragment.newInstance()
             1 -> BurgersCategoryFragment.newInstance()
             2 -> DrinksCategoryFragment.newInstance()
@@ -22,8 +22,9 @@ class ProductsSlidePageAdapter(fragment: Fragment) : FragmentStateAdapter(fragme
             4 -> ChickenCategoryFragment.newInstance()
             5 -> PotatoCategoryFragment.newInstance()
             6 -> DessertsCategoryFragment.newInstance()
-
             else -> throw IllegalStateException("Invalid position")
         }
+        (fragment as FragmentCatalog).setSearchQueryListener(fragmentProductList)
+        return fragmentProductList
     }
 }

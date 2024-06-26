@@ -9,6 +9,7 @@ import com.radlance.fooddelivery.domain.usecase.main.GetLocalProductsUseCase
 import com.radlance.fooddelivery.domain.usecase.main.GetProductByCategoryUseCase
 import com.radlance.fooddelivery.domain.usecase.main.GetProductsUseCase
 import com.radlance.fooddelivery.domain.usecase.main.SaveProductsUseCase
+import com.radlance.fooddelivery.domain.usecase.main.SearchProductsLikeNameUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -18,7 +19,8 @@ class ProductListViewModel(
     private val getProductsUseCase: GetProductsUseCase,
     private val saveProductsUseCase: SaveProductsUseCase,
     private val getLocalProductsUseCase: GetLocalProductsUseCase,
-    private val getProductByCategoryUseCase: GetProductByCategoryUseCase
+    private val getProductByCategoryUseCase: GetProductByCategoryUseCase,
+    private val searchProductsLikeNameUseCase: SearchProductsLikeNameUseCase
 ) : ViewModel() {
     private val viewModelScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
@@ -30,7 +32,7 @@ class ProductListViewModel(
 
     val loadState: LiveData<LoadResult>
         get() = _loadState
-    fun getProductList() {
+    fun getProducts() {
         viewModelScope.launch {
             val localProducts = getLocalProductsUseCase()
             if (localProducts.isEmpty()) {
@@ -49,7 +51,19 @@ class ProductListViewModel(
 
     fun getProductsByCategory(categoryName: String) {
         viewModelScope.launch {
-            _localProducts.value = getProductByCategoryUseCase(categoryName)
+            val localProducts = getLocalProductsUseCase()
+            if (localProducts.isEmpty()) {
+                _loadState.value = getProductsUseCase()
+            } else {
+                _loadState.value = LoadResult.Success()
+                _localProducts.value = getProductByCategoryUseCase(categoryName)
+            }
+        }
+    }
+
+    fun searchProductsLikeName(query: String) {
+        viewModelScope.launch {
+            _localProducts.value = searchProductsLikeNameUseCase(query)
         }
     }
 }

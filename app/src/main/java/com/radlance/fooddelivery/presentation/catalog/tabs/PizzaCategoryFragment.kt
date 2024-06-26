@@ -2,8 +2,9 @@ package com.radlance.fooddelivery.presentation.catalog.tabs
 
 import com.radlance.fooddelivery.R
 import com.radlance.fooddelivery.presentation.catalog.core.AbstractProductListFragment
+import com.radlance.fooddelivery.presentation.catalog.core.SearchQueryListener
 
-class PizzaCategoryFragment : AbstractProductListFragment() {
+class PizzaCategoryFragment : AbstractProductListFragment(), SearchQueryListener {
     override fun getProductList() {
         return viewModel.getProductsByCategory(getString(R.string.pizza))
     }
@@ -14,4 +15,7 @@ class PizzaCategoryFragment : AbstractProductListFragment() {
         }
     }
 
+    override fun onSearchQueryChanged(query: String) {
+
+    }
 }

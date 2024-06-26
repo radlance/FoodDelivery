@@ -28,4 +28,12 @@ interface ProductsDao {
                 " WHERE categoryTitle = :categoryName"
     )
     suspend fun getProductsByCategory(categoryName: String): List<FullProductInfo>
+
+
+    @Query(
+        "SELECT product.*, category.id AS categoryId, category.title AS categoryTitle FROM product" +
+                " INNER JOIN category ON product.category = category.id" +
+                " WHERE product.title LIKE '%' || :query || '%'"
+    )
+    suspend fun searchProductsLikeName(query: String): List<FullProductInfo>
 }

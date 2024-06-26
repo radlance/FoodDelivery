@@ -1,10 +1,10 @@
 package com.radlance.fooddelivery.domain.usecase.main
 
 import com.radlance.fooddelivery.domain.core.LoadResult
-import com.radlance.fooddelivery.domain.repository.MainRepository
+import com.radlance.fooddelivery.domain.repository.CatalogRepository
 
-class GetProductsUseCase(private val mainRepository: MainRepository) {
+class GetProductsUseCase(private val catalogRepository: CatalogRepository) {
     suspend operator fun invoke(): LoadResult {
-        return mainRepository.getProducts()
+        return catalogRepository.getProducts()
     }
 }

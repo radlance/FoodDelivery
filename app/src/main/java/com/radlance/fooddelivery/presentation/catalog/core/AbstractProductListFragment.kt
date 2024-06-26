@@ -62,7 +62,7 @@ abstract class AbstractProductListFragment : AbstractFragment<FragmentProductLis
         }
 
         binding.buttonRetry.setOnClickListener {
-            viewModel.getProductList()
+            getProductList()
         }
     }
 

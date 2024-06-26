@@ -3,14 +3,15 @@ package com.radlance.fooddelivery.data.repository
 import com.radlance.fooddelivery.data.api.core.Service
 import com.radlance.fooddelivery.data.api.response.CategoryResponse
 import com.radlance.fooddelivery.data.database.CategoryCache
+import com.radlance.fooddelivery.data.database.FullProductInfo
 import com.radlance.fooddelivery.data.database.ProductCache
 import com.radlance.fooddelivery.data.database.ProductsDao
 import com.radlance.fooddelivery.domain.core.LoadResult
 import com.radlance.fooddelivery.domain.entity.Product
-import com.radlance.fooddelivery.domain.repository.MainRepository
+import com.radlance.fooddelivery.domain.repository.CatalogRepository
 
-class MainRepositoryImpl(private val service: Service, private val productsDao: ProductsDao) :
-    MainRepository {
+class CatalogRepositoryImpl(private val service: Service, private val productsDao: ProductsDao) :
+    CatalogRepository {
     private var categories = listOf<CategoryResponse>()
     override suspend fun getProducts(): LoadResult {
         return try {
@@ -34,21 +35,19 @@ class MainRepositoryImpl(private val service: Service, private val productsDao: 
     }
 
     override suspend fun getLocalProducts(): List<Product> {
-        return productsDao.getFullProductsInfo()
-            .map {
-                Product(
-                    it.product.id,
-                    it.product.title,
-                    it.product.price,
-                    it.product.imageUrl,
-                    it.categoryId,
-                    it.categoryTitle
-                )
-            }
+        return mapFullInfoToProductList(productsDao.getFullProductsInfo())
     }
 
     override suspend fun getProductsByCategory(categoryName: String): List<Product> {
-        return productsDao.getProductsByCategory(categoryName).map {
+        return mapFullInfoToProductList(productsDao.getProductsByCategory(categoryName))
+    }
+
+    override suspend fun searchProductsLikeName(query: String): List<Product> {
+        return mapFullInfoToProductList(productsDao.searchProductsLikeName(query))
+    }
+
+    private fun mapFullInfoToProductList(fullProductInfo: List<FullProductInfo>): List<Product> {
+        return fullProductInfo.map {
             Product(
                 it.product.id,
                 it.product.title,
