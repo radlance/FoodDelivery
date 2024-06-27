@@ -30,4 +30,5 @@
     <string name="chicken">Курица</string>
     <string name="potato">Картофель</string>
     <string name="desserts">Десерты</string>
+    <string name="result">Result</string>
 </resources>

@@ -10,11 +10,11 @@ import com.radlance.fooddelivery.domain.usecase.main.GetProductsUseCase
 import com.radlance.fooddelivery.domain.usecase.main.SaveProductsUseCase
 import com.radlance.fooddelivery.presentation.core.ProvideRepository
 
-class ProductListViewModelFactory(private val token: String = "") : ViewModelProvider.Factory {
+class ProductListViewModelFactory() : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
         val application = extras[APPLICATION_KEY]
-        val catalogRepository = (application as ProvideRepository).catalogRepository(token)
+        val catalogRepository = (application as ProvideRepository).catalogRepository()
 
         val getProductsUseCase = GetProductsUseCase(catalogRepository)
         val saveProductsUseCase = SaveProductsUseCase(catalogRepository)

@@ -15,8 +15,8 @@ class App : Application(), ProvideRepository {
         return AuthorizationRepositoryImpl(BaseService())
     }
 
-    override fun catalogRepository(token: String): CatalogRepository {
+    override fun catalogRepository(): CatalogRepository {
         val dao = DeliveryDatabase.newInstance(applicationContext).productsDao()
-        return CatalogRepositoryImpl(BaseService(token), dao)
+        return CatalogRepositoryImpl(BaseService(), dao)
     }
 }

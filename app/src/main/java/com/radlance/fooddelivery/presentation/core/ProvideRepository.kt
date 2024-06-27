@@ -5,5 +5,5 @@ import com.radlance.fooddelivery.domain.repository.CatalogRepository
 
 interface ProvideRepository {
     fun authorizationRepository(): AuthorizationRepository
-    fun catalogRepository(token: String): CatalogRepository
+    fun catalogRepository(): CatalogRepository
 }
