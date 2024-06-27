@@ -31,4 +31,6 @@
     <string name="potato">Картофель</string>
     <string name="desserts">Десерты</string>
     <string name="result">Result</string>
+    <string name="add_to_cart">Add to cart</string>
+    <string name="more">More</string>
 </resources>
