@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewmodel.CreationExtras
-import com.radlance.fooddelivery.domain.usecase.main.SearchProductsLikeNameUseCase
 import com.radlance.fooddelivery.domain.usecase.main.GetLocalProductsUseCase
 import com.radlance.fooddelivery.domain.usecase.main.GetProductByCategoryUseCase
 import com.radlance.fooddelivery.domain.usecase.main.GetProductsUseCase
@@ -21,14 +20,12 @@ class ProductListViewModelFactory(private val token: String = "") : ViewModelPro
         val saveProductsUseCase = SaveProductsUseCase(catalogRepository)
         val getLocalProductsUseCase = GetLocalProductsUseCase(catalogRepository)
         val getProductByCategoryUseCase = GetProductByCategoryUseCase(catalogRepository)
-        val searchProductsLikeNameUseCase = SearchProductsLikeNameUseCase(catalogRepository)
 
         return ProductListViewModel(
             getProductsUseCase,
             saveProductsUseCase,
             getLocalProductsUseCase,
             getProductByCategoryUseCase,
-            searchProductsLikeNameUseCase
         ) as T
     }
 }
