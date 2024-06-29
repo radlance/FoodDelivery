@@ -33,4 +33,6 @@
     <string name="result">Result</string>
     <string name="add_to_cart">Add to cart</string>
     <string name="more">More</string>
+    <string name="delivery_info">Delivery info</string>
+    <string name="delivery_info_description">Delivered between monday aug and thursday 20 from 8pm to 91:32 pm</string>
 </resources>

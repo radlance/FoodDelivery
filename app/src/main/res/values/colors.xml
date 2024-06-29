@@ -6,4 +6,5 @@
     <color name="background_color">#EAEAEA</color>
     <color name="card_color">#F3F3F3</color>
     <color name="hint_color">#8c8c8c</color>
+    <color name="text_color">#797979</color>
 </resources>
