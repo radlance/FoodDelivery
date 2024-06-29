@@ -19,6 +19,7 @@ class ProductListRecyclerAdapter : RecyclerView.Adapter<ProductListRecyclerAdapt
             diffResult.dispatchUpdatesTo(this)
             field = value
         }
+    var onProductItemClickListener: ((Product) -> Unit)? = null
 
     class ProductListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding = ItemProductBinding.bind(itemView)
@@ -37,7 +38,13 @@ class ProductListRecyclerAdapter : RecyclerView.Adapter<ProductListRecyclerAdapt
     }
 
     override fun onBindViewHolder(holder: ProductListViewHolder, position: Int) {
-        holder.bind(productList[position])
+        val product = productList[position]
+
+        holder.itemView.setOnClickListener {
+            onProductItemClickListener?.invoke(product)
+        }
+
+        holder.bind(product)
     }
 
     override fun getItemCount(): Int = productList.size

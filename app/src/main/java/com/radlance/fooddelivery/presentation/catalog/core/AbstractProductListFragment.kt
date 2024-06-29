@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.radlance.fooddelivery.databinding.FragmentProductListBinding
 import com.radlance.fooddelivery.domain.core.LoadResult
 import com.radlance.fooddelivery.presentation.core.AbstractFragment
+import com.squareup.picasso.Picasso
 
 abstract class AbstractProductListFragment : AbstractFragment<FragmentProductListBinding>() {
     private lateinit var productListAdapter: ProductListRecyclerAdapter
@@ -29,6 +30,33 @@ abstract class AbstractProductListFragment : AbstractFragment<FragmentProductLis
             productListAdapter = ProductListRecyclerAdapter()
             layoutManager = GridLayoutManager(requireActivity(), 2)
             adapter = productListAdapter
+        }
+
+        productListAdapter.onProductItemClickListener = { product ->
+            viewModel.showDetails(product)
+        }
+
+        binding.ivBack.setOnClickListener {
+            viewModel.closeDetails()
+        }
+
+        view.setOnClickListener {
+            viewModel.closeDetails()
+        }
+
+        viewModel.openedProductDetails.observe(viewLifecycleOwner) { product ->
+            binding.cardViewDetails.visibility = View.VISIBLE
+            binding.tvTitle.text = product.title
+            binding.tvPrice.text = product.price.toString()
+            Picasso.get().load(product.imageUrl).into(binding.ivProduct)
+            binding.rvProductList.visibility = View.GONE
+        }
+
+        viewModel.shouldCloseDetails.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.cardViewDetails.visibility = View.GONE
+                binding.rvProductList.visibility = View.VISIBLE
+            }
         }
 
         getProductList()

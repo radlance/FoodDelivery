@@ -30,6 +30,16 @@ class ProductListViewModel(
 
     val loadState: LiveData<LoadResult>
         get() = _loadState
+
+    private val _openedProductDetails = MutableLiveData<Product>()
+    val openedProductDetails: LiveData<Product>
+        get() = _openedProductDetails
+
+    private val _shouldCloseDetails = MutableLiveData<Boolean>()
+    val shouldCloseDetails: LiveData<Boolean>
+        get() = _shouldCloseDetails
+
+
     fun getProducts() {
         viewModelScope.launch {
             val localProducts = getLocalProductsUseCase()
@@ -57,5 +67,14 @@ class ProductListViewModel(
                 _localProducts.value = getProductByCategoryUseCase(categoryName)
             }
         }
+    }
+
+    fun showDetails(product: Product) {
+        _openedProductDetails.value = product
+        _shouldCloseDetails.value = false
+    }
+
+    fun closeDetails() {
+        _shouldCloseDetails.value = true
     }
 }
