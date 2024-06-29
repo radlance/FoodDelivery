@@ -39,6 +39,10 @@ class ProductListViewModel(
     val shouldCloseDetails: LiveData<Boolean>
         get() = _shouldCloseDetails
 
+    private val _productCount = MutableLiveData<Int>()
+    val productCount: LiveData<Int>
+        get() = _productCount
+
 
     fun getProducts() {
         viewModelScope.launch {
@@ -76,5 +80,19 @@ class ProductListViewModel(
 
     fun closeDetails() {
         _shouldCloseDetails.value = true
+    }
+
+    fun incrementCount() {
+        val newCount = _productCount.value ?: 0
+        if (newCount < 99) {
+            _productCount.value = newCount + 1
+        }
+    }
+
+    fun decrementCount() {
+        val newCount = _productCount.value ?: 0
+        if (newCount > 0) {
+            _productCount.value = newCount - 1
+        }
     }
 }

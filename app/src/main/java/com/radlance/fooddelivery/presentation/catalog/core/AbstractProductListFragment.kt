@@ -50,6 +50,11 @@ abstract class AbstractProductListFragment : AbstractFragment<FragmentProductLis
             binding.tvPrice.text = product.price.toString()
             Picasso.get().load(product.imageUrl).into(binding.ivProduct)
             binding.rvProductList.visibility = View.GONE
+
+            binding.tvMore.setOnClickListener {
+                val intent = DetailActivity.productInstance(requireActivity(), product)
+                startActivity(intent)
+            }
         }
 
         viewModel.shouldCloseDetails.observe(viewLifecycleOwner) {
@@ -91,6 +96,18 @@ abstract class AbstractProductListFragment : AbstractFragment<FragmentProductLis
 
         binding.buttonRetry.setOnClickListener {
             getProductList()
+        }
+
+        binding.buttonMinus.setOnClickListener {
+            viewModel.decrementCount()
+        }
+
+        binding.buttonPlus.setOnClickListener {
+            viewModel.incrementCount()
+        }
+
+        viewModel.productCount.observe(viewLifecycleOwner) {
+            binding.tvCount.text = it.toString()
         }
     }
 
