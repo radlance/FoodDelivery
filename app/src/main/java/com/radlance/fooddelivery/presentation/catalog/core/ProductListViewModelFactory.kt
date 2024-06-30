@@ -4,10 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewmodel.CreationExtras
-import com.radlance.fooddelivery.domain.usecase.main.GetLocalProductsUseCase
-import com.radlance.fooddelivery.domain.usecase.main.GetProductByCategoryUseCase
-import com.radlance.fooddelivery.domain.usecase.main.GetProductsUseCase
-import com.radlance.fooddelivery.domain.usecase.main.SaveProductsUseCase
+import com.radlance.fooddelivery.domain.usecase.catalog.AddToCartUseCase
+import com.radlance.fooddelivery.domain.usecase.catalog.GetLocalProductsUseCase
+import com.radlance.fooddelivery.domain.usecase.catalog.GetProductByCategoryUseCase
+import com.radlance.fooddelivery.domain.usecase.catalog.GetProductsUseCase
+import com.radlance.fooddelivery.domain.usecase.catalog.SaveProductsUseCase
 import com.radlance.fooddelivery.presentation.core.ProvideRepository
 
 class ProductListViewModelFactory() : ViewModelProvider.Factory {
@@ -20,12 +21,14 @@ class ProductListViewModelFactory() : ViewModelProvider.Factory {
         val saveProductsUseCase = SaveProductsUseCase(catalogRepository)
         val getLocalProductsUseCase = GetLocalProductsUseCase(catalogRepository)
         val getProductByCategoryUseCase = GetProductByCategoryUseCase(catalogRepository)
+        val addToCartUseCase = AddToCartUseCase(catalogRepository)
 
         return ProductListViewModel(
             getProductsUseCase,
             saveProductsUseCase,
             getLocalProductsUseCase,
             getProductByCategoryUseCase,
+            addToCartUseCase
         ) as T
     }
 }

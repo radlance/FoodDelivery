@@ -1,4 +1,4 @@
-package com.radlance.fooddelivery.domain.usecase.main
+package com.radlance.fooddelivery.domain.usecase.catalog
 
 import com.radlance.fooddelivery.domain.entity.Product
 import com.radlance.fooddelivery.domain.repository.CatalogRepository

@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.radlance.fooddelivery.domain.entity.Product
-import com.radlance.fooddelivery.domain.usecase.main.SearchProductsLikeNameUseCase
+import com.radlance.fooddelivery.domain.usecase.catalog.SearchProductsLikeNameUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

@@ -6,9 +6,6 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "category")
 data class CategoryCache(
-    @PrimaryKey(autoGenerate = false)
-    @ColumnInfo(name = "id")
-    val id: Long,
-    @ColumnInfo(name = "title")
-    val title: String,
+    @PrimaryKey(autoGenerate = false) val id: Long,
+    @ColumnInfo(name = "title") val title: String,
 )

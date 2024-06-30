@@ -4,11 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.radlance.fooddelivery.domain.core.LoadResult
+import com.radlance.fooddelivery.domain.entity.CartItem
 import com.radlance.fooddelivery.domain.entity.Product
-import com.radlance.fooddelivery.domain.usecase.main.GetLocalProductsUseCase
-import com.radlance.fooddelivery.domain.usecase.main.GetProductByCategoryUseCase
-import com.radlance.fooddelivery.domain.usecase.main.GetProductsUseCase
-import com.radlance.fooddelivery.domain.usecase.main.SaveProductsUseCase
+import com.radlance.fooddelivery.domain.usecase.catalog.AddToCartUseCase
+import com.radlance.fooddelivery.domain.usecase.catalog.GetLocalProductsUseCase
+import com.radlance.fooddelivery.domain.usecase.catalog.GetProductByCategoryUseCase
+import com.radlance.fooddelivery.domain.usecase.catalog.GetProductsUseCase
+import com.radlance.fooddelivery.domain.usecase.catalog.SaveProductsUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -19,6 +21,7 @@ class ProductListViewModel(
     private val saveProductsUseCase: SaveProductsUseCase,
     private val getLocalProductsUseCase: GetLocalProductsUseCase,
     private val getProductByCategoryUseCase: GetProductByCategoryUseCase,
+    private val addToCartUseCase: AddToCartUseCase
 ) : ViewModel() {
     private val viewModelScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
@@ -83,16 +86,22 @@ class ProductListViewModel(
     }
 
     fun incrementCount() {
-        val newCount = _productCount.value ?: 0
+        val newCount = _productCount.value ?: 1
         if (newCount < 99) {
             _productCount.value = newCount + 1
         }
     }
 
     fun decrementCount() {
-        val newCount = _productCount.value ?: 0
-        if (newCount > 0) {
+        val newCount = _productCount.value ?: 1
+        if (newCount > 1) {
             _productCount.value = newCount - 1
+        }
+    }
+
+    fun addToCart(count: String, product: Product) {
+        viewModelScope.launch {
+            addToCartUseCase(CartItem(count.toInt(), product))
         }
     }
 }

@@ -31,7 +31,6 @@ abstract class AbstractProductListFragment : AbstractFragment<FragmentProductLis
             layoutManager = GridLayoutManager(requireActivity(), 2)
             adapter = productListAdapter
         }
-
         productListAdapter.onProductItemClickListener = { product ->
             viewModel.showDetails(product)
         }
@@ -54,6 +53,10 @@ abstract class AbstractProductListFragment : AbstractFragment<FragmentProductLis
             binding.tvMore.setOnClickListener {
                 val intent = DetailActivity.productInstance(requireActivity(), product)
                 startActivity(intent)
+            }
+
+            binding.buttonAdd.setOnClickListener {
+                viewModel.addToCart(binding.tvCount.text.toString(), product)
             }
         }
 
