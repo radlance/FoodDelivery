@@ -35,4 +35,6 @@
     <string name="more">More</string>
     <string name="delivery_info">Delivery info</string>
     <string name="delivery_info_description">Delivered between monday aug and thursday 20 from 8pm to 91:32 pm</string>
+    <string name="go_to_cart">Go to cart</string>
+    <string name="continue_shop">Continue Shop</string>
 </resources>

@@ -167,6 +167,37 @@
                     app:layout_constraintTop_toTopOf="@id/button_minus" />
 
                 <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/button_continue"
+                    style="?android:borderlessButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/button_frame"
+                    android:backgroundTint="@color/main_color"
+                    android:elevation="0dp"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textFontWeight="400"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toTopOf="@+id/button_add"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_button_continue_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/continue_shop"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="@id/button_continue"
+                    app:layout_constraintEnd_toEndOf="@id/button_continue"
+                    app:layout_constraintStart_toStartOf="@id/button_continue"
+                    app:layout_constraintTop_toTopOf="@id/button_continue" />
+
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/button_add"
                     style="?android:borderlessButtonStyle"
                     android:layout_width="0dp"
@@ -186,7 +217,27 @@
                     app:layout_constraintStart_toEndOf="@id/button_plus"
                     app:layout_constraintTop_toTopOf="@id/button_plus" />
 
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/button_go_to_cart"
+                    style="?android:borderlessButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="4dp"
+                    android:background="@drawable/button_frame"
+                    android:backgroundTint="@color/main_color"
+                    android:elevation="0dp"
+                    android:gravity="start|center_vertical"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="17sp"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_count"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/button_plus" />
+
                 <TextView
+                    android:id="@+id/tv_add"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
@@ -196,7 +247,21 @@
                     app:layout_constraintStart_toStartOf="@id/button_add"
                     app:layout_constraintTop_toTopOf="@id/button_add" />
 
+                <TextView
+                    android:id="@+id/tv_go_to_cart"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/go_to_cart"
+                    android:textColor="@color/white"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@id/button_go_to_cart"
+                    app:layout_constraintEnd_toEndOf="@id/button_go_to_cart"
+                    app:layout_constraintStart_toStartOf="@id/button_go_to_cart"
+                    app:layout_constraintTop_toTopOf="@id/button_go_to_cart" />
+
                 <ImageView
+                    android:id="@+id/iv_cart"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="20dp"

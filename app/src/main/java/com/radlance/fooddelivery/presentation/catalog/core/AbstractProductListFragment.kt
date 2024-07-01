@@ -43,6 +43,10 @@ abstract class AbstractProductListFragment : AbstractFragment<FragmentProductLis
             viewModel.closeDetails()
         }
 
+        binding.buttonContinue.setOnClickListener {
+            viewModel.closeDetails()
+        }
+
         viewModel.openedProductDetails.observe(viewLifecycleOwner) { product ->
             binding.cardViewDetails.visibility = View.VISIBLE
             binding.tvTitle.text = product.title
@@ -57,6 +61,15 @@ abstract class AbstractProductListFragment : AbstractFragment<FragmentProductLis
 
             binding.buttonAdd.setOnClickListener {
                 viewModel.addToCart(binding.tvCount.text.toString(), product)
+                binding.tvAdd.visibility = View.GONE
+                binding.tvGoToCart.visibility = View.VISIBLE
+                binding.buttonContinue.visibility = View.VISIBLE
+                binding.tvButtonContinueText.visibility = View.VISIBLE
+                binding.ivCart.visibility = View.INVISIBLE
+                binding.buttonGoToCart.visibility = View.VISIBLE
+                binding.buttonPlus.visibility = View.INVISIBLE
+                binding.buttonMinus.visibility = View.INVISIBLE
+                binding.tvCount.visibility = View.INVISIBLE
             }
         }
 
@@ -64,6 +77,15 @@ abstract class AbstractProductListFragment : AbstractFragment<FragmentProductLis
             if (it) {
                 binding.cardViewDetails.visibility = View.GONE
                 binding.rvProductList.visibility = View.VISIBLE
+                binding.tvAdd.visibility = View.VISIBLE
+                binding.tvGoToCart.visibility = View.GONE
+                binding.buttonContinue.visibility = View.INVISIBLE
+                binding.tvButtonContinueText.visibility = View.GONE
+                binding.ivCart.visibility = View.VISIBLE
+                binding.buttonGoToCart.visibility = View.GONE
+                binding.buttonPlus.visibility = View.VISIBLE
+                binding.buttonMinus.visibility = View.VISIBLE
+                binding.tvCount.visibility = View.VISIBLE
             }
         }
 

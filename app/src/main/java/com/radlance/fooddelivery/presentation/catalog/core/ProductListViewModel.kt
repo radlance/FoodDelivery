@@ -83,6 +83,7 @@ class ProductListViewModel(
 
     fun closeDetails() {
         _shouldCloseDetails.value = true
+        _productCount.value = 1
     }
 
     fun incrementCount() {
