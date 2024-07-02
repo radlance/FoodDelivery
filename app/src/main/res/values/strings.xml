@@ -37,4 +37,9 @@
     <string name="delivery_info_description">Delivered between monday aug and thursday 20 from 8pm to 91:32 pm</string>
     <string name="go_to_cart">Go to cart</string>
     <string name="continue_shop">Continue Shop</string>
+    <string name="order">Order</string>
+    <string name="select_the_delivery_address">Select the delivery address</string>
+    <string name="order_now">Order Now</string>
+    <string name="order_price">Order Price</string>
+    <string name="no_orders_yet">No orders yet</string>
 </resources>
