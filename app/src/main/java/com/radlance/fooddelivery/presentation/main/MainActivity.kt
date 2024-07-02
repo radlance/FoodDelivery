@@ -4,11 +4,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.radlance.fooddelivery.R
 import com.radlance.fooddelivery.databinding.ActivityMainBinding
 import com.radlance.fooddelivery.presentation.catalog.core.FragmentCatalog
+import com.radlance.fooddelivery.presentation.order.OrderFragment
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), FragmentReplaceListener {
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,34 +23,66 @@ class MainActivity : AppCompatActivity() {
                 .add(binding.containerMain.id, FragmentCatalog.newInstance())
                 .commit()
         }
-
-        val buttons = arrayOf(
-            binding.buttonHomePage,
-            binding.buttonShoppingCart,
-            binding.buttonUser,
-            binding.buttonHistory
-        )
-        val filledImages = arrayOf(
-            R.drawable.ic_home_filled,
-            R.drawable.ic_shopping_cart_filled,
-            R.drawable.ic_user_filled,
-            R.drawable.ic_sharp_history_filled
-        )
-        val defaultImages = arrayOf(
-            R.drawable.ic_home,
-            R.drawable.ic_shopping_cart,
-            R.drawable.ic_user,
-            R.drawable.ic_sharp_history
-        )
-
-        for (i in buttons.indices) {
-            buttons[i].setOnClickListener {
-                for (j in buttons.indices) {
-                    buttons[j].setImageResource(defaultImages[j])
-                }
-                buttons[i].setImageResource(filledImages[i])
-            }
+        binding.buttonShoppingCart.setOnClickListener {
+            orderReplace()
         }
+
+        binding.buttonHomePage.setOnClickListener {
+            catalogReplace()
+        }
+
+        binding.buttonUser.setOnClickListener {
+            userReplace()
+        }
+
+        binding.buttonHistory.setOnClickListener {
+            historyReplace()
+        }
+
+    }
+
+    private fun replaceFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(binding.containerMain.id, fragment)
+            .commit()
+    }
+
+    override fun catalogReplace() {
+        with(binding) {
+            buttonHomePage.setImageResource(R.drawable.ic_home_filled)
+            buttonShoppingCart.setImageResource(R.drawable.ic_shopping_cart)
+            buttonUser.setImageResource(R.drawable.ic_user)
+            buttonHistory.setImageResource(R.drawable.ic_sharp_history)
+        }
+        replaceFragment(FragmentCatalog.newInstance())
+    }
+
+    override fun orderReplace() {
+        with(binding) {
+            buttonHomePage.setImageResource(R.drawable.ic_home)
+            buttonShoppingCart.setImageResource(R.drawable.ic_shopping_cart_filled)
+            buttonUser.setImageResource(R.drawable.ic_user)
+            buttonHistory.setImageResource(R.drawable.ic_sharp_history)
+        }
+        replaceFragment(OrderFragment.newInstance())
+    }
+
+    override fun userReplace() {
+        with(binding) {
+            buttonHomePage.setImageResource(R.drawable.ic_home)
+            buttonShoppingCart.setImageResource(R.drawable.ic_shopping_cart)
+            buttonUser.setImageResource(R.drawable.ic_user_filled)
+            buttonHistory.setImageResource(R.drawable.ic_sharp_history)
+        }
+    }
+
+    override fun historyReplace() {
+        with(binding) {
+            buttonHomePage.setImageResource(R.drawable.ic_home)
+            buttonShoppingCart.setImageResource(R.drawable.ic_shopping_cart)
+            buttonUser.setImageResource(R.drawable.ic_user)
+            buttonHistory.setImageResource(R.drawable.ic_sharp_history_filled)
+            }
     }
 
     companion object {
