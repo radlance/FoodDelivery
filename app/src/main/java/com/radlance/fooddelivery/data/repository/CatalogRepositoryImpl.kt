@@ -4,11 +4,12 @@ import com.radlance.fooddelivery.data.api.core.Service
 import com.radlance.fooddelivery.data.api.response.CategoryResponse
 import com.radlance.fooddelivery.data.database.CartItemCache
 import com.radlance.fooddelivery.data.database.CategoryCache
-import com.radlance.fooddelivery.data.database.FullProductInfo
 import com.radlance.fooddelivery.data.database.ProductCache
 import com.radlance.fooddelivery.data.database.ProductsDao
 import com.radlance.fooddelivery.domain.core.LoadResult
 import com.radlance.fooddelivery.domain.entity.CartItem
+import com.radlance.fooddelivery.domain.entity.Category
+import com.radlance.fooddelivery.domain.entity.FullProduct
 import com.radlance.fooddelivery.domain.entity.Product
 import com.radlance.fooddelivery.domain.repository.CatalogRepository
 
@@ -19,7 +20,7 @@ class CatalogRepositoryImpl(private val service: Service, private val productsDa
         return try {
             categories = service.categories()
             val productList = service.products().map {
-                Product(it.id, it.title, it.price, it.imageUrl, it.category.id, it.category.title)
+                Product(it.id, it.title, it.price, it.imageUrl, it.category.id)
             }
             LoadResult.Success(productList)
         } catch (e: Exception) {
@@ -37,31 +38,33 @@ class CatalogRepositoryImpl(private val service: Service, private val productsDa
     }
 
     override suspend fun getLocalProducts(): List<Product> {
-        return mapFullInfoToProductList(productsDao.getFullProductsInfo())
+        return productsDao.getProductsInfo().map {
+            Product(it.id, it.title, it.price, it.imageUrl, it.categoryId)
+        }
     }
 
-    override suspend fun getProductsByCategory(categoryName: String): List<Product> {
-        return mapFullInfoToProductList(productsDao.getProductsByCategory(categoryName))
+    override suspend fun getProductsByCategory(categoryName: String): List<FullProduct> {
+        return productsDao.getProductsByCategory(categoryName).map {
+            FullProduct(
+                Product(
+                    it.product.id,
+                    it.product.title,
+                    it.product.price,
+                    it.product.imageUrl,
+                    it.product.categoryId
+                ),
+                Category(it.category.id, it.category.title)
+            )
+        }
     }
 
     override suspend fun searchProductsLikeName(query: String): List<Product> {
-        return mapFullInfoToProductList(productsDao.searchProductsLikeName(query))
+        return productsDao.searchProductsLikeName(query).map {
+            Product(it.id, it.title, it.price, it.imageUrl, it.categoryId)
+        }
     }
 
     override suspend fun addToCart(cartItem: CartItem) {
         productsDao.addToCart(CartItemCache(cartItem.count, cartItem.product.id))
-    }
-
-    private fun mapFullInfoToProductList(fullProductInfo: List<FullProductInfo>): List<Product> {
-        return fullProductInfo.map {
-            Product(
-                it.product.id,
-                it.product.title,
-                it.product.price,
-                it.product.imageUrl,
-                it.categoryId,
-                it.categoryTitle
-            )
-        }
     }
 }

@@ -71,7 +71,15 @@ class ProductListViewModel(
                 _loadState.value = getProductsUseCase()
             } else {
                 _loadState.value = LoadResult.Success()
-                _localProducts.value = getProductByCategoryUseCase(categoryName)
+                _localProducts.value = getProductByCategoryUseCase(categoryName).map {
+                    Product(
+                        it.product.id,
+                        it.product.title,
+                        it.product.price,
+                        it.product.imageUrl,
+                        it.product.categoryId
+                    )
+                }
             }
         }
     }

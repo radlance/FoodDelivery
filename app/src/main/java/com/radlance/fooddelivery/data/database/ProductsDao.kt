@@ -16,26 +16,19 @@ interface ProductsDao {
     @Query("SELECT * FROM category WHERE id = :id")
     suspend fun getCategoryById(id: Long): CategoryCache
 
-    @Query(
-        "SELECT product.*, category.id AS category_id, category.title AS category_title FROM product" +
-                " INNER JOIN category ON product.category = category.id"
-    )
-    suspend fun getFullProductsInfo(): List<FullProductInfo>
+    @Query("SELECT * FROM product")
+    suspend fun getProductsInfo(): List<ProductCache>
 
     @Query(
-        "SELECT product.*, category.id AS category_id, category.title AS category_title FROM product" +
+        "SELECT product.*, category.title AS category_title FROM product" +
                 " INNER JOIN category ON product.category = category.id" +
                 " WHERE category_title = :categoryName"
     )
-    suspend fun getProductsByCategory(categoryName: String): List<FullProductInfo>
+    suspend fun getProductsByCategory(categoryName: String): List<FullProductCache>
 
 
-    @Query(
-        "SELECT product.*, category.id AS category_id, category.title AS category_title FROM product" +
-                " INNER JOIN category ON product.category = category.id" +
-                " WHERE product.title LIKE '%' || :query || '%'"
-    )
-    suspend fun searchProductsLikeName(query: String): List<FullProductInfo>
+    @Query("SELECT * FROM product WHERE title LIKE '%' || :query || '%'")
+    suspend fun searchProductsLikeName(query: String): List<ProductCache>
 
     @Insert
     suspend fun addToCart(cartItem: CartItemCache)
