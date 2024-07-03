@@ -10,7 +10,8 @@ import com.radlance.fooddelivery.databinding.ItemProductBinding
 import com.radlance.fooddelivery.domain.entity.Product
 import com.squareup.picasso.Picasso
 
-class ProductListRecyclerAdapter : RecyclerView.Adapter<ProductListRecyclerAdapter.ProductListViewHolder>() {
+class ProductListRecyclerAdapter :
+    RecyclerView.Adapter<ProductListRecyclerAdapter.ProductListVH>() {
     var productList = listOf<Product>()
         set(value) {
             val callback = ProductListDiffCallback(field, value)
@@ -21,7 +22,7 @@ class ProductListRecyclerAdapter : RecyclerView.Adapter<ProductListRecyclerAdapt
         }
     var onProductItemClickListener: ((Product) -> Unit)? = null
 
-    class ProductListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ProductListVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding = ItemProductBinding.bind(itemView)
         fun bind(product: Product) {
             with(binding) {
@@ -32,12 +33,12 @@ class ProductListRecyclerAdapter : RecyclerView.Adapter<ProductListRecyclerAdapt
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductListViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductListVH {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_product, parent, false)
-        return ProductListViewHolder(view)
+        return ProductListVH(view)
     }
 
-    override fun onBindViewHolder(holder: ProductListViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ProductListVH, position: Int) {
         val product = productList[position]
 
         holder.itemView.setOnClickListener {

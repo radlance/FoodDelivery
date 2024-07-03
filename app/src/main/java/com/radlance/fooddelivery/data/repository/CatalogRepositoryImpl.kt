@@ -5,7 +5,7 @@ import com.radlance.fooddelivery.data.api.response.CategoryResponse
 import com.radlance.fooddelivery.data.database.CartItemCache
 import com.radlance.fooddelivery.data.database.CategoryCache
 import com.radlance.fooddelivery.data.database.ProductCache
-import com.radlance.fooddelivery.data.database.ProductsDao
+import com.radlance.fooddelivery.data.database.DeliveryDao
 import com.radlance.fooddelivery.domain.core.LoadResult
 import com.radlance.fooddelivery.domain.entity.CartItem
 import com.radlance.fooddelivery.domain.entity.Category
@@ -13,7 +13,7 @@ import com.radlance.fooddelivery.domain.entity.FullProduct
 import com.radlance.fooddelivery.domain.entity.Product
 import com.radlance.fooddelivery.domain.repository.CatalogRepository
 
-class CatalogRepositoryImpl(private val service: Service, private val productsDao: ProductsDao) :
+class CatalogRepositoryImpl(private val service: Service, private val deliveryDao: DeliveryDao) :
     CatalogRepository {
     private var categories = listOf<CategoryResponse>()
     override suspend fun getProducts(): LoadResult {
@@ -29,22 +29,22 @@ class CatalogRepositoryImpl(private val service: Service, private val productsDa
     }
 
     override suspend fun saveProducts(productList: List<Product>) {
-        productsDao.saveCategories(categories.map {
+        deliveryDao.saveCategories(categories.map {
             CategoryCache(it.id, it.title)
         })
-        productsDao.saveProducts(productList.map {
+        deliveryDao.saveProducts(productList.map {
             ProductCache(it.id, it.title, it.price, it.imageUrl, it.categoryId)
         })
     }
 
     override suspend fun getLocalProducts(): List<Product> {
-        return productsDao.getProductsInfo().map {
+        return deliveryDao.getProductsInfo().map {
             Product(it.id, it.title, it.price, it.imageUrl, it.categoryId)
         }
     }
 
     override suspend fun getProductsByCategory(categoryName: String): List<FullProduct> {
-        return productsDao.getProductsByCategory(categoryName).map {
+        return deliveryDao.getProductsByCategory(categoryName).map {
             FullProduct(
                 Product(
                     it.product.id,
@@ -59,12 +59,12 @@ class CatalogRepositoryImpl(private val service: Service, private val productsDa
     }
 
     override suspend fun searchProductsLikeName(query: String): List<Product> {
-        return productsDao.searchProductsLikeName(query).map {
+        return deliveryDao.searchProductsLikeName(query).map {
             Product(it.id, it.title, it.price, it.imageUrl, it.categoryId)
         }
     }
 
     override suspend fun addToCart(cartItem: CartItem) {
-        productsDao.addToCart(CartItemCache(cartItem.count, cartItem.product.id))
+        deliveryDao.addToCart(CartItemCache(cartItem.count, cartItem.product.id))
     }
 }

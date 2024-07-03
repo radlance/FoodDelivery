@@ -6,7 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 
 @Dao
-interface ProductsDao {
+interface DeliveryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveProducts(productList: List<ProductCache>)
 
@@ -32,4 +32,7 @@ interface ProductsDao {
 
     @Insert
     suspend fun addToCart(cartItem: CartItemCache)
+
+    @Query("SELECT * FROM cart_item INNER JOIN product ON cart_item.product_id = product.id")
+    suspend fun getFullCartItemInfo(): List<FullCartItemCache>
 }
