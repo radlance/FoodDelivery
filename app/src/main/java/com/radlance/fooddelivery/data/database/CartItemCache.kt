@@ -9,12 +9,14 @@ import androidx.room.PrimaryKey
     tableName = "cart_item", foreignKeys = [ForeignKey(
         entity = ProductCache::class,
         parentColumns = ["id"],
-        childColumns = ["product_id"],
+        childColumns = ["id"],
         onDelete = ForeignKey.CASCADE
     )]
 )
 data class CartItemCache(
-    @ColumnInfo(name = "count") val count: Int,
-    @ColumnInfo(name = "product_id") val productId: Long,
-    @PrimaryKey(autoGenerate = true) val id: Long? = null
+    @PrimaryKey @ColumnInfo(name = "id") val productId: Long,
+    @ColumnInfo(name = "count") val count: Int
+//    @PrimaryKey(autoGenerate = true) val id: Long? = null
 )
+
+//TODO сделать инкремент при наличии товара в корзине

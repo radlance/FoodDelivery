@@ -35,6 +35,7 @@
             </intent-filter>
         </activity>
         <activity
+            android:windowSoftInputMode="adjustPan"
             android:name=".presentation.main.MainActivity"
             android:exported="true" />
     </application>

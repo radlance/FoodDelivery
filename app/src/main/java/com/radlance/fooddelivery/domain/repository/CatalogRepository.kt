@@ -11,5 +11,5 @@ interface CatalogRepository {
     suspend fun getLocalProducts(): List<Product>
     suspend fun getProductsByCategory(categoryName: String): List<FullProduct>
     suspend fun searchProductsLikeName(query: String): List<Product>
-    suspend fun addToCart(cartItem: CartItem)
+    suspend fun addCartItem(cartItem: CartItem)
 }

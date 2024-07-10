@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 
 @Dao
 interface DeliveryDao {
@@ -31,8 +32,16 @@ interface DeliveryDao {
     suspend fun searchProductsLikeName(query: String): List<ProductCache>
 
     @Insert
-    suspend fun addToCart(cartItem: CartItemCache)
+    suspend fun addCartItem(cartItem: CartItemCache)
 
-    @Query("SELECT * FROM cart_item INNER JOIN product ON cart_item.product_id = product.id")
+    @Update
+    suspend fun updateCartItem(cartItem: CartItemCache)
+
+    @Query("SELECT count FROM cart_item WHERE id = :id")
+    suspend fun getProductCountById(id: Long): Int
+
+//    suspend fun incrementCartItemCount(cartItem: CartItemCache)
+
+    @Query("SELECT * FROM cart_item INNER JOIN product ON cart_item.id = product.id")
     suspend fun getFullCartItemInfo(): List<FullCartItemCache>
 }

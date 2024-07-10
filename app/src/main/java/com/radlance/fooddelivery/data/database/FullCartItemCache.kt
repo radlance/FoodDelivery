@@ -6,7 +6,7 @@ import androidx.room.Relation
 data class FullCartItemCache(
     @Embedded val cartItem: CartItemCache,
     @Relation(
-        parentColumn = "product_id",
+        parentColumn = "id",
         entityColumn = "id"
     )
     val product: ProductCache

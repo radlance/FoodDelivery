@@ -1,11 +1,12 @@
 package com.radlance.fooddelivery.data.repository
 
+import android.database.sqlite.SQLiteConstraintException
 import com.radlance.fooddelivery.data.api.core.Service
 import com.radlance.fooddelivery.data.api.response.CategoryResponse
 import com.radlance.fooddelivery.data.database.CartItemCache
 import com.radlance.fooddelivery.data.database.CategoryCache
-import com.radlance.fooddelivery.data.database.ProductCache
 import com.radlance.fooddelivery.data.database.DeliveryDao
+import com.radlance.fooddelivery.data.database.ProductCache
 import com.radlance.fooddelivery.domain.core.LoadResult
 import com.radlance.fooddelivery.domain.entity.CartItem
 import com.radlance.fooddelivery.domain.entity.Category
@@ -64,7 +65,21 @@ class CatalogRepositoryImpl(private val service: Service, private val deliveryDa
         }
     }
 
-    override suspend fun addToCart(cartItem: CartItem) {
-        deliveryDao.addToCart(CartItemCache(cartItem.count, cartItem.product.id))
+    override suspend fun addCartItem(cartItem: CartItem) {
+        try {
+            deliveryDao.addCartItem(CartItemCache(cartItem.product.id, cartItem.count))
+        } catch (e: SQLiteConstraintException) {
+            val incrementedCount =
+                deliveryDao.getProductCountById(cartItem.product.id) + cartItem.count
+            if (incrementedCount < 100) {
+                deliveryDao.updateCartItem(CartItemCache(cartItem.product.id, incrementedCount))
+            } else {
+                deliveryDao.updateCartItem(CartItemCache(cartItem.product.id, MAX_ITEM_COUNT))
+            }
+        }
+    }
+
+    companion object {
+        private const val MAX_ITEM_COUNT = 99
     }
 }

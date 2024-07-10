@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.radlance.fooddelivery.domain.core.LoadResult
 import com.radlance.fooddelivery.domain.entity.CartItem
 import com.radlance.fooddelivery.domain.entity.Product
-import com.radlance.fooddelivery.domain.usecase.catalog.AddToCartUseCase
+import com.radlance.fooddelivery.domain.usecase.catalog.AddCartItemUseCase
 import com.radlance.fooddelivery.domain.usecase.catalog.GetLocalProductsUseCase
 import com.radlance.fooddelivery.domain.usecase.catalog.GetProductByCategoryUseCase
 import com.radlance.fooddelivery.domain.usecase.catalog.GetProductsUseCase
@@ -21,7 +21,7 @@ class ProductListViewModel(
     private val saveProductsUseCase: SaveProductsUseCase,
     private val getLocalProductsUseCase: GetLocalProductsUseCase,
     private val getProductByCategoryUseCase: GetProductByCategoryUseCase,
-    private val addToCartUseCase: AddToCartUseCase
+    private val addCartItemUseCase: AddCartItemUseCase
 ) : ViewModel() {
     private val viewModelScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
@@ -110,7 +110,7 @@ class ProductListViewModel(
 
     fun addToCart(count: String, product: Product) {
         viewModelScope.launch {
-            addToCartUseCase(CartItem(count.toInt(), product))
+            addCartItemUseCase(CartItem(count.toInt(), product))
         }
     }
 }
