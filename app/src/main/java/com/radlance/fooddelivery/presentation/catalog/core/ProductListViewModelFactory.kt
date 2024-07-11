@@ -7,7 +7,7 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import com.radlance.fooddelivery.domain.usecase.catalog.AddCartItemUseCase
 import com.radlance.fooddelivery.domain.usecase.catalog.GetLocalProductsUseCase
 import com.radlance.fooddelivery.domain.usecase.catalog.GetProductByCategoryUseCase
-import com.radlance.fooddelivery.domain.usecase.catalog.GetProductsUseCase
+import com.radlance.fooddelivery.domain.usecase.catalog.LoadProductsUseCase
 import com.radlance.fooddelivery.domain.usecase.catalog.SaveProductsUseCase
 import com.radlance.fooddelivery.presentation.core.ProvideRepository
 
@@ -17,18 +17,20 @@ class ProductListViewModelFactory() : ViewModelProvider.Factory {
         val application = extras[APPLICATION_KEY]
         val catalogRepository = (application as ProvideRepository).catalogRepository()
 
-        val getProductsUseCase = GetProductsUseCase(catalogRepository)
+        val loadProductsUseCase = LoadProductsUseCase(catalogRepository)
         val saveProductsUseCase = SaveProductsUseCase(catalogRepository)
         val getLocalProductsUseCase = GetLocalProductsUseCase(catalogRepository)
         val getProductByCategoryUseCase = GetProductByCategoryUseCase(catalogRepository)
         val addCartItemUseCase = AddCartItemUseCase(catalogRepository)
+        val mapper = LoadResultMapper()
 
         return ProductListViewModel(
-            getProductsUseCase,
+            loadProductsUseCase,
             saveProductsUseCase,
             getLocalProductsUseCase,
             getProductByCategoryUseCase,
-            addCartItemUseCase
+            addCartItemUseCase,
+            mapper
         ) as T
     }
 }

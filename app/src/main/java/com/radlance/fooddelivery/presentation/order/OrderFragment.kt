@@ -25,8 +25,14 @@ class OrderFragment : AbstractFragment<FragmentOrderBinding>() {
         }
         viewModel.getFullCartItemInfo()
 
-        viewModel.orderList.observe(viewLifecycleOwner) {
-            orderListAdapter.orderList = it
+        viewModel.orderState.observe(viewLifecycleOwner) {
+            it.show(
+                binding.placeholder,
+                binding.viewPrice,
+                binding.linearPrice,
+                binding.buttonOrder,
+                orderListAdapter
+            )
         }
     }
     companion object {

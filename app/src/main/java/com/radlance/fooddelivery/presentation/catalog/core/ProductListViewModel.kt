@@ -9,7 +9,7 @@ import com.radlance.fooddelivery.domain.entity.Product
 import com.radlance.fooddelivery.domain.usecase.catalog.AddCartItemUseCase
 import com.radlance.fooddelivery.domain.usecase.catalog.GetLocalProductsUseCase
 import com.radlance.fooddelivery.domain.usecase.catalog.GetProductByCategoryUseCase
-import com.radlance.fooddelivery.domain.usecase.catalog.GetProductsUseCase
+import com.radlance.fooddelivery.domain.usecase.catalog.LoadProductsUseCase
 import com.radlance.fooddelivery.domain.usecase.catalog.SaveProductsUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -17,30 +17,32 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
 class ProductListViewModel(
-    private val getProductsUseCase: GetProductsUseCase,
+    private val loadProductsUseCase: LoadProductsUseCase,
     private val saveProductsUseCase: SaveProductsUseCase,
     private val getLocalProductsUseCase: GetLocalProductsUseCase,
     private val getProductByCategoryUseCase: GetProductByCategoryUseCase,
-    private val addCartItemUseCase: AddCartItemUseCase
+    private val addCartItemUseCase: AddCartItemUseCase,
+
+    private val mapper: LoadResult.Mapper<LoadState>
 ) : ViewModel() {
     private val viewModelScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
-    private val _loadState = MutableLiveData<LoadResult>()
+    private val _loadState = MutableLiveData<LoadState>()
+
+    val loadState: LiveData<LoadState>
+        get() = _loadState
 
     private val _localProducts = MutableLiveData<List<Product>>()
     val localProducts: LiveData<List<Product>>
         get() = _localProducts
 
-    val loadState: LiveData<LoadResult>
-        get() = _loadState
+    private val _detailsState = MutableLiveData<DetailsState>()
+    val openedProductDetails: LiveData<DetailsState>
+        get() = _detailsState
 
-    private val _openedProductDetails = MutableLiveData<Product>()
-    val openedProductDetails: LiveData<Product>
-        get() = _openedProductDetails
-
-    private val _shouldCloseDetails = MutableLiveData<Boolean>()
-    val shouldCloseDetails: LiveData<Boolean>
-        get() = _shouldCloseDetails
+    private val _actionsState = MutableLiveData<MoreActionsState>()
+    val actionsState: MutableLiveData<MoreActionsState>
+        get() = _actionsState
 
     private val _productCount = MutableLiveData<Int>()
     val productCount: LiveData<Int>
@@ -51,7 +53,8 @@ class ProductListViewModel(
         viewModelScope.launch {
             val localProducts = getLocalProductsUseCase()
             if (localProducts.isEmpty()) {
-                _loadState.value = getProductsUseCase()
+                val loadResult = loadProductsUseCase()
+                _loadState.value = loadResult.map(mapper)
             } else {
                 _localProducts.value = localProducts
             }
@@ -67,10 +70,10 @@ class ProductListViewModel(
     fun getProductsByCategory(categoryName: String) {
         viewModelScope.launch {
             val localProducts = getLocalProductsUseCase()
+            val loadResult = loadProductsUseCase()
             if (localProducts.isEmpty()) {
-                _loadState.value = getProductsUseCase()
+                _loadState.value = loadResult.map(mapper)
             } else {
-                _loadState.value = LoadResult.Success()
                 _localProducts.value = getProductByCategoryUseCase(categoryName).map {
                     Product(
                         it.product.id,
@@ -82,15 +85,20 @@ class ProductListViewModel(
                 }
             }
         }
+        //TODO сделать загрузку по категорим после retry
     }
 
     fun showDetails(product: Product) {
-        _openedProductDetails.value = product
-        _shouldCloseDetails.value = false
+        _detailsState.value = DetailsState.Opened(product)
+    }
+
+    fun showActions() {
+        _actionsState.value = MoreActionsState.More
     }
 
     fun closeDetails() {
-        _shouldCloseDetails.value = true
+        _detailsState.value = DetailsState.Closed
+        _actionsState.value = MoreActionsState.Less
         _productCount.value = 1
     }
 
@@ -111,6 +119,7 @@ class ProductListViewModel(
     fun addToCart(count: String, product: Product) {
         viewModelScope.launch {
             addCartItemUseCase(CartItem(count.toInt(), product))
+            _actionsState.value = MoreActionsState.More
         }
     }
 }

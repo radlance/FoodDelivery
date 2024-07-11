@@ -57,6 +57,7 @@
 
 
     <View
+        android:visibility="invisible"
         android:id="@+id/view_price"
         android:layout_width="0dp"
         android:layout_height="45dp"
@@ -69,6 +70,8 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
+        android:visibility="invisible"
+        android:id="@+id/linear_price"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="20dp"
@@ -100,6 +103,7 @@
     </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatButton
+        android:visibility="invisible"
         android:id="@+id/button_order"
         style="?android:borderlessButtonStyle"
         android:layout_width="match_parent"

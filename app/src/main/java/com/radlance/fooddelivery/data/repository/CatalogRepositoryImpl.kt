@@ -17,7 +17,7 @@ import com.radlance.fooddelivery.domain.repository.CatalogRepository
 class CatalogRepositoryImpl(private val service: Service, private val deliveryDao: DeliveryDao) :
     CatalogRepository {
     private var categories = listOf<CategoryResponse>()
-    override suspend fun getProducts(): LoadResult {
+    override suspend fun loadProducts(): LoadResult {
         return try {
             categories = service.categories()
             val productList = service.products().map {

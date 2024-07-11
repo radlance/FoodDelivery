@@ -8,10 +8,8 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.radlance.fooddelivery.databinding.FragmentProductListBinding
-import com.radlance.fooddelivery.domain.core.LoadResult
 import com.radlance.fooddelivery.presentation.core.AbstractFragment
 import com.radlance.fooddelivery.presentation.main.FragmentReplaceListener
-import com.squareup.picasso.Picasso
 
 abstract class AbstractProductListFragment : AbstractFragment<FragmentProductListBinding>() {
     private lateinit var productListAdapter: ProductListRecyclerAdapter
@@ -42,6 +40,8 @@ abstract class AbstractProductListFragment : AbstractFragment<FragmentProductLis
             layoutManager = GridLayoutManager(requireActivity(), 2)
             adapter = productListAdapter
         }
+        getProductList()
+
         productListAdapter.onProductItemClickListener = { product ->
             viewModel.showDetails(product)
         }
@@ -62,76 +62,60 @@ abstract class AbstractProductListFragment : AbstractFragment<FragmentProductLis
             fragmentReplaceListener.orderReplace()
         }
 
-        viewModel.openedProductDetails.observe(viewLifecycleOwner) { product ->
-            binding.cardViewDetails.visibility = View.VISIBLE
-            binding.tvTitle.text = product.title
-            binding.tvPrice.text = product.price.toString()
-            Picasso.get().load(product.imageUrl).into(binding.ivProduct)
-            binding.rvProductList.visibility = View.GONE
+        viewModel.openedProductDetails.observe(viewLifecycleOwner) { state ->
+            state.show(
+                binding.cardViewDetails,
+                binding.rvProductList,
+                binding.tvTitle,
+                binding.tvPrice,
+                binding.ivProduct
+            )
 
             binding.tvMore.setOnClickListener {
-                val intent = DetailActivity.productInstance(requireActivity(), product)
+                val intent = DetailActivity.productInstance(
+                    requireActivity(),
+                    (state as DetailsState.Opened).product
+                )
                 startActivity(intent)
             }
 
             binding.buttonAdd.setOnClickListener {
-                viewModel.addToCart(binding.tvCount.text.toString(), product)
-                binding.tvAdd.visibility = View.GONE
-                binding.tvGoToCart.visibility = View.VISIBLE
-                binding.buttonContinue.visibility = View.VISIBLE
-                binding.tvButtonContinueText.visibility = View.VISIBLE
-                binding.ivCart.visibility = View.INVISIBLE
-                binding.buttonGoToCart.visibility = View.VISIBLE
-                binding.buttonPlus.visibility = View.INVISIBLE
-                binding.buttonMinus.visibility = View.INVISIBLE
-                binding.tvCount.visibility = View.INVISIBLE
+                viewModel.addToCart(
+                    binding.tvCount.text.toString(),
+                    (state as DetailsState.Opened).product
+                )
+                viewModel.showActions()
             }
         }
-
-        viewModel.shouldCloseDetails.observe(viewLifecycleOwner) {
-            if (it) {
-                binding.cardViewDetails.visibility = View.GONE
-                binding.rvProductList.visibility = View.VISIBLE
-                binding.tvAdd.visibility = View.VISIBLE
-                binding.tvGoToCart.visibility = View.GONE
-                binding.buttonContinue.visibility = View.INVISIBLE
-                binding.tvButtonContinueText.visibility = View.GONE
-                binding.ivCart.visibility = View.VISIBLE
-                binding.buttonGoToCart.visibility = View.GONE
-                binding.buttonPlus.visibility = View.VISIBLE
-                binding.buttonMinus.visibility = View.VISIBLE
-                binding.tvCount.visibility = View.VISIBLE
-            }
-        }
-
-        getProductList()
-
         viewModel.loadState.observe(viewLifecycleOwner) { loadResult ->
-            when (loadResult) {
-                is LoadResult.Success -> {
-                    productListAdapter.productList = loadResult.productList
-                    viewModel.saveProducts(loadResult.productList)
-
-                    with(binding) {
-                        tvNoConnection.visibility = View.GONE
-                        progressLoading.visibility = View.GONE
-                        buttonRetry.visibility = View.INVISIBLE
-                    }
-                }
-
-                is LoadResult.Error -> {
-                    with(binding) {
-                        tvNoConnection.visibility = View.VISIBLE
-                        progressLoading.visibility = View.GONE
-                        buttonRetry.visibility = View.VISIBLE
-                    }
-                }
-            }
+            loadResult.show(
+                viewModel,
+                productListAdapter,
+                binding.tvNoConnection,
+                binding.progressLoading,
+                binding.buttonRetry
+            )
         }
 
         viewModel.localProducts.observe(viewLifecycleOwner) { productList ->
             productListAdapter.productList = productList
             binding.progressLoading.visibility = View.GONE
+        }
+
+        viewModel.actionsState.observe(viewLifecycleOwner) {
+            with(binding) {
+                it.more(
+                    buttonGoToCart,
+                    buttonContinue,
+                    buttonPlus,
+                    buttonMinus,
+                    tvAdd,
+                    tvGoToCart,
+                    tvButtonContinueText,
+                    tvCount,
+                    ivCart
+                )
+            }
         }
 
         binding.buttonRetry.setOnClickListener {
