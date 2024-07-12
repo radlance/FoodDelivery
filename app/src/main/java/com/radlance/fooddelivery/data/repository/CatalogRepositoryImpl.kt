@@ -23,13 +23,14 @@ class CatalogRepositoryImpl(private val service: Service, private val deliveryDa
             val productList = service.products().map {
                 Product(it.id, it.title, it.price, it.imageUrl, it.category.id)
             }
+            saveProducts(productList)
             LoadResult.Success(productList)
         } catch (e: Exception) {
             return LoadResult.Error
         }
     }
 
-    override suspend fun saveProducts(productList: List<Product>) {
+    private suspend fun saveProducts(productList: List<Product>) {
         deliveryDao.saveCategories(categories.map {
             CategoryCache(it.id, it.title)
         })

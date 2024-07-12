@@ -16,7 +16,4 @@ import androidx.room.PrimaryKey
 data class CartItemCache(
     @PrimaryKey @ColumnInfo(name = "id") val productId: Long,
     @ColumnInfo(name = "count") val count: Int
-//    @PrimaryKey(autoGenerate = true) val id: Long? = null
 )
-
-//TODO сделать инкремент при наличии товара в корзине

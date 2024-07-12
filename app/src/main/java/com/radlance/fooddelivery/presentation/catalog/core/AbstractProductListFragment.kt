@@ -89,17 +89,11 @@ abstract class AbstractProductListFragment : AbstractFragment<FragmentProductLis
         }
         viewModel.loadState.observe(viewLifecycleOwner) { loadResult ->
             loadResult.show(
-                viewModel,
                 productListAdapter,
                 binding.tvNoConnection,
                 binding.progressLoading,
                 binding.buttonRetry
             )
-        }
-
-        viewModel.localProducts.observe(viewLifecycleOwner) { productList ->
-            productListAdapter.productList = productList
-            binding.progressLoading.visibility = View.GONE
         }
 
         viewModel.actionsState.observe(viewLifecycleOwner) {

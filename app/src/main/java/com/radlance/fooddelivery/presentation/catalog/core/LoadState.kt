@@ -8,7 +8,6 @@ import com.radlance.fooddelivery.domain.entity.Product
 
 interface LoadState {
     fun show(
-        viewModel: ProductListViewModel,
         adapter: ProductListRecyclerAdapter,
         noConnectionTextView: TextView,
         progressBar: ProgressBar,
@@ -17,15 +16,11 @@ interface LoadState {
 
     class Success(private val list: List<Product> = emptyList()) : LoadState {
         override fun show(
-            viewModel: ProductListViewModel,
             adapter: ProductListRecyclerAdapter,
             noConnectionTextView: TextView,
             progressBar: ProgressBar,
             retryButton: Button
         ) {
-            if (list.isNotEmpty()) {
-                viewModel.saveProducts(list)
-            }
             adapter.productList = list
             noConnectionTextView.visibility = View.GONE
             progressBar.visibility = View.GONE
@@ -36,7 +31,6 @@ interface LoadState {
 
     object Error : LoadState {
         override fun show(
-            viewModel: ProductListViewModel,
             adapter: ProductListRecyclerAdapter,
             noConnectionTextView: TextView,
             progressBar: ProgressBar,

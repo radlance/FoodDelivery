@@ -10,7 +10,6 @@ import com.radlance.fooddelivery.domain.usecase.catalog.AddCartItemUseCase
 import com.radlance.fooddelivery.domain.usecase.catalog.GetLocalProductsUseCase
 import com.radlance.fooddelivery.domain.usecase.catalog.GetProductByCategoryUseCase
 import com.radlance.fooddelivery.domain.usecase.catalog.LoadProductsUseCase
-import com.radlance.fooddelivery.domain.usecase.catalog.SaveProductsUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -18,7 +17,6 @@ import kotlinx.coroutines.launch
 
 class ProductListViewModel(
     private val loadProductsUseCase: LoadProductsUseCase,
-    private val saveProductsUseCase: SaveProductsUseCase,
     private val getLocalProductsUseCase: GetLocalProductsUseCase,
     private val getProductByCategoryUseCase: GetProductByCategoryUseCase,
     private val addCartItemUseCase: AddCartItemUseCase,
@@ -31,10 +29,6 @@ class ProductListViewModel(
 
     val loadState: LiveData<LoadState>
         get() = _loadState
-
-    private val _localProducts = MutableLiveData<List<Product>>()
-    val localProducts: LiveData<List<Product>>
-        get() = _localProducts
 
     private val _detailsState = MutableLiveData<DetailsState>()
     val openedProductDetails: LiveData<DetailsState>
@@ -56,25 +50,31 @@ class ProductListViewModel(
                 val loadResult = loadProductsUseCase()
                 _loadState.value = loadResult.map(mapper)
             } else {
-                _localProducts.value = localProducts
+                _loadState.value = LoadState.Success(localProducts)
             }
-        }
-    }
-
-    fun saveProducts(productList: List<Product>) {
-        viewModelScope.launch {
-            saveProductsUseCase(productList)
         }
     }
 
     fun getProductsByCategory(categoryName: String) {
         viewModelScope.launch {
-            val localProducts = getLocalProductsUseCase()
-            val loadResult = loadProductsUseCase()
-            if (localProducts.isEmpty()) {
-                _loadState.value = loadResult.map(mapper)
+
+            if (getLocalProductsUseCase().isEmpty()) {
+                if (loadProductsUseCase() is LoadResult.Success) {
+                    val localProductsByCategory = getProductByCategoryUseCase(categoryName).map {
+                        Product(
+                            it.product.id,
+                            it.product.title,
+                            it.product.price,
+                            it.product.imageUrl,
+                            it.product.categoryId
+                        )
+                    }
+                    _loadState.value = LoadState.Success(localProductsByCategory)
+                } else {
+                    _loadState.value = LoadState.Error
+                }
             } else {
-                _localProducts.value = getProductByCategoryUseCase(categoryName).map {
+                val localProductsByCategory = getProductByCategoryUseCase(categoryName).map {
                     Product(
                         it.product.id,
                         it.product.title,
@@ -83,9 +83,9 @@ class ProductListViewModel(
                         it.product.categoryId
                     )
                 }
+                _loadState.value = LoadState.Success(localProductsByCategory)
             }
         }
-        //TODO сделать загрузку по категорим после retry
     }
 
     fun showDetails(product: Product) {
