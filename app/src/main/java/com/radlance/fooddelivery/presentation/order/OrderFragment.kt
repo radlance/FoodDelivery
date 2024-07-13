@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.radlance.fooddelivery.databinding.FragmentOrderBinding
@@ -49,6 +50,17 @@ class OrderFragment : AbstractFragment<FragmentOrderBinding>() {
 
         viewModel.updatedCartItem.observe(viewLifecycleOwner) {
             orderListAdapter.updateItemCount(it)
+        }
+
+        viewModel.totalOrderCost.observe(viewLifecycleOwner) {
+            binding.tvPrice.text = it.toString()
+        }
+
+        view.setOnClickListener {
+            binding.etAddress.isCursorVisible = false
+            requireActivity().window.setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
+            )
         }
     }
 

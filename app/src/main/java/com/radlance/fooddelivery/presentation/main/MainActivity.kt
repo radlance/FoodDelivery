@@ -5,13 +5,16 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.radlance.fooddelivery.R
+import androidx.lifecycle.ViewModelProvider
 import com.radlance.fooddelivery.databinding.ActivityMainBinding
 import com.radlance.fooddelivery.presentation.catalog.core.FragmentCatalog
 import com.radlance.fooddelivery.presentation.order.OrderFragment
 
 class MainActivity : AppCompatActivity(), FragmentReplaceListener {
     private lateinit var binding: ActivityMainBinding
+    private val viewModel: MainViewModel by lazy {
+        ViewModelProvider(this)[MainViewModel::class.java]
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -39,8 +42,16 @@ class MainActivity : AppCompatActivity(), FragmentReplaceListener {
             historyReplace()
         }
 
-    }
+        viewModel.navigationState.observe(this) {
+            it.update(
+                binding.buttonHomePage,
+                binding.buttonShoppingCart,
+                binding.buttonUser,
+                binding.buttonHistory
+            )
+        }
 
+    }
     private fun replaceFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(binding.containerMain.id, fragment)
@@ -48,41 +59,22 @@ class MainActivity : AppCompatActivity(), FragmentReplaceListener {
     }
 
     override fun catalogReplace() {
-        with(binding) {
-            buttonHomePage.setImageResource(R.drawable.ic_home_filled)
-            buttonShoppingCart.setImageResource(R.drawable.ic_shopping_cart)
-            buttonUser.setImageResource(R.drawable.ic_user)
-            buttonHistory.setImageResource(R.drawable.ic_sharp_history)
-        }
+        viewModel.updateNavigationState(NavigationState.HomeSelected)
         replaceFragment(FragmentCatalog.newInstance())
     }
 
     override fun orderReplace() {
-        with(binding) {
-            buttonHomePage.setImageResource(R.drawable.ic_home)
-            buttonShoppingCart.setImageResource(R.drawable.ic_shopping_cart_filled)
-            buttonUser.setImageResource(R.drawable.ic_user)
-            buttonHistory.setImageResource(R.drawable.ic_sharp_history)
-        }
+        viewModel.updateNavigationState(NavigationState.CartSelected)
         replaceFragment(OrderFragment.newInstance())
     }
 
     override fun userReplace() {
-        with(binding) {
-            buttonHomePage.setImageResource(R.drawable.ic_home)
-            buttonShoppingCart.setImageResource(R.drawable.ic_shopping_cart)
-            buttonUser.setImageResource(R.drawable.ic_user_filled)
-            buttonHistory.setImageResource(R.drawable.ic_sharp_history)
-        }
+        viewModel.updateNavigationState(NavigationState.UserSelected)
+
     }
 
     override fun historyReplace() {
-        with(binding) {
-            buttonHomePage.setImageResource(R.drawable.ic_home)
-            buttonShoppingCart.setImageResource(R.drawable.ic_shopping_cart)
-            buttonUser.setImageResource(R.drawable.ic_user)
-            buttonHistory.setImageResource(R.drawable.ic_sharp_history_filled)
-            }
+        viewModel.updateNavigationState(NavigationState.HistorySelected)
     }
 
     companion object {

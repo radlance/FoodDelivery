@@ -42,4 +42,10 @@ interface DeliveryDao {
 
     @Query("SELECT * FROM cart_item INNER JOIN product ON cart_item.id = product.id")
     suspend fun getFullCartItemInfo(): List<FullCartItemCache>
+
+    @Query(
+        "SELECT SUM(count * price) AS total_price FROM cart_item" +
+            " INNER JOIN product ON cart_item.id = product.id"
+    )
+    suspend fun getTotalOrderCost(): Double
 }

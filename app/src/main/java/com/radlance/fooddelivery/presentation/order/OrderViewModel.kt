@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.radlance.fooddelivery.domain.entity.CartItem
 import com.radlance.fooddelivery.domain.usecase.order.GetFullCartItemInfoUseCase
+import com.radlance.fooddelivery.domain.usecase.order.GetTotalOrderCostUseCase
 import com.radlance.fooddelivery.domain.usecase.order.UpdateCartItemUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -13,7 +14,8 @@ import kotlinx.coroutines.launch
 
 class OrderViewModel(
     private val getFullCartItemInfoUseCase: GetFullCartItemInfoUseCase,
-    private val updateCartItemUseCase: UpdateCartItemUseCase
+    private val updateCartItemUseCase: UpdateCartItemUseCase,
+    private val getTotalOrderCostUseCase: GetTotalOrderCostUseCase
 ) :
     ViewModel() {
     private val viewModelScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
@@ -26,13 +28,18 @@ class OrderViewModel(
     val updatedCartItem: LiveData<CartItem>
         get() = _updatedCartItem
 
+    private val _totalOrderCost = MutableLiveData<Double>()
+    val totalOrderCost: LiveData<Double>
+        get() = _totalOrderCost
+
     fun getFullCartItemInfo() {
         viewModelScope.launch {
             val orderList = getFullCartItemInfoUseCase()
-            _orderState.value = if (orderList.isEmpty()) {
-                OrdersState.Empty
+            if (orderList.isEmpty()) {
+                _orderState.value = OrdersState.Empty
             } else {
-                OrdersState.Loaded(orderList)
+                _orderState.value = OrdersState.Loaded(orderList)
+                _totalOrderCost.value = getTotalOrderCostUseCase()
             }
         }
     }
@@ -46,6 +53,7 @@ class OrderViewModel(
 
         viewModelScope.launch {
             updateCartItemUseCase(cartItem)
+            _totalOrderCost.value = getTotalOrderCostUseCase()
         }
     }
 
@@ -58,6 +66,7 @@ class OrderViewModel(
 
         viewModelScope.launch {
             updateCartItemUseCase(cartItem)
+            _totalOrderCost.value = getTotalOrderCostUseCase()
         }
     }
 }

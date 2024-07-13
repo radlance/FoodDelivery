@@ -27,4 +27,8 @@ class OrderRepositoryImpl(private val service: Service, private val deliveryDao:
     override suspend fun updateCartItem(cartItem: CartItem) {
         deliveryDao.updateCartItem(CartItemCache(cartItem.product.id, cartItem.count))
     }
+
+    override suspend fun getTotalOrderCost(): Double {
+        return deliveryDao.getTotalOrderCost()
+    }
 }
