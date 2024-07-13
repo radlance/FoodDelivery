@@ -76,7 +76,7 @@
         android:textColor="@color/text_color"/>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button_cancel"
+        android:id="@+id/button_add"
         style="?android:borderlessButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="70dp"
