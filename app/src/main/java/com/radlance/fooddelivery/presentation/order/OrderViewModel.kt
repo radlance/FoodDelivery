@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.radlance.fooddelivery.domain.entity.CartItem
+import com.radlance.fooddelivery.domain.usecase.order.DeleteCartItemUseCase
 import com.radlance.fooddelivery.domain.usecase.order.GetFullCartItemInfoUseCase
 import com.radlance.fooddelivery.domain.usecase.order.GetTotalOrderCostUseCase
 import com.radlance.fooddelivery.domain.usecase.order.UpdateCartItemUseCase
@@ -15,7 +16,8 @@ import kotlinx.coroutines.launch
 class OrderViewModel(
     private val getFullCartItemInfoUseCase: GetFullCartItemInfoUseCase,
     private val updateCartItemUseCase: UpdateCartItemUseCase,
-    private val getTotalOrderCostUseCase: GetTotalOrderCostUseCase
+    private val getTotalOrderCostUseCase: GetTotalOrderCostUseCase,
+    private val deleteCartItemUseCase: DeleteCartItemUseCase
 ) :
     ViewModel() {
     private val viewModelScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
@@ -28,8 +30,8 @@ class OrderViewModel(
     val updatedCartItem: LiveData<CartItem>
         get() = _updatedCartItem
 
-    private val _totalOrderCost = MutableLiveData<Double>()
-    val totalOrderCost: LiveData<Double>
+    private val _totalOrderCost = MutableLiveData<Int>()
+    val totalOrderCost: LiveData<Int>
         get() = _totalOrderCost
 
     fun getFullCartItemInfo() {
@@ -39,7 +41,7 @@ class OrderViewModel(
                 _orderState.value = OrdersState.Empty
             } else {
                 _orderState.value = OrdersState.Loaded(orderList)
-                _totalOrderCost.value = getTotalOrderCostUseCase()
+                _totalOrderCost.value = getTotalOrderCostUseCase().toInt()
             }
         }
     }
@@ -53,7 +55,7 @@ class OrderViewModel(
 
         viewModelScope.launch {
             updateCartItemUseCase(cartItem)
-            _totalOrderCost.value = getTotalOrderCostUseCase()
+            _totalOrderCost.value = getTotalOrderCostUseCase().toInt()
         }
     }
 
@@ -66,7 +68,14 @@ class OrderViewModel(
 
         viewModelScope.launch {
             updateCartItemUseCase(cartItem)
-            _totalOrderCost.value = getTotalOrderCostUseCase()
+            _totalOrderCost.value = getTotalOrderCostUseCase().toInt()
+        }
+    }
+
+    fun deleteCartItem(cartItem: CartItem) {
+        viewModelScope.launch {
+            deleteCartItemUseCase(cartItem)
+            getFullCartItemInfo()
         }
     }
 }

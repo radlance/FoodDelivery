@@ -11,3 +11,4 @@ data class Product(
     val imageUrl: String,
     val categoryId: Long
 ): Parcelable
+

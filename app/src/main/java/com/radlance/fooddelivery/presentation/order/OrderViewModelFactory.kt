@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewmodel.CreationExtras
+import com.radlance.fooddelivery.domain.usecase.order.DeleteCartItemUseCase
 import com.radlance.fooddelivery.domain.usecase.order.GetFullCartItemInfoUseCase
 import com.radlance.fooddelivery.domain.usecase.order.GetTotalOrderCostUseCase
 import com.radlance.fooddelivery.domain.usecase.order.UpdateCartItemUseCase
@@ -18,11 +19,13 @@ class OrderViewModelFactory : ViewModelProvider.Factory {
         val getFullCartItemInfoUseCase = GetFullCartItemInfoUseCase(orderRepository)
         val updateCartItemUseCase = UpdateCartItemUseCase(orderRepository)
         val getTotalOrderCostUseCase = GetTotalOrderCostUseCase(orderRepository)
+        val deleteCartItemUseCase = DeleteCartItemUseCase(orderRepository)
 
         return OrderViewModel(
             getFullCartItemInfoUseCase,
             updateCartItemUseCase,
-            getTotalOrderCostUseCase
+            getTotalOrderCostUseCase,
+            deleteCartItemUseCase
         ) as T
     }
 }

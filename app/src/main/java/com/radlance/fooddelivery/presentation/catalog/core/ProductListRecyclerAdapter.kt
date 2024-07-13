@@ -27,7 +27,7 @@ class ProductListRecyclerAdapter :
         fun bind(product: Product) {
             with(binding) {
                 tvTitle.text = product.title
-                tvPrice.text = product.price.toString()
+                tvPrice.text = product.price.toInt().toString()
                 Picasso.get().load(product.imageUrl).into(binding.ivProduct)
             }
         }

@@ -1,6 +1,7 @@
 package com.radlance.fooddelivery.data.database
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -48,4 +49,7 @@ interface DeliveryDao {
             " INNER JOIN product ON cart_item.id = product.id"
     )
     suspend fun getTotalOrderCost(): Double
+
+    @Delete
+    suspend fun deleteCartItem(cartItem: CartItemCache)
 }

@@ -33,13 +33,14 @@ class OrderListRecyclerAdapter :
 
     var incrementButtonClickListener: ((CartItem) -> Unit)? = null
     var decrementButtonClickListener: ((CartItem) -> Unit)? = null
+    var onCartItemLongClickListener: ((CartItem) -> Unit)? = null
 
     class OrderListRecyclerVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val binding = ItemOrderBinding.bind(itemView)
         fun bind(cartItem: CartItem) {
             Picasso.get().load(cartItem.product.imageUrl).into(binding.ivProduct)
             binding.tvTitle.text = cartItem.product.title
-            binding.tvPrice.text = (cartItem.product.price * cartItem.count).toString()
+            binding.tvPrice.text = (cartItem.product.price * cartItem.count).toInt().toString()
             binding.tvCount.text = cartItem.count.toString()
         }
     }
@@ -57,6 +58,11 @@ class OrderListRecyclerAdapter :
 
         holder.binding.buttonMinus.setOnClickListener {
             decrementButtonClickListener?.invoke(order)
+        }
+
+        holder.itemView.setOnLongClickListener {
+            onCartItemLongClickListener?.invoke(order)
+            true
         }
         holder.bind(order)
     }

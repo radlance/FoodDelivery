@@ -6,4 +6,5 @@ interface OrderRepository {
     suspend fun getFullCartItemInfo(): List<CartItem>
     suspend fun updateCartItem(cartItem: CartItem)
     suspend fun getTotalOrderCost(): Double
+    suspend fun deleteCartItem(cartItem: CartItem)
 }
