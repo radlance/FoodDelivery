@@ -21,14 +21,26 @@ class OrderListRecyclerAdapter :
             field = value
         }
 
+    fun updateItemCount(cartItem: CartItem) {
+        val index = orderList.indexOfFirst { it.product.id == cartItem.product.id }
+        val arrayList = orderList.toMutableList()
+        arrayList[index] = cartItem
+
+        orderList = arrayList
+        notifyItemChanged(index)
+
+    }
+
+    var incrementButtonClickListener: ((CartItem) -> Unit)? = null
+    var decrementButtonClickListener: ((CartItem) -> Unit)? = null
+
     class OrderListRecyclerVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val binding = ItemOrderBinding.bind(itemView)
         fun bind(cartItem: CartItem) {
             Picasso.get().load(cartItem.product.imageUrl).into(binding.ivProduct)
             binding.tvTitle.text = cartItem.product.title
-            binding.tvPrice.text = cartItem.product.price.toString()
+            binding.tvPrice.text = (cartItem.product.price * cartItem.count).toString()
             binding.tvCount.text = cartItem.count.toString()
-
         }
     }
 
@@ -39,6 +51,13 @@ class OrderListRecyclerAdapter :
 
     override fun onBindViewHolder(holder: OrderListRecyclerVH, position: Int) {
         val order = orderList[position]
+        holder.binding.buttonPlus.setOnClickListener {
+            incrementButtonClickListener?.invoke(order)
+        }
+
+        holder.binding.buttonMinus.setOnClickListener {
+            decrementButtonClickListener?.invoke(order)
+        }
         holder.bind(order)
     }
 

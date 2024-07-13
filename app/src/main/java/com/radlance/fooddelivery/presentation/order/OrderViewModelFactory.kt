@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.radlance.fooddelivery.domain.usecase.order.GetFullCartItemInfoUseCase
+import com.radlance.fooddelivery.domain.usecase.order.UpdateCartItemUseCase
 import com.radlance.fooddelivery.presentation.core.ProvideRepository
 
 class OrderViewModelFactory : ViewModelProvider.Factory {
@@ -13,6 +14,7 @@ class OrderViewModelFactory : ViewModelProvider.Factory {
         val application = extras[APPLICATION_KEY]
         val orderRepository = (application as ProvideRepository).orderRepository()
         val getFullCartItemInfoUseCase = GetFullCartItemInfoUseCase(orderRepository)
-        return OrderViewModel(getFullCartItemInfoUseCase) as T
+        val updateCartItemUseCase = UpdateCartItemUseCase(orderRepository)
+        return OrderViewModel(getFullCartItemInfoUseCase, updateCartItemUseCase) as T
     }
 }

@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.radlance.fooddelivery.databinding.FragmentOrderBinding
 import com.radlance.fooddelivery.presentation.core.AbstractFragment
+
 
 class OrderFragment : AbstractFragment<FragmentOrderBinding>() {
     val viewModel: OrderViewModel by lazy {
@@ -23,6 +25,8 @@ class OrderFragment : AbstractFragment<FragmentOrderBinding>() {
             orderListAdapter = OrderListRecyclerAdapter()
             adapter = orderListAdapter
         }
+        (binding.rvOrders.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
+
         viewModel.getFullCartItemInfo()
 
         viewModel.orderState.observe(viewLifecycleOwner) {
@@ -34,7 +38,20 @@ class OrderFragment : AbstractFragment<FragmentOrderBinding>() {
                 orderListAdapter
             )
         }
+
+        orderListAdapter.incrementButtonClickListener = {
+            viewModel.incrementCount(it)
+        }
+
+        orderListAdapter.decrementButtonClickListener = {
+            viewModel.decrementCount(it)
+        }
+
+        viewModel.updatedCartItem.observe(viewLifecycleOwner) {
+            orderListAdapter.updateItemCount(it)
+        }
     }
+
     companion object {
         fun newInstance(): OrderFragment {
             return OrderFragment()

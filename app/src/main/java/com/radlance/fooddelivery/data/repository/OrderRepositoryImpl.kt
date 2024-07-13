@@ -1,6 +1,7 @@
 package com.radlance.fooddelivery.data.repository
 
 import com.radlance.fooddelivery.data.api.core.Service
+import com.radlance.fooddelivery.data.database.CartItemCache
 import com.radlance.fooddelivery.data.database.DeliveryDao
 import com.radlance.fooddelivery.domain.entity.CartItem
 import com.radlance.fooddelivery.domain.entity.Product
@@ -21,5 +22,9 @@ class OrderRepositoryImpl(private val service: Service, private val deliveryDao:
                 )
             )
         }
+    }
+
+    override suspend fun updateCartItem(cartItem: CartItem) {
+        deliveryDao.updateCartItem(CartItemCache(cartItem.product.id, cartItem.count))
     }
 }
