@@ -8,9 +8,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.radlance.fooddelivery.databinding.ActivityMainBinding
 import com.radlance.fooddelivery.presentation.catalog.core.FragmentCatalog
+import com.radlance.fooddelivery.presentation.history.HistoryFragment
 import com.radlance.fooddelivery.presentation.order.OrderFragment
 
 class MainActivity : AppCompatActivity(), FragmentReplaceListener {
+    private lateinit var token: String
     private lateinit var binding: ActivityMainBinding
     private val viewModel: MainViewModel by lazy {
         ViewModelProvider(this)[MainViewModel::class.java]
@@ -20,12 +22,15 @@ class MainActivity : AppCompatActivity(), FragmentReplaceListener {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if (savedInstanceState == null) {
+        token = (if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
                 .add(binding.containerMain.id, FragmentCatalog.newInstance())
                 .commit()
-        }
+            intent.getStringExtra(TOKEN)
+        } else {
+            savedInstanceState.getString(TOKEN)
+        })!!
         binding.buttonShoppingCart.setOnClickListener {
             orderReplace()
         }
@@ -50,7 +55,6 @@ class MainActivity : AppCompatActivity(), FragmentReplaceListener {
                 binding.buttonHistory
             )
         }
-
     }
     private fun replaceFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
@@ -70,18 +74,22 @@ class MainActivity : AppCompatActivity(), FragmentReplaceListener {
 
     override fun userReplace() {
         viewModel.updateNavigationState(NavigationState.UserSelected)
-
     }
 
     override fun historyReplace() {
         viewModel.updateNavigationState(NavigationState.HistorySelected)
+        replaceFragment(HistoryFragment.newInstance(token))
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(TOKEN, intent.getStringExtra(TOKEN))
+    }
     companion object {
-        private const val SIGN_IN_KEY = "sign_in"
+        private const val TOKEN = "token"
         fun newInstance(context: Context, token: String = ""): Intent {
             return Intent(context, MainActivity::class.java).apply {
-                putExtra(SIGN_IN_KEY, token)
+                putExtra(TOKEN, token)
             }
         }
     }

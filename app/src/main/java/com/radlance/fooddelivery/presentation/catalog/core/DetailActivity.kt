@@ -35,7 +35,7 @@ class DetailActivity : AppCompatActivity() {
         }
 
         binding.tvTitle.text = product.title
-        binding.tvPrice.text = product.price.toString()
+        binding.tvPrice.text = product.price.toInt().toString()
         Picasso.get().load(product.imageUrl).into(binding.ivProduct)
     }
 

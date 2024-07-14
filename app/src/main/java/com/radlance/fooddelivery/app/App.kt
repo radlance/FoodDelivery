@@ -5,9 +5,11 @@ import com.radlance.fooddelivery.data.api.core.BaseService
 import com.radlance.fooddelivery.data.database.DeliveryDatabase
 import com.radlance.fooddelivery.data.repository.AuthorizationRepositoryImpl
 import com.radlance.fooddelivery.data.repository.CatalogRepositoryImpl
+import com.radlance.fooddelivery.data.repository.HistoryRepositoryImpl
 import com.radlance.fooddelivery.data.repository.OrderRepositoryImpl
 import com.radlance.fooddelivery.domain.repository.AuthorizationRepository
 import com.radlance.fooddelivery.domain.repository.CatalogRepository
+import com.radlance.fooddelivery.domain.repository.HistoryRepository
 import com.radlance.fooddelivery.domain.repository.OrderRepository
 import com.radlance.fooddelivery.presentation.core.ProvideRepository
 
@@ -24,6 +26,10 @@ class App : Application(), ProvideRepository {
 
     override fun orderRepository(): OrderRepository {
         val dao = DeliveryDatabase.newInstance(applicationContext).productsDao()
-        return OrderRepositoryImpl(BaseService(), dao)
+        return OrderRepositoryImpl(dao)
+    }
+
+    override fun historyRepository(token: String): HistoryRepository {
+        return HistoryRepositoryImpl(BaseService(token))
     }
 }

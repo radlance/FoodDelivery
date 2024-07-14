@@ -6,7 +6,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import com.radlance.fooddelivery.domain.entity.Product
 
-interface LoadState {
+interface LoadProductsState {
     fun show(
         adapter: ProductListRecyclerAdapter,
         noConnectionTextView: TextView,
@@ -14,7 +14,7 @@ interface LoadState {
         retryButton: Button
     )
 
-    class Success(private val list: List<Product> = emptyList()) : LoadState {
+    class Success(private val list: List<Product> = emptyList()) : LoadProductsState {
         override fun show(
             adapter: ProductListRecyclerAdapter,
             noConnectionTextView: TextView,
@@ -29,7 +29,7 @@ interface LoadState {
 
     }
 
-    object Error : LoadState {
+    object Error : LoadProductsState {
         override fun show(
             adapter: ProductListRecyclerAdapter,
             noConnectionTextView: TextView,

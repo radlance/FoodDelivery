@@ -1,4 +1,4 @@
-package com.radlance.fooddelivery.presentation.core
+package com.radlance.fooddelivery.presentation.authorization
 
 fun validateLogin(login: String): Boolean {
     val emailRegex =

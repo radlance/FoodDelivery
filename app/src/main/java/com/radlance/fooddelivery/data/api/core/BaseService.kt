@@ -26,7 +26,7 @@ object BaseService {
         token?.let {
             client = client.addInterceptor { chain: Interceptor.Chain ->
                 val request = chain.request().newBuilder()
-                    .header("Authorization", "Bearer token")
+                    .header("Authorization", "Bearer $token")
                     .build()
                 return@addInterceptor chain.proceed(request)
             }

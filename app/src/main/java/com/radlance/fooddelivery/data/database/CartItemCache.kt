@@ -14,6 +14,6 @@ import androidx.room.PrimaryKey
     )]
 )
 data class CartItemCache(
-    @PrimaryKey @ColumnInfo(name = "id") val productId: Long,
+    @PrimaryKey @ColumnInfo(name = "id") val productId: Int,
     @ColumnInfo(name = "count") val count: Int
 )

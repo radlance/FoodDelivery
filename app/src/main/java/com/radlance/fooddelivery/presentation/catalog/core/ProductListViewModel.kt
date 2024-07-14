@@ -3,7 +3,7 @@ package com.radlance.fooddelivery.presentation.catalog.core
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.radlance.fooddelivery.domain.core.LoadResult
+import com.radlance.fooddelivery.domain.core.LoadProductsResult
 import com.radlance.fooddelivery.domain.entity.CartItem
 import com.radlance.fooddelivery.domain.entity.Product
 import com.radlance.fooddelivery.domain.usecase.catalog.AddCartItemUseCase
@@ -21,13 +21,13 @@ class ProductListViewModel(
     private val getProductByCategoryUseCase: GetProductByCategoryUseCase,
     private val addCartItemUseCase: AddCartItemUseCase,
 
-    private val mapper: LoadResult.Mapper<LoadState>
+    private val mapper: LoadProductsResult.Mapper<LoadProductsState>
 ) : ViewModel() {
     private val viewModelScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
-    private val _loadState = MutableLiveData<LoadState>()
+    private val _loadState = MutableLiveData<LoadProductsState>()
 
-    val loadState: LiveData<LoadState>
+    val loadState: LiveData<LoadProductsState>
         get() = _loadState
 
     private val _detailsState = MutableLiveData<DetailsState>()
@@ -50,7 +50,7 @@ class ProductListViewModel(
                 val loadResult = loadProductsUseCase()
                 _loadState.value = loadResult.map(mapper)
             } else {
-                _loadState.value = LoadState.Success(localProducts)
+                _loadState.value = LoadProductsState.Success(localProducts)
             }
         }
     }
@@ -59,7 +59,7 @@ class ProductListViewModel(
         viewModelScope.launch {
 
             if (getLocalProductsUseCase().isEmpty()) {
-                if (loadProductsUseCase() is LoadResult.Success) {
+                if (loadProductsUseCase() is LoadProductsResult.Success) {
                     val localProductsByCategory = getProductByCategoryUseCase(categoryName).map {
                         Product(
                             it.product.id,
@@ -69,9 +69,9 @@ class ProductListViewModel(
                             it.product.categoryId
                         )
                     }
-                    _loadState.value = LoadState.Success(localProductsByCategory)
+                    _loadState.value = LoadProductsState.Success(localProductsByCategory)
                 } else {
-                    _loadState.value = LoadState.Error
+                    _loadState.value = LoadProductsState.Error
                 }
             } else {
                 val localProductsByCategory = getProductByCategoryUseCase(categoryName).map {
@@ -83,7 +83,7 @@ class ProductListViewModel(
                         it.product.categoryId
                     )
                 }
-                _loadState.value = LoadState.Success(localProductsByCategory)
+                _loadState.value = LoadProductsState.Success(localProductsByCategory)
             }
         }
     }

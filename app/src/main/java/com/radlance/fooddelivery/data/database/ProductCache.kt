@@ -15,9 +15,9 @@ import androidx.room.PrimaryKey
     )]
 )
 data class ProductCache(
-    @PrimaryKey(autoGenerate = false) val id: Long,
+    @PrimaryKey(autoGenerate = false) val id: Int,
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "price") val price: Double,
     @ColumnInfo(name = "image_url") val imageUrl: String,
-    @ColumnInfo(name = "category") val categoryId: Long
+    @ColumnInfo(name = "category") val categoryId: Int
 )

@@ -2,7 +2,7 @@ package com.radlance.fooddelivery.domain.core
 
 import com.radlance.fooddelivery.domain.entity.Product
 
-interface LoadResult {
+interface LoadProductsResult {
     fun <T : Any> map(mapper: Mapper<T>): T
 
     interface Mapper<T : Any> {
@@ -10,13 +10,13 @@ interface LoadResult {
         fun mapError(): T
     }
 
-    class Success(val productList: List<Product> = emptyList()) : LoadResult {
+    data class Success(private val productList: List<Product> = emptyList()) : LoadProductsResult {
         override fun <T : Any> map(mapper: Mapper<T>): T {
             return mapper.mapSuccess(productList)
         }
     }
 
-    object Error : LoadResult {
+    object Error : LoadProductsResult {
         override fun <T : Any> map(mapper: Mapper<T>): T {
             return mapper.mapError()
         }

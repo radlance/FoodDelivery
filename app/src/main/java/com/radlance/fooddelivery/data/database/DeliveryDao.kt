@@ -39,7 +39,7 @@ interface DeliveryDao {
     suspend fun updateCartItem(cartItem: CartItemCache)
 
     @Query("SELECT count FROM cart_item WHERE id = :id")
-    suspend fun getProductCountById(id: Long): Int
+    suspend fun getProductCountById(id: Int): Int
 
     @Query("SELECT * FROM cart_item INNER JOIN product ON cart_item.id = product.id")
     suspend fun getFullCartItemInfo(): List<FullCartItemCache>

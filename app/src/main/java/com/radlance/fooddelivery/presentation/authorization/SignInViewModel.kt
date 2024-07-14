@@ -6,8 +6,6 @@ import androidx.lifecycle.ViewModel
 import com.radlance.fooddelivery.domain.core.AuthResult
 import com.radlance.fooddelivery.domain.entity.User
 import com.radlance.fooddelivery.domain.usecase.authorization.LoginUserUseCase
-import com.radlance.fooddelivery.presentation.core.parseString
-import com.radlance.fooddelivery.presentation.core.validateLogin
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

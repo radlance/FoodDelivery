@@ -1,0 +1,45 @@
+package com.radlance.fooddelivery.presentation.history
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import com.radlance.fooddelivery.databinding.FramentHistoryBinding
+import com.radlance.fooddelivery.presentation.core.AbstractFragment
+
+class HistoryFragment : AbstractFragment<FramentHistoryBinding>() {
+    private val token: String by lazy {
+        requireArguments().getString(TOKEN_EXTRA)!!
+    }
+
+    private val viewModel: HistoryViewModel by lazy {
+        ViewModelProvider(this, HistoryViewModelFactory(token))[HistoryViewModel::class.java]
+    }
+
+    override fun bind(inflater: LayoutInflater, container: ViewGroup?): FramentHistoryBinding {
+        return FramentHistoryBinding.inflate(inflater, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.loadHistory()
+
+        viewModel.history.observe(viewLifecycleOwner) {
+            it.show(requireContext())
+        }
+    }
+
+    companion object {
+        private const val TOKEN_EXTRA = "token"
+        fun newInstance(token: String): HistoryFragment {
+            return HistoryFragment().apply {
+                arguments = Bundle().apply {
+                    putString(
+                        TOKEN_EXTRA, token
+                    )
+                }
+            }
+        }
+    }
+}

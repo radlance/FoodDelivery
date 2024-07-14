@@ -1,6 +1,5 @@
 package com.radlance.fooddelivery.presentation.catalog.core
 
-import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.ImageView
@@ -30,7 +29,7 @@ interface DetailsState {
             cardView.visibility = VISIBLE
             recyclerView.visibility = GONE
             title.text = product.title
-            price.text = product.price.toString()
+            price.text = product.price.toInt().toString()
             Picasso.get().load(product.imageUrl).into(image)
         }
 

@@ -20,7 +20,7 @@ class ProductListViewModelFactory : ViewModelProvider.Factory {
         val getLocalProductsUseCase = GetLocalProductsUseCase(catalogRepository)
         val getProductByCategoryUseCase = GetProductByCategoryUseCase(catalogRepository)
         val addCartItemUseCase = AddCartItemUseCase(catalogRepository)
-        val mapper = LoadResultMapper()
+        val mapper = LoadProductsResultMapper()
 
         return ProductListViewModel(
             loadProductsUseCase,

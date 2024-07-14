@@ -7,7 +7,7 @@ import com.radlance.fooddelivery.data.database.CartItemCache
 import com.radlance.fooddelivery.data.database.CategoryCache
 import com.radlance.fooddelivery.data.database.DeliveryDao
 import com.radlance.fooddelivery.data.database.ProductCache
-import com.radlance.fooddelivery.domain.core.LoadResult
+import com.radlance.fooddelivery.domain.core.LoadProductsResult
 import com.radlance.fooddelivery.domain.entity.CartItem
 import com.radlance.fooddelivery.domain.entity.Category
 import com.radlance.fooddelivery.domain.entity.FullProduct
@@ -17,16 +17,16 @@ import com.radlance.fooddelivery.domain.repository.CatalogRepository
 class CatalogRepositoryImpl(private val service: Service, private val deliveryDao: DeliveryDao) :
     CatalogRepository {
     private var categories = listOf<CategoryResponse>()
-    override suspend fun loadProducts(): LoadResult {
+    override suspend fun loadProducts(): LoadProductsResult {
         return try {
             categories = service.categories()
             val productList = service.products().map {
                 Product(it.id, it.title, it.price, it.imageUrl, it.category.id)
             }
             saveProducts(productList)
-            LoadResult.Success(productList)
+            LoadProductsResult.Success(productList)
         } catch (e: Exception) {
-            return LoadResult.Error
+            return LoadProductsResult.Error
         }
     }
 
