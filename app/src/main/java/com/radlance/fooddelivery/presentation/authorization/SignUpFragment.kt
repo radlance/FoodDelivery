@@ -7,10 +7,8 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.radlance.fooddelivery.R
 import com.radlance.fooddelivery.databinding.FragmentSignUpBinding
-import com.radlance.fooddelivery.domain.core.AuthResult
 import com.radlance.fooddelivery.presentation.core.AbstractFragment
 import com.radlance.fooddelivery.presentation.core.IncorrectFillDialog
-import com.radlance.fooddelivery.presentation.main.MainActivity
 
 class SignUpFragment : AbstractFragment<FragmentSignUpBinding>() {
     private val viewModel: SignUpViewModel by lazy {
@@ -69,16 +67,22 @@ class SignUpFragment : AbstractFragment<FragmentSignUpBinding>() {
             }
         }
 
-        viewModel.registerResult.observe(viewLifecycleOwner) { registrationResult ->
-            when (registrationResult) {
-                is AuthResult.Success -> {
-                    val intent = MainActivity
-                        .newInstance(requireActivity().applicationContext, registrationResult.token)
-                    startActivity(intent)
-                }
-
-                is AuthResult.Error -> showErrorDialog(R.string.failed_registration)
-            }
+        viewModel.registerResult.observe(viewLifecycleOwner) {
+//            when (registrationResult) {
+//                is AuthResult.Success -> {
+//                    val intent = MainActivity
+//                        .newInstance(requireActivity().applicationContext, registrationResult.token)
+//                    startActivity(intent)
+//                }
+//
+//                is AuthResult.Error -> showErrorDialog(R.string.failed_registration)
+//            }
+            it.show(
+                requireActivity(),
+                binding.pbRegister,
+                binding.tvRegister,
+                binding.buttonRegister
+            )
         }
     }
 
@@ -88,7 +92,7 @@ class SignUpFragment : AbstractFragment<FragmentSignUpBinding>() {
     }
 
     companion object {
-        private const val ERROR_DIALOG = "error_dialog"
+        const val ERROR_DIALOG = "error_dialog"
         fun newInstance(): SignUpFragment {
             return SignUpFragment()
         }

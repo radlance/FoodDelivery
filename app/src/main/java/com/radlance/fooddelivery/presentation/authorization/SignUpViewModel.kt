@@ -12,11 +12,12 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
 class SignUpViewModel(
-    private val registerUserUseCase: RegisterUserUseCase
+    private val registerUserUseCase: RegisterUserUseCase,
+    private val mapper: AuthResult.Mapper<RegistrationState>
 ) :
     ViewModel() {
-    private val _registerResult = MutableLiveData<AuthResult>()
-    val registerResult: LiveData<AuthResult>
+    private val _registerResult = MutableLiveData<RegistrationState>()
+    val registerResult: LiveData<RegistrationState>
         get() = _registerResult
 
 
@@ -51,7 +52,8 @@ class SignUpViewModel(
                 phoneNumber = parseString(phoneNumber)
             )
             if (validateInput(registeredUser)) {
-                _registerResult.value = registerUserUseCase(registeredUser)
+                _registerResult.value = RegistrationState.Loading
+                _registerResult.value = registerUserUseCase(registeredUser).map(mapper)
             }
         }
     }

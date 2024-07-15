@@ -4,5 +4,5 @@ import com.google.gson.annotations.SerializedName
 
 data class DeliveryResponse(
     @SerializedName("productId") val productId: Int,
-    @SerializedName("amount") val amount: Double
+    @SerializedName("amount") val amount: Int
 )

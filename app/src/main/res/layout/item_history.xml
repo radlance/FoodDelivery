@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginBottom="10dp"
+    android:background="@color/item_history_color"
+    android:elevation="0dp"
+    app:cardCornerRadius="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/item_history_color"
+        android:paddingStart="18dp"
+        android:paddingEnd="18dp"
+        android:paddingBottom="18dp"
+        android:paddingTop="18dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/item_history_text_color"
+                android:textSize="18sp"
+                tools:text="4th Avenue, 76" />
+
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/item_history_text_color"
+                android:textSize="18sp"
+                tools:text="02.02.2021 18:00" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/item_history_text_color"
+                android:textSize="18sp"
+                android:text="@string/cost" />
+
+            <TextView
+                android:id="@+id/tv_cost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/item_history_text_color"
+                android:textSize="18sp"
+                tools:text="20000$" />
+
+        </LinearLayout>
+    </LinearLayout>
+    <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:background="@color/item_history_color">-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/tv_address"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:gravity="center"-->
+    <!--            android:textColor="@color/item_history_text_color"-->
+    <!--            android:textSize="18sp"-->
+    <!--            app:layout_constraintBottom_toTopOf="@id/tv_date"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintTop_toTopOf="parent"-->
+    <!--            app:layout_constraintVertical_chainStyle="packed"-->
+    <!--            tools:text="address"-->
+    <!--            android:layout_marginStart="11dp"-->
+    <!--            android:layout_marginTop="18dp"/>-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/tv_date"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:gravity="center"-->
+    <!--            android:textColor="@color/item_history_text_color"-->
+    <!--            android:textSize="18sp"-->
+    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--            app:layout_constraintEnd_toEndOf="@id/tv_address"-->
+    <!--            app:layout_constraintStart_toStartOf="@id/tv_address"-->
+    <!--            app:layout_constraintTop_toBottomOf="@id/tv_address"-->
+    <!--            tools:text="date"-->
+    <!--            android:layout_marginBottom="18dp"/>-->
+
+    <!--        <TextView-->
+    <!--            app:layout_constraintStart_toStartOf="@id/tv_cost"-->
+    <!--            android:id="@+id/tv_cost_const"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:gravity="center"-->
+    <!--            android:textColor="@color/item_history_text_color"-->
+    <!--            android:textSize="18sp"-->
+    <!--            app:layout_constraintBottom_toTopOf="@+id/tv_cost"-->
+    <!--            app:layout_constraintEnd_toEndOf="t"-->
+    <!--            app:layout_constraintTop_toTopOf="parent"-->
+    <!--            app:layout_constraintVertical_chainStyle="packed"-->
+    <!--            tools:text="address" />-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/tv_cost"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:gravity="center"-->
+    <!--            android:textColor="@color/item_history_text_color"-->
+    <!--            android:textSize="18sp"-->
+    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintTop_toBottomOf="@id/tv_cost_const"-->
+    <!--            tools:text="20000$$" />-->
+
+
+    <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+</androidx.cardview.widget.CardView>

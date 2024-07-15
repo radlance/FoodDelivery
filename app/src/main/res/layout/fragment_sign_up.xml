@@ -112,12 +112,36 @@
             android:background="@drawable/button_frame"
             android:backgroundTint="@color/main_color"
             android:elevation="0dp"
-            android:text="@string/register_now"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="17sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintBottom_toTopOf="@id/button_cancel" />
+
+        <TextView
+            android:id="@+id/tv_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/register_now"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            app:layout_constraintBottom_toBottomOf="@id/button_register"
+            app:layout_constraintEnd_toEndOf="@id/button_register"
+            app:layout_constraintStart_toStartOf="@id/button_register"
+            app:layout_constraintTop_toTopOf="@id/button_register" />
+
+        <ProgressBar
+            android:id="@+id/pb_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/white"
+            android:indeterminateTintMode="src_atop"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/button_register"
+            app:layout_constraintEnd_toEndOf="@id/button_register"
+            app:layout_constraintStart_toStartOf="@id/button_register"
+            app:layout_constraintTop_toTopOf="@id/button_register" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_cancel"
@@ -130,10 +154,22 @@
             android:background="@drawable/button_frame"
             android:backgroundTint="@color/main_color"
             android:elevation="0dp"
-            android:text="@string/cancel"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="17sp"
             app:layout_constraintBottom_toBottomOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            app:layout_constraintBottom_toBottomOf="@id/button_cancel"
+            app:layout_constraintEnd_toEndOf="@id/button_cancel"
+            app:layout_constraintStart_toStartOf="@id/button_cancel"
+            app:layout_constraintTop_toTopOf="@id/button_cancel" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

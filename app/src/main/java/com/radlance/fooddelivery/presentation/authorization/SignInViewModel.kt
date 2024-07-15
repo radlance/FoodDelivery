@@ -11,11 +11,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
-class SignInViewModel(private val loginUserUseCase: LoginUserUseCase) : ViewModel() {
+class SignInViewModel(
+    private val loginUserUseCase: LoginUserUseCase,
+    private val mapper: AuthResult.Mapper<AuthorizationState>
+) : ViewModel() {
     private val viewModelScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
-    private val _loginResult = MutableLiveData<AuthResult>()
-    val loginResult: LiveData<AuthResult>
+    private val _loginResult = MutableLiveData<AuthorizationState>()
+    val loginResult: LiveData<AuthorizationState>
         get() = _loginResult
 
     private val _errorInputLogin = MutableLiveData<Boolean>()
@@ -26,6 +29,10 @@ class SignInViewModel(private val loginUserUseCase: LoginUserUseCase) : ViewMode
     val errorInputPassword: LiveData<Boolean>
         get() = _errorInputPassword
 
+    private val _errorLogin = MutableLiveData<Boolean>()
+    val errorLogin: LiveData<Boolean>
+        get() = _errorLogin
+
     fun loginUser(login: String, password: String) {
         viewModelScope.launch {
             val currentUser = User(
@@ -33,7 +40,9 @@ class SignInViewModel(private val loginUserUseCase: LoginUserUseCase) : ViewMode
                 password = parseString(password)
             )
             if (validateInput(currentUser)) {
-                _loginResult.value = loginUserUseCase(currentUser)
+                _loginResult.value = AuthorizationState.Loading
+                val authResult = loginUserUseCase(currentUser)
+                _loginResult.value = authResult.map(mapper)
             }
         }
     }
@@ -59,5 +68,13 @@ class SignInViewModel(private val loginUserUseCase: LoginUserUseCase) : ViewMode
 
     fun resetErrorInputPassword() {
         _errorInputPassword.value = false
+    }
+
+    fun setupErrorLogin() {
+        _errorLogin.value = true
+    }
+
+    fun resetErrorLogin() {
+        _errorLogin.value = false
     }
 }

@@ -20,6 +20,7 @@
     <string name="incorrect_password">password field must have a minimum length of 8 and a maximum length of 20</string>
     <string name="incorrect_number">phone number field should not be empty</string>
     <string name="failed_registration">registration failed</string>
+    <string name="failed_authorization">authorization failed</string>
     <string name="name">name</string>
     <string name="price">price</string>
     <string name="no_connection">no connection</string>
@@ -43,4 +44,5 @@
     <string name="order_price">Order Price</string>
     <string name="no_orders_yet">No orders yet</string>
     <string name="history">History</string>
+    <string name="cost">Cost</string>
 </resources>

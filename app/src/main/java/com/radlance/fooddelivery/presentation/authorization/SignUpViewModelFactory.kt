@@ -13,7 +13,9 @@ class SignUpViewModelFactory : ViewModelProvider.Factory {
 
         val application = checkNotNull(extras[APPLICATION_KEY])
         val repositoryImpl = (application as ProvideRepository).authorizationRepository()
+
         val registrationUserUseCase = RegisterUserUseCase(repositoryImpl)
-        return SignUpViewModel(registrationUserUseCase) as T
+        val mapper = RegistrationResultMapper()
+        return SignUpViewModel(registrationUserUseCase, mapper) as T
     }
 }

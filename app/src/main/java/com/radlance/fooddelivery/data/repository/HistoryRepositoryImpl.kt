@@ -15,6 +15,7 @@ class HistoryRepositoryImpl(private val service: Service) : HistoryRepository {
                     HistoryItem(
                         id,
                         orderTime,
+                        street,
                         house,
                         building,
                         apartment,

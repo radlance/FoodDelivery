@@ -14,6 +14,7 @@ class SignInViewModelFactory : ViewModelProvider.Factory {
         val repository = (application as ProvideRepository).authorizationRepository()
 
         val loginUserUseCase = LoginUserUseCase(repository)
-        return SignInViewModel(loginUserUseCase) as T
+        val mapper = AuthorizationResultMapper()
+        return SignInViewModel(loginUserUseCase, mapper) as T
     }
 }

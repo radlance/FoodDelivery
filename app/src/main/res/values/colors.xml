@@ -8,4 +8,6 @@
     <color name="card_color">#F3F3F3</color>
     <color name="hint_color">#8c8c8c</color>
     <color name="text_color">#797979</color>
+    <color name="item_history_color">#e3e3e3</color>
+    <color name="item_history_text_color">#9a9a9d</color>
 </resources>

@@ -12,6 +12,7 @@ class HistoryFragment : AbstractFragment<FramentHistoryBinding>() {
     private val token: String by lazy {
         requireArguments().getString(TOKEN_EXTRA)!!
     }
+    private lateinit var historyAdapter: HistoryRecyclerAdapter
 
     private val viewModel: HistoryViewModel by lazy {
         ViewModelProvider(this, HistoryViewModelFactory(token))[HistoryViewModel::class.java]
@@ -23,10 +24,15 @@ class HistoryFragment : AbstractFragment<FramentHistoryBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.rvHistory.apply {
+            historyAdapter = HistoryRecyclerAdapter()
+            adapter = historyAdapter
+        }
+
         viewModel.loadHistory()
 
         viewModel.history.observe(viewLifecycleOwner) {
-            it.show(requireContext())
+            it.show(historyAdapter, binding.placeholder, binding.rvHistory)
         }
     }
 
