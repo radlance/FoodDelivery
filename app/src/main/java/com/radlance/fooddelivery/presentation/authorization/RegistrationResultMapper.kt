@@ -7,10 +7,6 @@ class RegistrationResultMapper : AuthResult.Mapper<RegistrationState> {
         return RegistrationState.Success(token)
     }
 
-    override fun mapLoading(): RegistrationState {
-        return RegistrationState.Loading
-    }
-
     override fun mapError(): RegistrationState {
         return RegistrationState.Error
     }

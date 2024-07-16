@@ -5,7 +5,6 @@ interface AuthResult {
 
     interface Mapper<T : Any> {
         fun mapSuccess(token: String): T
-        fun mapLoading(): T
         fun mapError(): T
     }
 

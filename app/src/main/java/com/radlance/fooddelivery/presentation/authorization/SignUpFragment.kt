@@ -68,15 +68,6 @@ class SignUpFragment : AbstractFragment<FragmentSignUpBinding>() {
         }
 
         viewModel.registerResult.observe(viewLifecycleOwner) {
-//            when (registrationResult) {
-//                is AuthResult.Success -> {
-//                    val intent = MainActivity
-//                        .newInstance(requireActivity().applicationContext, registrationResult.token)
-//                    startActivity(intent)
-//                }
-//
-//                is AuthResult.Error -> showErrorDialog(R.string.failed_registration)
-//            }
             it.show(
                 requireActivity(),
                 binding.pbRegister,

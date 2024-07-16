@@ -32,7 +32,24 @@ class HistoryFragment : AbstractFragment<FramentHistoryBinding>() {
         viewModel.loadHistory()
 
         viewModel.history.observe(viewLifecycleOwner) {
-            it.show(historyAdapter, binding.placeholder, binding.rvHistory)
+            it.show(
+                historyAdapter,
+                binding.placeholder,
+                binding.rvHistory,
+                binding.pbHistory,
+                binding.buttonRetry,
+                binding.buttonExit,
+                binding.tvError,
+                this
+            )
+        }
+
+        binding.buttonRetry.setOnClickListener {
+            viewModel.loadHistory()
+        }
+
+        binding.buttonExit.setOnClickListener {
+            requireActivity().finish()
         }
     }
 

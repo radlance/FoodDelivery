@@ -45,4 +45,6 @@
     <string name="no_orders_yet">No orders yet</string>
     <string name="history">History</string>
     <string name="cost">Cost</string>
+    <string name="exit">exit</string>
+    <string name="authorized_error">you must be logged in</string>
 </resources>

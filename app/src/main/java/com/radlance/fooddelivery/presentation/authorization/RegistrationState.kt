@@ -28,6 +28,7 @@ interface RegistrationState {
         ) {
             val intent = MainActivity.newInstance(activity.applicationContext, token)
             activity.startActivity(intent)
+            activity.finish()
         }
     }
 

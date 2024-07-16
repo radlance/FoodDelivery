@@ -22,6 +22,7 @@ class HistoryViewModel(
 
     fun loadHistory() {
         viewModelScope.launch {
+            _history.value = LoadHistoryState.Loading
             val loadResult = loadHistoryUseCase()
             _history.value = loadResult.map(mapper)
         }

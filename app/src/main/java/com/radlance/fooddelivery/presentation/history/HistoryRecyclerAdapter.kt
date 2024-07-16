@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.radlance.fooddelivery.R
 import com.radlance.fooddelivery.databinding.ItemHistoryBinding
 import com.radlance.fooddelivery.domain.entity.HistoryItem
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class HistoryRecyclerAdapter : RecyclerView.Adapter<HistoryRecyclerAdapter.HistoryRecyclerVH>() {
     var history = listOf<HistoryItem>()
@@ -31,7 +33,13 @@ class HistoryRecyclerAdapter : RecyclerView.Adapter<HistoryRecyclerAdapter.Histo
                 historyItem.apartment
             )
 
-            binding.tvDate.text = historyItem.orderTime
+            val dateString = historyItem.orderTime
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
+
+            val date = inputFormat.parse(dateString)
+            val outputDateString = date?.let { outputFormat.format(it) }
+            binding.tvDate.text = outputDateString
         }
 
         private fun setAddress(street: String, house: Int, building: Int, apartment: Int): String {

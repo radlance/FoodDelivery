@@ -7,10 +7,6 @@ class AuthorizationResultMapper : AuthResult.Mapper<AuthorizationState> {
         return AuthorizationState.Success(token)
     }
 
-    override fun mapLoading(): AuthorizationState {
-        return AuthorizationState.Loading
-    }
-
     override fun mapError(): AuthorizationState {
         return AuthorizationState.Error
     }
