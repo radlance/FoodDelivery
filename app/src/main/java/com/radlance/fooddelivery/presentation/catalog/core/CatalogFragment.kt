@@ -11,7 +11,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.radlance.fooddelivery.databinding.FragmentCatalogBinding
 import com.radlance.fooddelivery.presentation.core.AbstractFragment
 
-class FragmentCatalog : AbstractFragment<FragmentCatalogBinding>() {
+class CatalogFragment : AbstractFragment<FragmentCatalogBinding>() {
     private lateinit var productListAdapter: ProductListRecyclerAdapter
     private val viewModel: CatalogViewModel by lazy {
         ViewModelProvider(this, CatalogViewModelFactory())[CatalogViewModel::class.java]
@@ -54,23 +54,13 @@ class FragmentCatalog : AbstractFragment<FragmentCatalogBinding>() {
         }
 
         viewModel.shouldCloseSearch.observe(viewLifecycleOwner) {
-            if (it) {
-                binding.tvResult.visibility = View.GONE
-                binding.tabLayout.visibility = View.VISIBLE
-                binding.rvResult.visibility = View.GONE
-                binding.pagerProducts.visibility = View.VISIBLE
-            } else {
-                binding.tvResult.visibility = View.VISIBLE
-                binding.tabLayout.visibility = View.GONE
-                binding.rvResult.visibility = View.VISIBLE
-                binding.pagerProducts.visibility = View.GONE
-            }
+            it.show(binding.tvResult, binding.tabLayout, binding.rvResult, binding.pagerProducts)
         }
     }
 
     companion object {
-        fun newInstance(): FragmentCatalog {
-            return FragmentCatalog()
+        fun newInstance(): CatalogFragment {
+            return CatalogFragment()
         }
     }
 }

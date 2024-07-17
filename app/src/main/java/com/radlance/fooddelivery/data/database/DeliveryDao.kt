@@ -52,4 +52,7 @@ interface DeliveryDao {
 
     @Delete
     suspend fun deleteCartItem(cartItem: CartItemCache)
+
+    @Query("DELETE FROM cart_item")
+    suspend fun clearCart()
 }

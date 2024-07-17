@@ -113,13 +113,13 @@
 
 
         <ProgressBar
-            android:indeterminate="true"
-            android:indeterminateTintMode="src_atop"
-            android:indeterminateTint="@color/white"
-            android:visibility="gone"
             android:id="@+id/pb_auth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/white"
+            android:indeterminateTintMode="src_atop"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/button_login"
             app:layout_constraintEnd_toEndOf="@id/button_login"
             app:layout_constraintStart_toStartOf="@id/button_login"

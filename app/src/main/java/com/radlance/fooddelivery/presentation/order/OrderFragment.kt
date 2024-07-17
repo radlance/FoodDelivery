@@ -4,15 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.SimpleItemAnimator
+import com.radlance.fooddelivery.R
 import com.radlance.fooddelivery.databinding.FragmentOrderBinding
 import com.radlance.fooddelivery.presentation.core.AbstractFragment
 
 
 class OrderFragment : AbstractFragment<FragmentOrderBinding>() {
+    private val token: String by lazy {
+        requireArguments().getString(TOKEN_EXTRA)!!
+    }
     val viewModel: OrderViewModel by lazy {
-        ViewModelProvider(this, OrderViewModelFactory())[OrderViewModel::class.java]
+        ViewModelProvider(this, OrderViewModelFactory(token))[OrderViewModel::class.java]
     }
     private lateinit var orderListAdapter: OrderListRecyclerAdapter
     override fun bind(inflater: LayoutInflater, container: ViewGroup?): FragmentOrderBinding {
@@ -27,6 +32,9 @@ class OrderFragment : AbstractFragment<FragmentOrderBinding>() {
         }
         (binding.rvOrders.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
 
+        binding.buttonOrder.setOnClickListener {
+            viewModel.createDelivery(binding.etAddress.text.toString(), orderListAdapter.orderList)
+        }
         viewModel.getFullCartItemInfo()
 
         viewModel.orderState.observe(viewLifecycleOwner) {
@@ -36,6 +44,7 @@ class OrderFragment : AbstractFragment<FragmentOrderBinding>() {
                 binding.viewPrice,
                 binding.linearPrice,
                 binding.buttonOrder,
+                binding.tvOrderNow,
                 orderListAdapter
             )
         }
@@ -59,11 +68,32 @@ class OrderFragment : AbstractFragment<FragmentOrderBinding>() {
         viewModel.totalOrderCost.observe(viewLifecycleOwner) {
             binding.tvPrice.text = it.toString()
         }
+
+        viewModel.addressInputError.observe(viewLifecycleOwner) {
+            if (it) {
+                Toast.makeText(
+                    requireActivity().applicationContext,
+                    getString(R.string.address_input_error),
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
+
+        viewModel.deliveryResult.observe(viewLifecycleOwner) {
+            it.show(this, binding.pbAdd, binding.buttonOrder, binding.tvOrderNow, viewModel)
+        }
     }
 
     companion object {
-        fun newInstance(): OrderFragment {
-            return OrderFragment()
+        private const val TOKEN_EXTRA = "token"
+        fun newInstance(token: String): OrderFragment {
+            return OrderFragment().apply {
+                arguments = Bundle().apply {
+                    putString(
+                        TOKEN_EXTRA, token
+                    )
+                }
+            }
         }
     }
 }

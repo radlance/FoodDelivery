@@ -47,4 +47,7 @@
     <string name="cost">Cost</string>
     <string name="exit">exit</string>
     <string name="authorized_error">you must be logged in</string>
+    <string name="address_input_error">invalid address format</string>
+    <string name="successs">Success!</string>
+    <string name="error">Error</string>
 </resources>

@@ -5,7 +5,5 @@ data class HistoryItem(
     val orderTime: String,
     val street: String,
     val house: Int,
-    val building: Int,
-    val apartment: Int,
-    val productDeliveries: List<Order>
+    val productDeliveries: List<CartItem>
 )

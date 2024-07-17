@@ -105,7 +105,7 @@
     </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:visibility="invisible"
+        android:visibility="gone"
         android:id="@+id/button_order"
         style="?android:borderlessButtonStyle"
         android:layout_width="match_parent"
@@ -116,11 +116,33 @@
         android:background="@drawable/button_frame"
         android:backgroundTint="@color/main_color"
         android:elevation="0dp"
-        android:text="@string/order_now"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent" />
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/tv_order_now"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/button_order"
+        app:layout_constraintBottom_toBottomOf="@id/button_order"
+        app:layout_constraintStart_toStartOf="@id/button_order"
+        app:layout_constraintEnd_toEndOf="@id/button_order"
+        android:text="@string/order_now"
+        android:textColor="@color/white"
+        android:textSize="17sp"/>
+
+    <ProgressBar
+        android:indeterminate="true"
+        android:indeterminateTintMode="src_atop"
+        android:indeterminateTint="@color/white"
+        android:visibility="gone"
+        android:id="@+id/pb_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/button_order"
+        app:layout_constraintEnd_toEndOf="@id/button_order"
+        app:layout_constraintStart_toStartOf="@id/button_order"
+        app:layout_constraintTop_toTopOf="@id/button_order" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/placeholder"

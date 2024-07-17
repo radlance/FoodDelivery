@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.radlance.fooddelivery.databinding.ActivityMainBinding
-import com.radlance.fooddelivery.presentation.catalog.core.FragmentCatalog
+import com.radlance.fooddelivery.presentation.catalog.core.CatalogFragment
 import com.radlance.fooddelivery.presentation.history.HistoryFragment
 import com.radlance.fooddelivery.presentation.order.OrderFragment
 
@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity(), FragmentReplaceListener {
         token = (if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
-                .add(binding.containerMain.id, FragmentCatalog.newInstance())
+                .add(binding.containerMain.id, CatalogFragment.newInstance())
                 .commit()
             intent.getStringExtra(TOKEN)
         } else {
@@ -64,12 +64,12 @@ class MainActivity : AppCompatActivity(), FragmentReplaceListener {
 
     override fun catalogReplace() {
         viewModel.updateNavigationState(NavigationState.HomeSelected)
-        replaceFragment(FragmentCatalog.newInstance())
+        replaceFragment(CatalogFragment.newInstance())
     }
 
     override fun orderReplace() {
         viewModel.updateNavigationState(NavigationState.CartSelected)
-        replaceFragment(OrderFragment.newInstance())
+        replaceFragment(OrderFragment.newInstance(token))
     }
 
     override fun userReplace() {

@@ -1,5 +1,6 @@
 package com.radlance.fooddelivery.data.api.core
 
+import com.radlance.fooddelivery.data.api.request.DeliveryRequest
 import com.radlance.fooddelivery.data.api.request.NewUser
 import com.radlance.fooddelivery.data.api.request.UserData
 import com.radlance.fooddelivery.data.api.response.CategoryResponse
@@ -31,4 +32,7 @@ interface Service {
 
     @GET("/deliveries/user/history")
     suspend fun history(): List<HistoryResponse>
+
+    @POST("/client/deliveries/create")
+    suspend fun createDelivery(@Body delivery: DeliveryRequest)
 }

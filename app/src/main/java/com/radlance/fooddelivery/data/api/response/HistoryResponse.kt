@@ -7,7 +7,5 @@ data class HistoryResponse(
     @SerializedName("openingDateTime") val orderTime: String,
     @SerializedName("street") val street: String,
     @SerializedName("house") val house: Int,
-    @SerializedName("building") val building: Int,
-    @SerializedName("apartment") val apartment: Int,
-    @SerializedName("productDeliveries") val productDeliveries: List<DeliveryResponse>
+    @SerializedName("productDeliveries") val productDeliveries: List<CartItemResponse>
 )

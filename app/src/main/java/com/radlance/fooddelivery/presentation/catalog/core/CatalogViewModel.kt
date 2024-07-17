@@ -17,12 +17,16 @@ class CatalogViewModel(private val searchProductsLikeNameUseCase: SearchProducts
     val searchResult: LiveData<List<Product>>
         get() = _searchResult
 
-    private val _shouldCloseSearch = MutableLiveData<Boolean>()
-    val shouldCloseSearch: LiveData<Boolean>
+    private val _shouldCloseSearch = MutableLiveData<CatalogState>()
+    val shouldCloseSearch: LiveData<CatalogState>
         get() = _shouldCloseSearch
 
     fun searchProductsLikeName(query: String) {
-        _shouldCloseSearch.value = query.isBlank()
+        _shouldCloseSearch.value = if (query.isBlank()) {
+            CatalogState.Hide
+        } else {
+            CatalogState.Show
+        }
         viewModelScope.launch {
             _searchResult.value = searchProductsLikeNameUseCase(query)
         }

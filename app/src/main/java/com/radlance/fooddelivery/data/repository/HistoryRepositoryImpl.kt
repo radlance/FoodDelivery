@@ -2,8 +2,8 @@ package com.radlance.fooddelivery.data.repository
 
 import com.radlance.fooddelivery.data.api.core.Service
 import com.radlance.fooddelivery.domain.core.LoadHistoryResult
+import com.radlance.fooddelivery.domain.entity.CartItem
 import com.radlance.fooddelivery.domain.entity.HistoryItem
-import com.radlance.fooddelivery.domain.entity.Order
 import com.radlance.fooddelivery.domain.repository.HistoryRepository
 import retrofit2.HttpException
 
@@ -17,11 +17,9 @@ class HistoryRepositoryImpl(private val service: Service) : HistoryRepository {
                         orderTime,
                         street,
                         house,
-                        building,
-                        apartment,
                         productDeliveries.map {
-                            Order(
-                                service.productById(it.productId), it.amount
+                            CartItem(
+                                it.amount, service.productById(it.productId)
                             )
                         }
                     )

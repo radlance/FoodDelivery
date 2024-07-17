@@ -2,6 +2,7 @@ package com.radlance.fooddelivery.presentation.order
 
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +15,7 @@ interface OrdersState {
         priceView: View,
         linearLayout: LinearLayout,
         button: AppCompatButton,
+        textView: TextView,
         adapter: OrderListRecyclerAdapter
     )
 
@@ -24,6 +26,7 @@ interface OrdersState {
             priceView: View,
             linearLayout: LinearLayout,
             button: AppCompatButton,
+            textView: TextView,
             adapter: OrderListRecyclerAdapter
         ) {
             adapter.orderList = emptyList()
@@ -32,6 +35,7 @@ interface OrdersState {
             priceView.visibility = View.INVISIBLE
             linearLayout.visibility = View.INVISIBLE
             button.visibility = View.INVISIBLE
+            textView.visibility = View.GONE
         }
 
     }
@@ -43,8 +47,10 @@ interface OrdersState {
             priceView: View,
             linearLayout: LinearLayout,
             button: AppCompatButton,
+            textView: TextView,
             adapter: OrderListRecyclerAdapter
         ) {
+            textView.visibility = View.VISIBLE
             constraintLayout.visibility = View.INVISIBLE
             recyclerView.visibility = View.VISIBLE
             priceView.visibility = View.VISIBLE

@@ -28,9 +28,7 @@ class HistoryRecyclerAdapter : RecyclerView.Adapter<HistoryRecyclerAdapter.Histo
                 historyItem.productDeliveries.sumOf { it.product.price }.toInt().toString()
             binding.tvAddress.text = setAddress(
                 historyItem.street,
-                historyItem.house,
-                historyItem.building,
-                historyItem.apartment
+                historyItem.house
             )
 
             val dateString = historyItem.orderTime
@@ -42,8 +40,8 @@ class HistoryRecyclerAdapter : RecyclerView.Adapter<HistoryRecyclerAdapter.Histo
             binding.tvDate.text = outputDateString
         }
 
-        private fun setAddress(street: String, house: Int, building: Int, apartment: Int): String {
-            return "$street, $house-$building-$apartment"
+        private fun setAddress(street: String, house: Int): String {
+            return "$street, $house"
         }
     }
 
