@@ -46,12 +46,20 @@ kapt {
     correctErrorTypes = true
 }
 
+tasks.withType<Test> {
+    useJUnitPlatform()
+}
+
 dependencies {
     implementation(libs.androidx.viewpager2)
     implementation(libs.retrofit)
     implementation(libs.logging.interceptor)
     implementation(libs.converter.gson)
     implementation(libs.picasso)
+    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.assertj.core)
+
     // noinspection KaptUsageInsteadOfKsp
     kapt(libs.androidx.room.compiler)
     implementation(libs.androidx.room.runtime)
