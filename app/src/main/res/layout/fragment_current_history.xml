@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_history"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="19dp"
+        android:fontFamily="@font/italianno_regular"
+        android:text="@string/history"
+        android:textSize="48sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="47dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@id/tv_history"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_history">
+
+        <TextView
+            android:id="@+id/tv_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/item_history_text_color"
+            android:textSize="18sp"
+            tools:text="4th Avenue, 76" />
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/item_history_text_color"
+            android:textSize="18sp"
+            tools:text="02.02.2021 18:00" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_current_history"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="39dp"
+        android:layout_marginBottom="44dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@id/button_repeat_order"
+        app:layout_constraintTop_toBottomOf="@id/tv_history"
+        tools:listitem="@layout/item_order" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button_repeat_order"
+        style="?android:borderlessButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginBottom="19dp"
+        android:background="@drawable/button_frame"
+        android:backgroundTint="@color/main_color"
+        android:elevation="0dp"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toTopOf="@id/button_order_price" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/repeat_order"
+        android:textColor="@color/white"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="@id/button_repeat_order"
+        app:layout_constraintEnd_toEndOf="@id/button_repeat_order"
+        app:layout_constraintStart_toStartOf="@id/button_repeat_order"
+        app:layout_constraintTop_toTopOf="@id/button_repeat_order" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button_order_price"
+        style="?android:borderlessButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/button_frame"
+        android:backgroundTint="@color/main_color"
+        android:elevation="0dp"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_order_price_const"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="@string/order_price"
+        android:textColor="@color/white"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="@id/button_order_price"
+        app:layout_constraintStart_toStartOf="@id/button_order_price"
+        app:layout_constraintTop_toTopOf="@id/button_order_price" />
+
+    <TextView
+        android:id="@+id/tv_order_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:textColor="@color/white"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="@id/button_order_price"
+        app:layout_constraintEnd_toEndOf="@id/button_order_price"
+        app:layout_constraintTop_toTopOf="@id/button_order_price"
+        tools:text="20000$" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

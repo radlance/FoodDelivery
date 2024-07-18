@@ -8,6 +8,6 @@ import com.radlance.fooddelivery.domain.repository.OrderRepository
 interface ProvideRepository {
     fun authorizationRepository(): AuthorizationRepository
     fun catalogRepository(): CatalogRepository
-    fun orderRepository(token: String): OrderRepository
+    fun orderRepository(token: String? = null): OrderRepository
     fun historyRepository(token: String): HistoryRepository
 }

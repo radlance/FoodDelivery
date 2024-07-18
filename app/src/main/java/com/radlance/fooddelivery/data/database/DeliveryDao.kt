@@ -55,4 +55,7 @@ interface DeliveryDao {
 
     @Query("DELETE FROM cart_item")
     suspend fun clearCart()
+
+    @Insert
+    suspend fun repeatOrder(order: List<CartItemCache>)
 }

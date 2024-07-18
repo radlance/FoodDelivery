@@ -11,4 +11,5 @@ interface OrderRepository {
     suspend fun deleteCartItem(cartItem: CartItem)
     suspend fun clearCart()
     suspend fun createDelivery(delivery: Delivery): DeliveryResult
+    suspend fun repeatOrder(order: List<CartItem>)
 }

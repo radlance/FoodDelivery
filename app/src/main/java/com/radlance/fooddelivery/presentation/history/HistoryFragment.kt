@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import com.radlance.fooddelivery.R
 import com.radlance.fooddelivery.databinding.FramentHistoryBinding
 import com.radlance.fooddelivery.presentation.core.AbstractFragment
 
@@ -50,6 +51,14 @@ class HistoryFragment : AbstractFragment<FramentHistoryBinding>() {
 
         binding.buttonExit.setOnClickListener {
             requireActivity().finish()
+        }
+
+        historyAdapter.onHistoryItemClickListener = {
+            requireActivity().supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.container_main, CurrentHistoryFragment.newInstance(it, token))
+                .addToBackStack(null)
+                .commit()
         }
     }
 

@@ -63,4 +63,8 @@ class OrderRepositoryImpl(private val service: Service, private val deliveryDao:
             DeliveryResult.Error(false)
         }
     }
+
+    override suspend fun repeatOrder(order: List<CartItem>) {
+        deliveryDao.repeatOrder(order.map { CartItemCache(it.product.id, it.count) })
+    }
 }
