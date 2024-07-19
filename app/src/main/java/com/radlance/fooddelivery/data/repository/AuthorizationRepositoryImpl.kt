@@ -6,6 +6,7 @@ import com.radlance.fooddelivery.data.api.request.UserData
 import com.radlance.fooddelivery.domain.core.AuthResult
 import com.radlance.fooddelivery.domain.entity.User
 import com.radlance.fooddelivery.domain.repository.AuthorizationRepository
+import retrofit2.HttpException
 import java.time.LocalDate
 
 class AuthorizationRepositoryImpl(private val service: Service) : AuthorizationRepository {
@@ -23,18 +24,20 @@ class AuthorizationRepositoryImpl(private val service: Service) : AuthorizationR
                 )
             )
             val token = service.loginUser(UserData(user.login, user.password))
-            AuthResult.Success(token.token)
+            AuthResult.Success(token.value)
+        } catch (e: HttpException) {
+            AuthResult.Error(e.code() == 409)
         } catch (e: Exception) {
-            AuthResult.Error
+            AuthResult.Error()
         }
     }
 
     override suspend fun loginUser(user: User): AuthResult {
         return try {
             val token = service.loginUser(UserData(user.login, user.password))
-            AuthResult.Success(token.token)
+            AuthResult.Success(token.value)
         } catch (e: Exception) {
-            AuthResult.Error
+            AuthResult.Error()
         }
     }
 }

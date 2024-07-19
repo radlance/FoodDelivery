@@ -60,7 +60,7 @@ class OrderRepositoryImpl(private val service: Service, private val deliveryDao:
         } catch (e: HttpException) {
             DeliveryResult.Error(e.code() == 401)
         } catch (e: Exception) {
-            DeliveryResult.Error(false)
+            DeliveryResult.Error()
         }
     }
 

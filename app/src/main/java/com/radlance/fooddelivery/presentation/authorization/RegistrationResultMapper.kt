@@ -7,7 +7,7 @@ class RegistrationResultMapper : AuthResult.Mapper<RegistrationState> {
         return RegistrationState.Success(token)
     }
 
-    override fun mapError(): RegistrationState {
-        return RegistrationState.Error
+    override fun mapError(userAlreadyExist: Boolean): RegistrationState {
+        return RegistrationState.Error(userAlreadyExist)
     }
 }

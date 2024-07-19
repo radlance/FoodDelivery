@@ -7,7 +7,7 @@ class AuthorizationResultMapper : AuthResult.Mapper<AuthorizationState> {
         return AuthorizationState.Success(token)
     }
 
-    override fun mapError(): AuthorizationState {
+    override fun mapError(userAlreadyExist: Boolean): AuthorizationState {
         return AuthorizationState.Error
     }
 }

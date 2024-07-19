@@ -13,7 +13,7 @@ interface DeliveryResult {
         }
     }
 
-    class Error(private val unauthorized: Boolean) : DeliveryResult {
+    class Error(private val unauthorized: Boolean = false) : DeliveryResult {
         override fun <T : Any> map(mapper: Mapper<T>): T {
             return mapper.mapError(unauthorized)
         }

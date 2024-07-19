@@ -5,18 +5,18 @@ interface AuthResult {
 
     interface Mapper<T : Any> {
         fun mapSuccess(token: String): T
-        fun mapError(): T
+        fun mapError(userAlreadyExist: Boolean): T
     }
 
-    class Success(val token: String = "") : AuthResult {
+    data class Success(val token: String = "") : AuthResult {
         override fun <T : Any> map(mapper: Mapper<T>): T {
             return mapper.mapSuccess(token)
         }
     }
 
-    object Error : AuthResult {
+    data class Error(val userAlreadyExist: Boolean = false) : AuthResult {
         override fun <T : Any> map(mapper: Mapper<T>): T {
-            return mapper.mapError()
+            return mapper.mapError(userAlreadyExist)
         }
     }
 }

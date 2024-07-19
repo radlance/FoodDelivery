@@ -45,19 +45,19 @@ interface RegistrationState {
         }
     }
 
-    object Error : RegistrationState {
+    data class Error(private val userAlreadyExist: Boolean) : RegistrationState {
         override fun show(
             activity: FragmentActivity,
             progressBar: ProgressBar,
             textView: TextView,
             button: Button
         ) {
-            IncorrectFillDialog.newInstance(
-                getString(
-                    activity.applicationContext,
-                    R.string.failed_registration
-                )
-            )
+            val errorMessage = if (userAlreadyExist) {
+                getString(activity, R.string.user_already_exist_error)
+            } else {
+                getString(activity, R.string.failed_registration)
+            }
+            IncorrectFillDialog.newInstance(errorMessage)
                 .show(activity.supportFragmentManager, ERROR_DIALOG)
             progressBar.visibility = View.GONE
             textView.visibility = View.VISIBLE

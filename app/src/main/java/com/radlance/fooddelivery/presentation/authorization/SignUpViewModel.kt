@@ -74,6 +74,12 @@ class SignUpViewModel(
             if (fullName.isBlank() || fullName.split(" ").size < 2) {
                 _errorInputFullName.value = true
                 return false
+            } else {
+                val splitInitials = fullName.split(" ")
+                if ((splitInitials[0].length < 3 || splitInitials[0].length > 30) || (splitInitials[1].length < 3 || splitInitials[1].length > 30)) {
+                    _errorInputFullName.value = true
+                    return false
+                }
             }
 
             if (phoneNumber.isBlank()) {

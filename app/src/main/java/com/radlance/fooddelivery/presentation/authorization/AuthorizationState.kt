@@ -53,12 +53,7 @@ interface AuthorizationState {
             textView: TextView,
             button: Button
         ) {
-            IncorrectFillDialog.newInstance(
-                getString(
-                    activity.applicationContext,
-                    R.string.failed_authorization
-                )
-            )
+            IncorrectFillDialog.newInstance(getString(activity, R.string.failed_authorization))
                 .show(activity.supportFragmentManager, ERROR_DIALOG)
             progressBar.visibility = View.GONE
             textView.visibility = View.VISIBLE

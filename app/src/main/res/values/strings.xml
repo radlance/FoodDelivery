@@ -15,11 +15,12 @@
     <string name="phone_number">Phone number</string>
     <string name="register_now">Register Now</string>
     <string name="cancel">Cancel</string>
-    <string name="incorrect_fullname">full name field must contain at least 2 words</string>
+    <string name="incorrect_fullname">The "full name" field must contain at least 2 words, each of which must be in the length range from 3 to 30</string>
     <string name="incorrect_email">email field should not be empty and have the correct format</string>
     <string name="incorrect_password">password field must have a minimum length of 8 and a maximum length of 20</string>
     <string name="incorrect_number">phone number field should not be empty</string>
     <string name="failed_registration">registration failed</string>
+    <string name="user_already_exist_error">user with this login already exist</string>
     <string name="failed_authorization">authorization failed</string>
     <string name="name">name</string>
     <string name="price">price</string>
