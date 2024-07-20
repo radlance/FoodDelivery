@@ -15,24 +15,24 @@ import retrofit2.http.Path
 
 interface Service {
 
-    @POST("/user/register")
+    @POST("user/register")
     suspend fun registerUser(@Body newUser: NewUser)
 
     @POST("user/login")
     suspend fun loginUser(@Body userData: UserData): Token
 
-    @GET("/products")
+    @GET("products")
     suspend fun products(): List<ProductResponse>
 
     @GET("products/{id}")
     suspend fun productById(@Path("id") id: Int): Product
 
-    @GET("/categories")
+    @GET("categories")
     suspend fun categories(): List<CategoryResponse>
 
-    @GET("/deliveries/user/history")
+    @GET("deliveries/user/history")
     suspend fun history(): List<HistoryResponse>
 
-    @POST("/client/deliveries/create")
+    @POST("client/deliveries/create")
     suspend fun createDelivery(@Body delivery: DeliveryRequest)
 }
