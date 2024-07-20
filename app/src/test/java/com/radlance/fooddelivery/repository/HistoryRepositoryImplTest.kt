@@ -6,6 +6,7 @@ import com.radlance.fooddelivery.data.repository.HistoryRepositoryImpl
 import com.radlance.fooddelivery.domain.core.LoadHistoryResult
 import com.radlance.fooddelivery.domain.entity.HistoryItem
 import com.radlance.fooddelivery.domain.repository.HistoryRepository
+import com.radlance.fooddelivery.domain.usecase.history.LoadHistoryUseCase
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody.Companion.toResponseBody
 import org.assertj.core.api.Assertions.assertThat
@@ -40,7 +41,7 @@ class HistoryRepositoryImplTest {
 
         whenever(service.history()).thenReturn(history)
 
-        val result = repository.loadHistory()
+        val loadHistoryUseCase = LoadHistoryUseCase(repository)
         val historyResult = history.map {
             HistoryItem(
                 id = it.id,
@@ -51,7 +52,7 @@ class HistoryRepositoryImplTest {
             )
         }
 
-        assertThat(result).isEqualTo(LoadHistoryResult.Success(historyResult))
+        assertThat(loadHistoryUseCase()).isEqualTo(LoadHistoryResult.Success(historyResult))
     }
 
     @Test
@@ -61,20 +62,23 @@ class HistoryRepositoryImplTest {
                 Response.error<Any>(401, "".toResponseBody())
             )
         )
-        assertThat(repository.loadHistory()).isEqualTo(LoadHistoryResult.Error(unauthorized = true))
+        val loadHistoryUseCase = LoadHistoryUseCase(repository)
+        assertThat(loadHistoryUseCase()).isEqualTo(LoadHistoryResult.Error(unauthorized = true))
     }
 
     @Test
     fun testLoadHistoryServiceError(): Unit = runBlocking {
         whenever(service.history()).thenThrow(HttpException::class.java)
 
-        assertThat(repository.loadHistory()).isEqualTo(LoadHistoryResult.Error(unauthorized = false))
+        val loadHistoryUseCase = LoadHistoryUseCase(repository)
+        assertThat(loadHistoryUseCase()).isEqualTo(LoadHistoryResult.Error(unauthorized = false))
     }
 
     @Test
     fun testLoadHistoryOtherError(): Unit = runBlocking {
         whenever(service.history()).thenThrow(RuntimeException::class.java)
 
-        assertThat(repository.loadHistory()).isEqualTo(LoadHistoryResult.Error(unauthorized = false))
+        val loadHistoryUseCase = LoadHistoryUseCase(repository)
+        assertThat(loadHistoryUseCase()).isEqualTo(LoadHistoryResult.Error(unauthorized = false))
     }
 }

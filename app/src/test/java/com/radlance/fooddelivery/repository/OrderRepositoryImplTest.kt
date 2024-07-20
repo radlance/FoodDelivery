@@ -6,6 +6,7 @@ import com.radlance.fooddelivery.data.repository.OrderRepositoryImpl
 import com.radlance.fooddelivery.domain.core.DeliveryResult
 import com.radlance.fooddelivery.domain.entity.Delivery
 import com.radlance.fooddelivery.domain.repository.OrderRepository
+import com.radlance.fooddelivery.domain.usecase.order.CreateDeliveryUseCase
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody.Companion.toResponseBody
 import org.assertj.core.api.Assertions.assertThat
@@ -42,9 +43,9 @@ class OrderRepositoryImplTest {
     @Test
     fun testCreateDeliverySuccess(): Unit = runBlocking {
         whenever(service.createDelivery(any())).thenReturn(Unit)
-        val result = repository.createDelivery(delivery)
+        val createDeliveryUseCase = CreateDeliveryUseCase(repository)
 
-        assertThat(result).isEqualTo(DeliveryResult.Success)
+        assertThat(createDeliveryUseCase(delivery)).isEqualTo(DeliveryResult.Success)
     }
 
     @Test
@@ -54,24 +55,24 @@ class OrderRepositoryImplTest {
                 Response.error<Any>(401, "".toResponseBody())
             )
         )
-        val result = repository.createDelivery(delivery)
+        val createDeliveryUseCase = CreateDeliveryUseCase(repository)
 
-        assertThat(result).isEqualTo(DeliveryResult.Error(unauthorized = true))
+        assertThat(createDeliveryUseCase(delivery)).isEqualTo(DeliveryResult.Error(unauthorized = true))
     }
 
     @Test
     fun testCreateDeliveryServiceError(): Unit = runBlocking {
         whenever(service.createDelivery(any())).thenThrow(HttpException::class.java)
-        val result = repository.createDelivery(delivery)
+        val createDeliveryUseCase = CreateDeliveryUseCase(repository)
 
-        assertThat(result).isEqualTo(DeliveryResult.Error(unauthorized = false))
+        assertThat(createDeliveryUseCase(delivery)).isEqualTo(DeliveryResult.Error(unauthorized = false))
     }
 
     @Test
     fun testCreateDeliveryRuntimeError(): Unit = runBlocking {
         whenever(service.createDelivery(any())).thenThrow(RuntimeException::class.java)
-        val result = repository.createDelivery(delivery)
+        val createDeliveryUseCase = CreateDeliveryUseCase(repository)
 
-        assertThat(result).isEqualTo(DeliveryResult.Error(unauthorized = false))
+        assertThat(createDeliveryUseCase(delivery)).isEqualTo(DeliveryResult.Error(unauthorized = false))
     }
 }

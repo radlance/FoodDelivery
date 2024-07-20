@@ -8,6 +8,7 @@ import com.radlance.fooddelivery.data.repository.CatalogRepositoryImpl
 import com.radlance.fooddelivery.domain.core.LoadProductsResult
 import com.radlance.fooddelivery.domain.entity.Product
 import com.radlance.fooddelivery.domain.repository.CatalogRepository
+import com.radlance.fooddelivery.domain.usecase.catalog.LoadProductsUseCase
 import kotlinx.coroutines.runBlocking
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -52,12 +53,12 @@ class CatalogRepositoryImplTest {
         whenever(service.categories()).thenReturn(categories)
         whenever(service.products()).thenReturn(products)
 
-        val result = repository.loadProducts()
+        val loadProductsUseCase = LoadProductsUseCase(repository)
         val productList = products.map {
             Product(it.id, it.title, it.price, it.imageUrl, it.category.id)
         }
 
-        assertThat(result).isEqualTo(LoadProductsResult.Success(productList = productList))
+        assertThat(loadProductsUseCase()).isEqualTo(LoadProductsResult.Success(productList = productList))
     }
 
     @Test
