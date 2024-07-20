@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
 import retrofit2.HttpException
+
 /**
  * for other methods
  * @see com.radlance.fooddelivery.RoomTest

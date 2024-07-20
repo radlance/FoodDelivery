@@ -7,13 +7,13 @@ interface DeliveryResult {
         fun mapError(unauthorized: Boolean): T
     }
 
-    class Success : DeliveryResult {
+    object Success : DeliveryResult {
         override fun <T : Any> map(mapper: Mapper<T>): T {
             return mapper.mapSuccess()
         }
     }
 
-    class Error(private val unauthorized: Boolean = false) : DeliveryResult {
+    data class Error(private val unauthorized: Boolean = false) : DeliveryResult {
         override fun <T : Any> map(mapper: Mapper<T>): T {
             return mapper.mapError(unauthorized)
         }
