@@ -28,7 +28,7 @@ class AuthorizationRepositoryImplTest {
 
     @BeforeEach
     fun setup() {
-        mockService = mock<Service>()
+        mockService = mock()
         repository = AuthorizationRepositoryImpl(mockService)
     }
 

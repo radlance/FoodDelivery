@@ -28,7 +28,6 @@ class RoomTest {
         val context = ApplicationProvider.getApplicationContext<Context>()
         db = Room.inMemoryDatabaseBuilder(context, DeliveryDatabase::class.java).build()
         dao = db.deliveryDao()
-
     }
 
     @After
