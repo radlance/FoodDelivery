@@ -20,12 +20,12 @@ class App : Application(), ProvideRepository {
     }
 
     override fun catalogRepository(): CatalogRepository {
-        val dao = DeliveryDatabase.newInstance(applicationContext).productsDao()
+        val dao = DeliveryDatabase.newInstance(applicationContext).deliveryDao()
         return CatalogRepositoryImpl(BaseService(), dao)
     }
 
     override fun orderRepository(token: String?): OrderRepository {
-        val dao = DeliveryDatabase.newInstance(applicationContext).productsDao()
+        val dao = DeliveryDatabase.newInstance(applicationContext).deliveryDao()
         return OrderRepositoryImpl(BaseService(token), dao)
     }
 

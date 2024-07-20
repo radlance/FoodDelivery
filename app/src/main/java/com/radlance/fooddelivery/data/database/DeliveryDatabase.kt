@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase
 @Database(entities = [ProductCache::class, CategoryCache::class, CartItemCache::class], version = 1)
 abstract class DeliveryDatabase : RoomDatabase() {
 
-    abstract fun productsDao(): DeliveryDao
+    abstract fun deliveryDao(): DeliveryDao
 
     companion object {
         private var INSTANCE: DeliveryDatabase? = null

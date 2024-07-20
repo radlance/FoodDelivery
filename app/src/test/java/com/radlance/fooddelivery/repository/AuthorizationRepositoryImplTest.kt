@@ -7,11 +7,13 @@ import com.radlance.fooddelivery.data.api.response.Token
 import com.radlance.fooddelivery.data.repository.AuthorizationRepositoryImpl
 import com.radlance.fooddelivery.domain.core.AuthResult
 import com.radlance.fooddelivery.domain.entity.User
+import com.radlance.fooddelivery.domain.repository.AuthorizationRepository
 import com.radlance.fooddelivery.domain.usecase.authorization.LoginUserUseCase
 import com.radlance.fooddelivery.domain.usecase.authorization.RegisterUserUseCase
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody.Companion.toResponseBody
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
@@ -21,8 +23,14 @@ import java.time.LocalDate
 
 class AuthorizationRepositoryImplTest {
 
-    private val mockService = mock<Service>()
-    private val authorizationRepository = AuthorizationRepositoryImpl(mockService)
+    private lateinit var mockService: Service
+    private lateinit var repository: AuthorizationRepository
+
+    @BeforeEach
+    fun setup() {
+        mockService = mock<Service>()
+        repository = AuthorizationRepositoryImpl(mockService)
+    }
 
     @Test
     fun testRegisterUserSuccess(): Unit = runBlocking {
@@ -34,7 +42,7 @@ class AuthorizationRepositoryImplTest {
             )
         ).thenReturn(TOKEN)
 
-        val registerUserUseCase = RegisterUserUseCase(authorizationRepository)
+        val registerUserUseCase = RegisterUserUseCase(repository)
         val result = registerUserUseCase(USER)
 
         assertThat(result).isEqualTo(AuthResult.Success(TOKEN.value))
@@ -44,7 +52,7 @@ class AuthorizationRepositoryImplTest {
     fun testRegisterUserServiceError(): Unit = runBlocking {
         whenever(mockService.registerUser(newUser = NEW_USER)).thenThrow(HttpException::class.java)
 
-        val registerUserUseCase = RegisterUserUseCase(authorizationRepository)
+        val registerUserUseCase = RegisterUserUseCase(repository)
         val result = registerUserUseCase(user = USER)
 
         assertThat(result).isEqualTo(AuthResult.Error(userAlreadyExist = false))
@@ -56,7 +64,7 @@ class AuthorizationRepositoryImplTest {
             mockService.registerUser(NEW_USER)
         ).thenThrow(HttpException(Response.error<Any>(409, "".toResponseBody())))
 
-        val registerUserUseCase = RegisterUserUseCase(authorizationRepository)
+        val registerUserUseCase = RegisterUserUseCase(repository)
         val result = registerUserUseCase(USER)
 
         assertThat(result).isEqualTo(AuthResult.Error(userAlreadyExist = true))
@@ -68,7 +76,7 @@ class AuthorizationRepositoryImplTest {
             mockService.registerUser(NEW_USER)
         ).thenThrow(RuntimeException::class.java)
 
-        val registerUserUseCase = RegisterUserUseCase(authorizationRepository)
+        val registerUserUseCase = RegisterUserUseCase(repository)
         val result = registerUserUseCase(USER)
 
         assertThat(result).isEqualTo(AuthResult.Error(userAlreadyExist = false))
@@ -82,7 +90,7 @@ class AuthorizationRepositoryImplTest {
             )
         ).thenReturn(TOKEN)
 
-        val loginUserUseCase = LoginUserUseCase(authorizationRepository)
+        val loginUserUseCase = LoginUserUseCase(repository)
         val result = loginUserUseCase(USER)
 
         assertThat(result).isEqualTo(AuthResult.Success(TOKEN.value))
@@ -96,7 +104,7 @@ class AuthorizationRepositoryImplTest {
             )
         ).thenThrow(HttpException::class.java)
 
-        val loginUserUseCase = LoginUserUseCase(authorizationRepository)
+        val loginUserUseCase = LoginUserUseCase(repository)
         val result = loginUserUseCase(USER)
 
         assertThat(result).isEqualTo(AuthResult.Error(userAlreadyExist = false))

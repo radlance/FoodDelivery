@@ -12,11 +12,11 @@ interface DeliveryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveProducts(productList: List<ProductCache>)
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveCategories(categoryCache: List<CategoryCache>)
 
     @Query("SELECT * FROM category WHERE id = :id")
-    suspend fun getCategoryById(id: Long): CategoryCache
+    suspend fun getCategoryById(id: Int): CategoryCache
 
     @Query("SELECT * FROM product")
     suspend fun getProductsInfo(): List<ProductCache>
@@ -32,7 +32,7 @@ interface DeliveryDao {
     @Query("SELECT * FROM product WHERE title LIKE '%' || :query || '%'")
     suspend fun searchProductsLikeName(query: String): List<ProductCache>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addCartItem(cartItem: CartItemCache)
 
     @Update
@@ -56,6 +56,6 @@ interface DeliveryDao {
     @Query("DELETE FROM cart_item")
     suspend fun clearCart()
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun repeatOrder(order: List<CartItemCache>)
 }
