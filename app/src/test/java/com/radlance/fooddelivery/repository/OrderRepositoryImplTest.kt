@@ -41,7 +41,7 @@ class OrderRepositoryImplTest {
     }
 
     @Test
-    fun testCreateDeliverySuccess(): Unit = runBlocking {
+    fun test_create_delivery_success(): Unit = runBlocking {
         whenever(service.createDelivery(any())).thenReturn(Unit)
         val createDeliveryUseCase = CreateDeliveryUseCase(repository)
 
@@ -49,7 +49,7 @@ class OrderRepositoryImplTest {
     }
 
     @Test
-    fun testCreateDeliveryUnauthorizedError(): Unit = runBlocking {
+    fun test_create_delivery_unauthorized_error(): Unit = runBlocking {
         whenever(service.createDelivery(any())).thenThrow(
             HttpException(
                 Response.error<Any>(401, "".toResponseBody())
@@ -61,7 +61,7 @@ class OrderRepositoryImplTest {
     }
 
     @Test
-    fun testCreateDeliveryServiceError(): Unit = runBlocking {
+    fun test_create_delivery_service_error(): Unit = runBlocking {
         whenever(service.createDelivery(any())).thenThrow(HttpException::class.java)
         val createDeliveryUseCase = CreateDeliveryUseCase(repository)
 
@@ -69,7 +69,7 @@ class OrderRepositoryImplTest {
     }
 
     @Test
-    fun testCreateDeliveryRuntimeError(): Unit = runBlocking {
+    fun test_create_delivery_runtime_error(): Unit = runBlocking {
         whenever(service.createDelivery(any())).thenThrow(RuntimeException::class.java)
         val createDeliveryUseCase = CreateDeliveryUseCase(repository)
 

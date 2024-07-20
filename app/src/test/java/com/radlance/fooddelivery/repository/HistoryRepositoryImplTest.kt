@@ -28,7 +28,7 @@ class HistoryRepositoryImplTest {
     }
 
     @Test
-    fun testLoadHistorySuccess(): Unit = runBlocking {
+    fun test_load_history_success(): Unit = runBlocking {
         val history = listOf(
             HistoryResponse(
                 id = 1,
@@ -56,7 +56,7 @@ class HistoryRepositoryImplTest {
     }
 
     @Test
-    fun testLoadHistoryUnauthorizedError(): Unit = runBlocking {
+    fun test_load_history_unauthorized_error(): Unit = runBlocking {
         whenever(service.history()).thenThrow(
             HttpException(
                 Response.error<Any>(401, "".toResponseBody())
@@ -67,7 +67,7 @@ class HistoryRepositoryImplTest {
     }
 
     @Test
-    fun testLoadHistoryServiceError(): Unit = runBlocking {
+    fun test_load_history_service_error(): Unit = runBlocking {
         whenever(service.history()).thenThrow(HttpException::class.java)
 
         val loadHistoryUseCase = LoadHistoryUseCase(repository)
@@ -75,7 +75,7 @@ class HistoryRepositoryImplTest {
     }
 
     @Test
-    fun testLoadHistoryOtherError(): Unit = runBlocking {
+    fun test_load_history_other_error(): Unit = runBlocking {
         whenever(service.history()).thenThrow(RuntimeException::class.java)
 
         val loadHistoryUseCase = LoadHistoryUseCase(repository)

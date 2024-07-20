@@ -35,7 +35,7 @@ class CatalogRepositoryImplTest {
     }
 
     @Test
-    fun testLoadProductsSuccess(): Unit = runBlocking {
+    fun test_load_products_success(): Unit = runBlocking {
         val categories = listOf(
             CategoryResponse(id = 1, title = "Category 1")
         )
@@ -62,7 +62,7 @@ class CatalogRepositoryImplTest {
     }
 
     @Test
-    fun testLoadProductsError(): Unit = runBlocking {
+    fun test_load_products_error(): Unit = runBlocking {
         whenever(service.categories()).thenReturn(emptyList())
         whenever(service.products()).thenThrow(HttpException::class.java)
 
@@ -70,7 +70,7 @@ class CatalogRepositoryImplTest {
     }
 
     @Test
-    fun testLoadCategoriesError(): Unit = runBlocking {
+    fun test_load_categories_error(): Unit = runBlocking {
         whenever(service.categories()).thenThrow(HttpException::class.java)
         whenever(service.products()).thenReturn(emptyList())
 

@@ -37,7 +37,7 @@ class RoomTest {
     }
 
     @Test
-    fun testSaveCategories(): Unit = runBlocking {
+    fun test_save_categories(): Unit = runBlocking {
         dao.saveCategories(categoryCache = CATEGORIES)
 
         val savedCategories = CATEGORIES.map { dao.getCategoryById(it.id) }
@@ -47,14 +47,14 @@ class RoomTest {
     }
 
     @Test(expected = SQLiteConstraintException::class)
-    fun testSaveProductsConstraintForeignKeyException(): Unit = runBlocking {
+    fun test_save_products_constraint_foreign_key_exception(): Unit = runBlocking {
 
         assertThat(dao.getProductsInfo()).isEmpty()
         dao.saveProducts(productList = BASE_PRODUCTS_CACHE)
     }
 
     @Test
-    fun testSaveProducts(): Unit = runBlocking {
+    fun test_save_products(): Unit = runBlocking {
         dao.saveCategories(categoryCache = CATEGORIES)
         dao.saveProducts(productList = BASE_PRODUCTS_CACHE)
 
@@ -62,7 +62,7 @@ class RoomTest {
     }
 
     @Test
-    fun testGetProductsByCategory(): Unit = runBlocking {
+    fun test_get_products_by_category(): Unit = runBlocking {
         dao.saveCategories(categoryCache = CATEGORIES)
 
         val productsCacheWithFirstCategoryId = mutableListOf(
@@ -134,7 +134,7 @@ class RoomTest {
 
 
     @Test
-    fun testSearchProductsLikeName(): Unit = runBlocking {
+    fun test_search_products_like_name(): Unit = runBlocking {
         assertThat(dao.getProductsInfo()).isEmpty()
 
         dao.saveCategories(categoryCache = CATEGORIES)
@@ -182,12 +182,12 @@ class RoomTest {
     }
 
     @Test(expected = SQLiteConstraintException::class)
-    fun testAddCartItemConstraintForeignKeyException(): Unit = runBlocking {
+    fun test_add_cart_item_constraint_foreign_key_exception(): Unit = runBlocking {
         dao.addCartItem(cartItem = CartItemCache(productId = 1, count = 1))
     }
 
     @Test
-    fun testAddCartItem(): Unit = runBlocking {
+    fun test_add_cart_item(): Unit = runBlocking {
 
         assertThat(dao.getFullCartItemInfo()).isEmpty()
 
@@ -218,7 +218,7 @@ class RoomTest {
     }
 
     @Test
-    fun testUpdateCartItem(): Unit = runBlocking {
+    fun test_update_cart_item(): Unit = runBlocking {
 
         dao.saveCategories(categoryCache = CATEGORIES)
         dao.saveProducts(productList = BASE_PRODUCTS_CACHE)
@@ -242,7 +242,7 @@ class RoomTest {
     }
 
     @Test
-    fun testGetProductCountById(): Unit = runBlocking {
+    fun test_get_product_count_by_id(): Unit = runBlocking {
 
         dao.saveCategories(categoryCache = CATEGORIES)
         dao.saveProducts(productList = BASE_PRODUCTS_CACHE)
@@ -259,7 +259,7 @@ class RoomTest {
     }
 
     @Test
-    fun testGetTotalOrderCost(): Unit = runBlocking {
+    fun test_get_total_order_cost(): Unit = runBlocking {
 
         dao.saveCategories(categoryCache = CATEGORIES)
         dao.saveProducts(productList = BASE_PRODUCTS_CACHE)
@@ -276,7 +276,7 @@ class RoomTest {
     }
 
     @Test
-    fun testDeleteCartItem(): Unit = runBlocking {
+    fun test_delete_cart_item(): Unit = runBlocking {
         dao.saveCategories(categoryCache = CATEGORIES)
         dao.saveProducts(productList = BASE_PRODUCTS_CACHE)
 
@@ -308,7 +308,7 @@ class RoomTest {
     }
 
     @Test
-    fun testClearCart(): Unit = runBlocking {
+    fun test_clear_cart(): Unit = runBlocking {
         dao.saveCategories(categoryCache = CATEGORIES)
         dao.saveProducts(productList = BASE_PRODUCTS_CACHE)
 
@@ -328,7 +328,7 @@ class RoomTest {
     }
 
     @Test
-    fun testRepeatOrder(): Unit = runBlocking {
+    fun test_repeat_order(): Unit = runBlocking {
         dao.saveCategories(categoryCache = CATEGORIES)
         dao.saveProducts(productList = BASE_PRODUCTS_CACHE)
 

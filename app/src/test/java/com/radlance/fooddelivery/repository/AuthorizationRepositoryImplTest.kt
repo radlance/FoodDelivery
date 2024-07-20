@@ -33,7 +33,7 @@ class AuthorizationRepositoryImplTest {
     }
 
     @Test
-    fun testRegisterUserSuccess(): Unit = runBlocking {
+    fun test_register_user_success(): Unit = runBlocking {
 
         whenever(mockService.registerUser(NEW_USER)).thenReturn(Unit)
         whenever(
@@ -49,7 +49,7 @@ class AuthorizationRepositoryImplTest {
     }
 
     @Test
-    fun testRegisterUserServiceError(): Unit = runBlocking {
+    fun test_register_user_service_error(): Unit = runBlocking {
         whenever(mockService.registerUser(newUser = NEW_USER)).thenThrow(HttpException::class.java)
 
         val registerUserUseCase = RegisterUserUseCase(repository)
@@ -59,7 +59,7 @@ class AuthorizationRepositoryImplTest {
     }
 
     @Test
-    fun testRegisterUserAlreadyExistError(): Unit = runBlocking {
+    fun test_register_user_already_exist_error(): Unit = runBlocking {
         whenever(
             mockService.registerUser(NEW_USER)
         ).thenThrow(HttpException(Response.error<Any>(409, "".toResponseBody())))
@@ -71,7 +71,7 @@ class AuthorizationRepositoryImplTest {
     }
 
     @Test
-    fun testRegisterUserRuntimeError(): Unit = runBlocking {
+    fun test_register_user_runtime_error(): Unit = runBlocking {
         whenever(
             mockService.registerUser(NEW_USER)
         ).thenThrow(RuntimeException::class.java)
@@ -83,7 +83,7 @@ class AuthorizationRepositoryImplTest {
     }
 
     @Test
-    fun testLoginUserSuccess(): Unit = runBlocking {
+    fun test_login_user_success(): Unit = runBlocking {
         whenever(
             mockService.loginUser(
                 UserData(login = USER.login, password = USER.password)
@@ -97,7 +97,7 @@ class AuthorizationRepositoryImplTest {
     }
 
     @Test
-    fun testLoginUserError(): Unit = runBlocking {
+    fun test_login_user_error(): Unit = runBlocking {
         whenever(
             mockService.loginUser(
                 UserData(login = USER.login, password = USER.password)
