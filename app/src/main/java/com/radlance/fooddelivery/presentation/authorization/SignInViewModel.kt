@@ -29,10 +29,6 @@ class SignInViewModel(
     val errorInputPassword: LiveData<Boolean>
         get() = _errorInputPassword
 
-    private val _errorLogin = MutableLiveData<Boolean>()
-    val errorLogin: LiveData<Boolean>
-        get() = _errorLogin
-
     fun loginUser(login: String, password: String) {
         viewModelScope.launch {
             val currentUser = User(
@@ -68,13 +64,5 @@ class SignInViewModel(
 
     fun resetErrorInputPassword() {
         _errorInputPassword.value = false
-    }
-
-    fun setupErrorLogin() {
-        _errorLogin.value = true
-    }
-
-    fun resetErrorLogin() {
-        _errorLogin.value = false
     }
 }
