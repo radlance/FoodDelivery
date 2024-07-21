@@ -42,7 +42,7 @@ class SignInFragment : AbstractFragment<FragmentSignInBinding>() {
         viewModel.errorInputLogin.observe(viewLifecycleOwner) {
             if (it) {
                 viewModel.resetErrorInputLogin()
-                showErrorDialog(R.string.incorrect_email)
+                showErrorDialog(R.string.incorrect_login)
             }
         }
 

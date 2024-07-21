@@ -23,9 +23,9 @@ class SignUpViewModel(
 
     private val viewModelScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
-    private val _errorInputEmail = MutableLiveData<Boolean>()
-    val errorInputEmail: LiveData<Boolean>
-        get() = _errorInputEmail
+    private val _errorInputLogin = MutableLiveData<Boolean>()
+    val errorInputLogin: LiveData<Boolean>
+        get() = _errorInputLogin
 
     private val _errorInputPassword = MutableLiveData<Boolean>()
     val errorInputPassword: LiveData<Boolean>
@@ -61,8 +61,8 @@ class SignUpViewModel(
     private fun validateInput(user: User): Boolean {
         val result = true
         with(user) {
-            if (login.isBlank() || !validateLogin(login)) {
-                _errorInputEmail.value = true
+            if (login.length < 5 || login.length > 15) {
+                _errorInputLogin.value = true
                 return false
             }
 
@@ -91,7 +91,7 @@ class SignUpViewModel(
     }
 
     fun resetErrorInputEmail() {
-        _errorInputEmail.value = false
+        _errorInputLogin.value = false
     }
 
     fun resetErrorInputFullName() {

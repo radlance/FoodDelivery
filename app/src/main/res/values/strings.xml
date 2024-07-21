@@ -7,7 +7,6 @@
     <string name="_24_7">24/7</string>
     <string name="welcome_to_tcmc_food">Welcome To TCMC Food</string>
     <string name="skip_authorization">Skip authorization</string>
-    <string name="e_mail">E-mail</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="forgot_password">Forgot password?</string>
@@ -16,7 +15,7 @@
     <string name="register_now">Register Now</string>
     <string name="cancel">Cancel</string>
     <string name="incorrect_fullname">The "full name" field must contain at least 2 words, each of which must be in the length range from 3 to 30</string>
-    <string name="incorrect_email">email field should not be empty and have the correct format</string>
+    <string name="incorrect_login">login field must have a minimum length of 5 and a maximum length of 15</string>
     <string name="incorrect_password">password field must have a minimum length of 8 and a maximum length of 20</string>
     <string name="incorrect_number">phone number field should not be empty</string>
     <string name="failed_registration">registration failed</string>

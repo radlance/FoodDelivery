@@ -46,7 +46,7 @@ class SignInViewModel(
     private fun validateInput(user: User): Boolean {
         val result = true
         with(user) {
-            if (!validateLogin(login) || login.isBlank()) {
+            if (login.length < 5 || login.length > 15) {
                 _errorInputLogin.value = true
                 return false
             }

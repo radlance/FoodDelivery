@@ -46,10 +46,10 @@ class SignUpFragment : AbstractFragment<FragmentSignUpBinding>() {
             }
         }
 
-        viewModel.errorInputEmail.observe(viewLifecycleOwner) {
+        viewModel.errorInputLogin.observe(viewLifecycleOwner) {
             if (it) {
                 viewModel.resetErrorInputEmail()
-                showErrorDialog(R.string.incorrect_email)
+                showErrorDialog(R.string.incorrect_login)
             }
         }
 
