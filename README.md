@@ -26,3 +26,5 @@ Test android app with a private api.
 ## application work
 
 ![application](application.gif)
+
+device: Xiaomi Redmi Note 8T
