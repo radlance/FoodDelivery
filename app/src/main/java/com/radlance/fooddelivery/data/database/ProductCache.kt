@@ -19,5 +19,5 @@ data class ProductCache(
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "price") val price: Double,
     @ColumnInfo(name = "image_url") val imageUrl: String,
-    @ColumnInfo(name = "category") val categoryId: Int
+    @ColumnInfo(name = "category", index = true) val categoryId: Int
 )
