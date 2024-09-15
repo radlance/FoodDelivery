@@ -11,5 +11,7 @@ class OnBoardingActivity : AppCompatActivity() {
         binding = ActivityOnBoardingBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.viewPager2.adapter = LaunchSlidePageAdapter(this)
+
+        binding.wormDotsIndicator.attachTo(binding.viewPager2)
     }
 }

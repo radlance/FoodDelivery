@@ -52,6 +52,7 @@ tasks.withType<Test> {
 }
 
 dependencies {
+    implementation(libs.dotsindicator)
     implementation(libs.androidx.viewpager2)
     implementation(libs.retrofit)
     implementation(libs.logging.interceptor)
